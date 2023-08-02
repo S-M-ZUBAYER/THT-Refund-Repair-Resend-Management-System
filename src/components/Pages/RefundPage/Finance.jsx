@@ -78,6 +78,10 @@ const Finance = ({ refundProducts }) => {
     }, []);
 
     const deleteRequest = async (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
             toast.success('User deleted successfully');
@@ -95,6 +99,10 @@ const Finance = ({ refundProducts }) => {
     };
 
     const updateRequest = async (orderNumber, editingRequest) => {
+        const confirmed = window.confirm('Are you sure you want to update these information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
             console.log(editingRequest)
@@ -105,46 +113,15 @@ const Finance = ({ refundProducts }) => {
         }
     };
 
-    // const handleOptionChange = (special) => {
-    //   setEditingRequest({ ...editingRequest, special: !special });
-    //   console.log(editingRequest?.special);
-    // };
 
 
 
-    const handleImageChange = (e) => {
-        setSelectedImages(e.target.files);
-    };
-
-
-    // const updateWarehouseStatus = async (orderNumber) => {
-    //   try {
-    //     const response = await axios.put(
-    //       `https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`
-    //     );
-
-    //     if (response.status === 200) {
-    //       setAllWarehouseRequest((prevRequests) =>
-    //         prevRequests.map((request) => {
-    //           if (request.orderNumber === orderNumber) {
-    //             return { ...request, warehouseStatus: true };
-    //           }
-    //           return request;
-    //         })
-    //       );
-
-    //       toast.success('Warehouse status updated successfully');
-    //     } else {
-    //       toast.error('Failed to update warehouse status');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error updating warehouse status:', error);
-    //     toast.error('Failed to update warehouse status');
-    //   }
-    // };
-
-
+  
     const updateWarehouseStatus = async (orderNumber) => {
+        const confirmed = window.confirm('Are you sure you want to approve?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
 

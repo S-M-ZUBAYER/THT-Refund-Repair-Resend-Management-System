@@ -169,6 +169,10 @@ const DetailsLayout = () => {
     };
 
     const handleToUpdateWarehouseManagerStatus = async (orderNumber) => {
+        const confirmed = window.confirm('Are you sure you want to approve this refund product?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         console.log(status)
         if (status === "warehouseManager") {
             console.log(status, "enter")
@@ -210,6 +214,10 @@ const DetailsLayout = () => {
     }
 
     const updateWarehouseStatus = async (orderNumber) => {
+        const confirmed = window.confirm('Are you sure you want to approve this refund product?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             // const formData = new FormData();
             // selectedImages.forEach((image) => formData.append('images', image));

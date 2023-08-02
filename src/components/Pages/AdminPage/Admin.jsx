@@ -149,6 +149,10 @@ const Admin = () => {
 
     //create a function to update a user from the frontend and database both side 
     const updateUser = async (userId, editingUser) => {
+        const confirmed = window.confirm('Are you sure you want to update this user information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/RFusers/update/${userId}`, editingUser);
             console.log(response)
@@ -169,6 +173,10 @@ const Admin = () => {
     const updateUserToAdmin = async (userId) => {
         // setUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
         const isAdmin = true;
+        const confirmed = window.confirm('Are you sure you want to Admin this user?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
 
         try {
             const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/RFusers/update/admin/${userId}`, isAdmin);
@@ -387,54 +395,56 @@ const Admin = () => {
 
             <div className="mt-32">
 
-                {/* Show The List Available Refund Request */}
-                {selectedLanguage === "en-US" && (
-                    <>
-                        <h1>Show The List Available Refund Request</h1>
-                        <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information.</p>
-                    </>
-                )}
+               
+            {selectedLanguage === "en-US" && (
+  <>
+    <h1>Add New Shop Name and Product Refund Reason</h1>
+    <p className='py-4'>These are two input fields to add the new shop name and add product refund reason.</p>
+  </>
+)}
 
-                {selectedLanguage === "zh-CN" && (
-                    <>
-                        <h1>显示可用的退款请求列表</h1>
-                        <p className='py-4'>这是当前所有的退款请求列表。您可以在此处检查并更新退款请求信息。</p>
-                    </>
-                )}
-                {selectedLanguage === "fil-PH" && (
-                    <>
-                        <h1>Ipakita ang Listahan ng Magagamit na Kahilingan sa Pagbabalik</h1>
-                        <p className='py-4'>Ito ay lahat ng listahan ng kahilingan sa pagbabalik sa sandaling ito. Dito maaari mong suriin at i-update ang impormasyon ng kahilingan sa pagbabalik.</p>
-                    </>
-                )}
+{selectedLanguage === "zh-CN" && (
+  <>
+    <h1>添加新店名和产品退款原因</h1>
+    <p className='py-4'>这是两个输入字段，用于添加新的店名和添加产品退款原因。</p>
+  </>
+)}
 
-                {selectedLanguage === "ms-MY" && (
-                    <>
-                        <h1>Paparkan Senarai Permintaan Pembayaran Balik yang Tersedia</h1>
-                        <p className='py-4'>Ini adalah senarai semua permintaan pembayaran balik pada masa ini. Di sini anda boleh menyemak dan mengemas kini maklumat permintaan pembayaran balik.</p>
-                    </>
-                )}
+{selectedLanguage === "th-TH" && (
+  <>
+    <h1>เพิ่มชื่อร้านค้าและเหตุผลการคืนสินค้าใหม่</h1>
+    <p className='py-4'>นี่คือสองช่องกรอกข้อมูลที่ใช้ในการเพิ่มชื่อร้านค้าใหม่และเพิ่มเหตุผลในการคืนสินค้า</p>
+  </>
+)}
 
-                {selectedLanguage === "th-TH" && (
-                    <>
-                        <h1>แสดงรายการคำขอคืนเงินที่มีให้</h1>
-                        <p className='py-4'>นี้คือรายการคำขอคืนเงินทั้งหมดในขณะนี้ ที่นี่คุณสามารถตรวจสอบและอัปเดตข้อมูลคำขอคืนเงินได้</p>
-                    </>
-                )}
+{selectedLanguage === "fil-PH" && (
+  <>
+    <h1>Magdagdag ng Bagong Pangalan ng Tindahan at Rason sa Pagbabalik ng Produkto</h1>
+    <p className='py-4'>Ito ay dalawang patlang ng input upang magdagdag ng bagong pangalan ng tindahan at magdagdag ng rason sa pagbabalik ng produkto.</p>
+  </>
+)}
 
-                {selectedLanguage === "vi-VN" && (
-                    <>
-                        <h1>Hiển thị Danh sách Yêu cầu Hoàn tiền Hiện có</h1>
-                        <p className='py-4'>Dưới đây là tất cả danh sách yêu cầu hoàn tiền hiện có. Ở đây bạn có thể kiểm tra và cập nhật thông tin yêu cầu hoàn tiền.</p>
-                    </>
-                )}
+{selectedLanguage === "vi-VN" && (
+  <>
+    <h1>Thêm Tên Cửa Hàng Mới và Lý Do Hoàn Tiền Sản Phẩm</h1>
+    <p className='py-4'>Đây là hai trường nhập liệu để thêm tên cửa hàng mới và thêm lý do hoàn tiền sản phẩm.</p>
+  </>
+)}
 
-                {selectedLanguage === "id-ID" && (
-                    <>
-                        <h1>Tampilkan Daftar Permintaan Pengembalian Dana yang Tersedia</h1>
-                        <p className='py-4'>Ini adalah semua daftar permintaan pengembalian dana pada saat ini. Di sini Anda dapat memeriksa dan memperbarui informasi permintaan pengembalian dana.</p>
-                    </>
-                )}
+{selectedLanguage === "ms-MY" && (
+  <>
+    <h1>Tambah Nama Kedai Baru dan Sebab Pembayaran Balik Produk</h1>
+    <p className='py-4'>Ini adalah dua medan input untuk menambahkan nama kedai baru dan menambahkan sebab pembayaran balik produk.</p>
+  </>
+)}
+
+{selectedLanguage === "id-ID" && (
+  <>
+    <h1>Tambahkan Nama Toko Baru dan Alasan Pengembalian Produk</h1>
+    <p className='py-4'>Ini adalah dua kolom input untuk menambahkan nama toko baru dan menambahkan alasan pengembalian produk.</p>
+  </>
+)}
+
 
 
                 <div className="md:grid grid-cols-3 gap-4">
@@ -517,7 +527,7 @@ const Admin = () => {
                         <input
                             type="text"
                             placeholder="Designation"
-                            value={editingUser.designation}
+                            value={editingUser.role}
                             onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
                             className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
                         />

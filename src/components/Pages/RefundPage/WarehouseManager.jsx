@@ -56,6 +56,10 @@ const WarehouseManager = ({ refundProducts }) => {
   }, []);
 
   const deleteRequest = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this product information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
     try {
       await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
@@ -72,6 +76,10 @@ const WarehouseManager = ({ refundProducts }) => {
   };
 
   const updateRequest = async (orderNumber, editingRequest) => {
+    const confirmed = window.confirm('Are you sure you want to update these information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
     try {
       const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       console.log(editingRequest)

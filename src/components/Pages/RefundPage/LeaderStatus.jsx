@@ -59,6 +59,7 @@ const LeaderStatus = ({ refundProducts }) => {
     };
 
     const fetchSpecialData = async () => {
+
         try {
             setLoading(true);
             const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusSpecialRequest');
@@ -78,9 +79,13 @@ const LeaderStatus = ({ refundProducts }) => {
     }, []);
 
     const deleteRequest = async (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this product information?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
-            toast.success('User deleted successfully');
+            toast.success('Refund Product deleted successfully');
             setAllLeaderRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
             setAllSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
         } catch (error) {
@@ -95,6 +100,10 @@ const LeaderStatus = ({ refundProducts }) => {
     };
 
     const updateRequest = async (orderNumber, editingRequest) => {
+        const confirmed = window.confirm('Are you sure you want to update this product?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
             toast.success('User information updated successfully');
@@ -105,6 +114,10 @@ const LeaderStatus = ({ refundProducts }) => {
     };
 
     const updateLeaderStatus = async (orderNumber) => {
+        const confirmed = window.confirm('Are you sure you want to approved this refund request?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
         try {
             const response = await axios.put(
                 `https://grozziie.zjweiting.com:8035/tht/updateLeaderStatus/${orderNumber}`

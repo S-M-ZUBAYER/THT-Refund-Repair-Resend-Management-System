@@ -32,7 +32,7 @@ const RefundProductList = ({ refundProducts }) => {
   }, []);
 
   const deleteUser = async (id) => {
-    const confirmed = window.confirm('Are you sure you want to delete this translation question?');
+    const confirmed = window.confirm('Are you sure you want to delete this Product information?');
     if (!confirmed) {
       return;
     }
@@ -52,6 +52,10 @@ const RefundProductList = ({ refundProducts }) => {
   };
 
   const updateUser = async (orderNumber, editingRequest) => {
+    const confirmed = window.confirm('Are you sure you want to update this product information?');
+    if (!confirmed) {
+      return;
+    }
     try {
       const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       toast.success("User information updated successfully");
