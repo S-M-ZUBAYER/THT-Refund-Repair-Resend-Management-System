@@ -494,38 +494,38 @@ const RegisterSystem = () => {
 
       <div className="lg:col-span-2 ml-5 border-2 px-3 pt-3">
         <div className='border text-center bg-amber-200 font-semibold rounded-lg'>
-        <p className='pt-2'>
-  {selectedLanguage === "zh-CN" && "如果您没有任何帐户"}
-  {selectedLanguage === "en-US" && "If You Don't Have Any Account"}
-  {selectedLanguage === "fil-PH" && "Kung Wala Kang Anumang Account"}
-  {selectedLanguage === "ms-MY" && "Jika Anda Tidak Mempunyai Akaun"}
-  {selectedLanguage === "th-TH" && "หากคุณไม่มีบัญชี"}
-  {selectedLanguage === "vi-VN" && "Nếu Bạn Không Có Tài Khoản"}
-  {selectedLanguage === "id-ID" && "Jika Anda Tidak Memiliki Akun"}
-</p>
+          <p className='pt-2'>
+            {selectedLanguage === "zh-CN" && "如果您没有任何帐户"}
+            {selectedLanguage === "en-US" && "If You Don't Have Any Account"}
+            {selectedLanguage === "fil-PH" && "Kung Wala Kang Anumang Account"}
+            {selectedLanguage === "ms-MY" && "Jika Anda Tidak Mempunyai Akaun"}
+            {selectedLanguage === "th-TH" && "หากคุณไม่มีบัญชี"}
+            {selectedLanguage === "vi-VN" && "Nếu Bạn Không Có Tài Khoản"}
+            {selectedLanguage === "id-ID" && "Jika Anda Tidak Memiliki Akun"}
+          </p>
 
-<p className='py-2'>
-  {selectedLanguage === "zh-CN" && "请注册"}
-  {selectedLanguage === "en-US" && "Please Register"}
-  {selectedLanguage === "fil-PH" && "Mangyaring Magparehistro"}
-  {selectedLanguage === "ms-MY" && "Sila Daftar"}
-  {selectedLanguage === "th-TH" && "กรุณาลงทะเบียน"}
-  {selectedLanguage === "vi-VN" && "Vui lòng Đăng ký"}
-  {selectedLanguage === "id-ID" && "Silakan Mendaftar"}
-</p>
+          <p className='py-2'>
+            {selectedLanguage === "zh-CN" && "请注册"}
+            {selectedLanguage === "en-US" && "Please Register"}
+            {selectedLanguage === "fil-PH" && "Mangyaring Magparehistro"}
+            {selectedLanguage === "ms-MY" && "Sila Daftar"}
+            {selectedLanguage === "th-TH" && "กรุณาลงทะเบียน"}
+            {selectedLanguage === "vi-VN" && "Vui lòng Đăng ký"}
+            {selectedLanguage === "id-ID" && "Silakan Mendaftar"}
+          </p>
 
         </div>
         <form className='w-full'>
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2 text-base'>
-  {selectedLanguage === "zh-CN" && "电子邮件"}
-  {selectedLanguage === "en-US" && "Email"}
-  {selectedLanguage === "fil-PH" && "Email"}
-  {selectedLanguage === "ms-MY" && "E-mel"}
-  {selectedLanguage === "th-TH" && "อีเมล"}
-  {selectedLanguage === "vi-VN" && "Email"}
-  {selectedLanguage === "id-ID" && "Email"}
-</label>
+            <label className='mr-2 text-base'>
+              {selectedLanguage === "zh-CN" && "电子邮件"}
+              {selectedLanguage === "en-US" && "Email"}
+              {selectedLanguage === "fil-PH" && "Email"}
+              {selectedLanguage === "ms-MY" && "E-mel"}
+              {selectedLanguage === "th-TH" && "อีเมล"}
+              {selectedLanguage === "vi-VN" && "Email"}
+              {selectedLanguage === "id-ID" && "Email"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='email'
@@ -534,15 +534,15 @@ const RegisterSystem = () => {
             />
           </div>
           <div className='flex justify-between items-center my-2 relative'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "密码"}
-  {selectedLanguage === "en-US" && "Password"}
-  {selectedLanguage === "fil-PH" && "Password"}
-  {selectedLanguage === "ms-MY" && "Kata Laluan"}
-  {selectedLanguage === "th-TH" && "รหัสผ่าน"}
-  {selectedLanguage === "vi-VN" && "Mật khẩu"}
-  {selectedLanguage === "id-ID" && "Password"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "密码"}
+              {selectedLanguage === "en-US" && "Password"}
+              {selectedLanguage === "fil-PH" && "Password"}
+              {selectedLanguage === "ms-MY" && "Kata Laluan"}
+              {selectedLanguage === "th-TH" && "รหัสผ่าน"}
+              {selectedLanguage === "vi-VN" && "Mật khẩu"}
+              {selectedLanguage === "id-ID" && "Password"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='password'
@@ -557,15 +557,15 @@ const RegisterSystem = () => {
                                 </button> */}
           </div>
           <div className='flex justify-between items-center my-2 relative'>
-          <label className='text-sm'>
-  {selectedLanguage === "zh-CN" && "确认密码"}
-  {selectedLanguage === "en-US" && "Confirm Password"}
-  {selectedLanguage === "fil-PH" && "Kumpirmahin ang Password"}
-  {selectedLanguage === "ms-MY" && "Sahkan Kata Laluan"}
-  {selectedLanguage === "th-TH" && "ยืนยันรหัสผ่าน"}
-  {selectedLanguage === "vi-VN" && "Xác nhận mật khẩu"}
-  {selectedLanguage === "id-ID" && "Konfirmasi Password"}
-</label>
+            <label className='text-sm'>
+              {selectedLanguage === "zh-CN" && "确认密码"}
+              {selectedLanguage === "en-US" && "Confirm Password"}
+              {selectedLanguage === "fil-PH" && "Kumpirmahin ang Password"}
+              {selectedLanguage === "ms-MY" && "Sahkan Kata Laluan"}
+              {selectedLanguage === "th-TH" && "ยืนยันรหัสผ่าน"}
+              {selectedLanguage === "vi-VN" && "Xác nhận mật khẩu"}
+              {selectedLanguage === "id-ID" && "Konfirmasi Password"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='password'
@@ -580,15 +580,15 @@ const RegisterSystem = () => {
                                 </button> */}
           </div>
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "名称"}
-  {selectedLanguage === "en-US" && "Name"}
-  {selectedLanguage === "fil-PH" && "Pangalan"}
-  {selectedLanguage === "ms-MY" && "Nama"}
-  {selectedLanguage === "th-TH" && "ชื่อ"}
-  {selectedLanguage === "vi-VN" && "Tên"}
-  {selectedLanguage === "id-ID" && "Nama"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "名称"}
+              {selectedLanguage === "en-US" && "Name"}
+              {selectedLanguage === "fil-PH" && "Pangalan"}
+              {selectedLanguage === "ms-MY" && "Nama"}
+              {selectedLanguage === "th-TH" && "ชื่อ"}
+              {selectedLanguage === "vi-VN" && "Tên"}
+              {selectedLanguage === "id-ID" && "Nama"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='text'
@@ -597,15 +597,15 @@ const RegisterSystem = () => {
             />
           </div>
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "电话号码"}
-  {selectedLanguage === "en-US" && "Phone Number"}
-  {selectedLanguage === "fil-PH" && "Numero ng Telepono"}
-  {selectedLanguage === "ms-MY" && "Nombor Telefon"}
-  {selectedLanguage === "th-TH" && "หมายเลขโทรศัพท์"}
-  {selectedLanguage === "vi-VN" && "Số điện thoại"}
-  {selectedLanguage === "id-ID" && "Nomor Telepon"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "电话号码"}
+              {selectedLanguage === "en-US" && "Phone Number"}
+              {selectedLanguage === "fil-PH" && "Numero ng Telepono"}
+              {selectedLanguage === "ms-MY" && "Nombor Telefon"}
+              {selectedLanguage === "th-TH" && "หมายเลขโทรศัพท์"}
+              {selectedLanguage === "vi-VN" && "Số điện thoại"}
+              {selectedLanguage === "id-ID" && "Nomor Telepon"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='tel'
@@ -614,15 +614,15 @@ const RegisterSystem = () => {
             />
           </div>
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "角色"}
-  {selectedLanguage === "en-US" && "Role"}
-  {selectedLanguage === "fil-PH" && "Papel"}
-  {selectedLanguage === "ms-MY" && "Peranan"}
-  {selectedLanguage === "th-TH" && "บทบาท"}
-  {selectedLanguage === "vi-VN" && "Vai trò"}
-  {selectedLanguage === "id-ID" && "Peran"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "角色"}
+              {selectedLanguage === "en-US" && "Role"}
+              {selectedLanguage === "fil-PH" && "Papel"}
+              {selectedLanguage === "ms-MY" && "Peranan"}
+              {selectedLanguage === "th-TH" && "บทบาท"}
+              {selectedLanguage === "vi-VN" && "Vai trò"}
+              {selectedLanguage === "id-ID" && "Peran"}
+            </label>
             <select
               className='border rounded-md p-1 w-9/12'
               value={role}
@@ -639,15 +639,15 @@ const RegisterSystem = () => {
           </div>
 
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "语言"}
-  {selectedLanguage === "en-US" && "Language"}
-  {selectedLanguage === "fil-PH" && "Wika"}
-  {selectedLanguage === "ms-MY" && "Bahasa"}
-  {selectedLanguage === "th-TH" && "ภาษา"}
-  {selectedLanguage === "vi-VN" && "Ngôn ngữ"}
-  {selectedLanguage === "id-ID" && "Bahasa"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "语言"}
+              {selectedLanguage === "en-US" && "Language"}
+              {selectedLanguage === "fil-PH" && "Wika"}
+              {selectedLanguage === "ms-MY" && "Bahasa"}
+              {selectedLanguage === "th-TH" && "ภาษา"}
+              {selectedLanguage === "vi-VN" && "Ngôn ngữ"}
+              {selectedLanguage === "id-ID" && "Bahasa"}
+            </label>
             <select
               className='border rounded-md p-1 w-9/12'
               value={language}
@@ -664,15 +664,15 @@ const RegisterSystem = () => {
           </div>
 
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "国家"}
-  {selectedLanguage === "en-US" && "Country"}
-  {selectedLanguage === "fil-PH" && "Bansa"}
-  {selectedLanguage === "ms-MY" && "Negara"}
-  {selectedLanguage === "th-TH" && "ประเทศ"}
-  {selectedLanguage === "vi-VN" && "Quốc gia"}
-  {selectedLanguage === "id-ID" && "Negara"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "国家"}
+              {selectedLanguage === "en-US" && "Country"}
+              {selectedLanguage === "fil-PH" && "Bansa"}
+              {selectedLanguage === "ms-MY" && "Negara"}
+              {selectedLanguage === "th-TH" && "ประเทศ"}
+              {selectedLanguage === "vi-VN" && "Quốc gia"}
+              {selectedLanguage === "id-ID" && "Negara"}
+            </label>
             <select
               className='border rounded-md p-1 w-9/12'
               value={country}
@@ -688,15 +688,15 @@ const RegisterSystem = () => {
             </select>
           </div>
           <div className='flex justify-between items-center my-2'>
-          <label className='mr-2'>
-  {selectedLanguage === "zh-CN" && "图像"}
-  {selectedLanguage === "en-US" && "Image"}
-  {selectedLanguage === "fil-PH" && "Larawan"}
-  {selectedLanguage === "ms-MY" && "Imej"}
-  {selectedLanguage === "th-TH" && "รูปภาพ"}
-  {selectedLanguage === "vi-VN" && "Hình ảnh"}
-  {selectedLanguage === "id-ID" && "Gambar"}
-</label>
+            <label className='mr-2'>
+              {selectedLanguage === "zh-CN" && "图像"}
+              {selectedLanguage === "en-US" && "Image"}
+              {selectedLanguage === "fil-PH" && "Larawan"}
+              {selectedLanguage === "ms-MY" && "Imej"}
+              {selectedLanguage === "th-TH" && "รูปภาพ"}
+              {selectedLanguage === "vi-VN" && "Hình ảnh"}
+              {selectedLanguage === "id-ID" && "Gambar"}
+            </label>
             <input
               className='border rounded-md p-1 w-9/12'
               type='file'
@@ -705,14 +705,14 @@ const RegisterSystem = () => {
             />
           </div>
           <button className='w-full my-4' onClick={handleRegister}>
-  {selectedLanguage === "zh-CN" && "注册"}
-  {selectedLanguage === "en-US" && "Register"}
-  {selectedLanguage === "fil-PH" && "Magparehistro"}
-  {selectedLanguage === "ms-MY" && "Daftar"}
-  {selectedLanguage === "th-TH" && "ลงทะเบียน"}
-  {selectedLanguage === "vi-VN" && "Đăng ký"}
-  {selectedLanguage === "id-ID" && "Mendaftar"}
-</button>
+            {selectedLanguage === "zh-CN" && "注册"}
+            {selectedLanguage === "en-US" && "Register"}
+            {selectedLanguage === "fil-PH" && "Magparehistro"}
+            {selectedLanguage === "ms-MY" && "Daftar"}
+            {selectedLanguage === "th-TH" && "ลงทะเบียน"}
+            {selectedLanguage === "vi-VN" && "Đăng ký"}
+            {selectedLanguage === "id-ID" && "Mendaftar"}
+          </button>
 
         </form>
       </div>

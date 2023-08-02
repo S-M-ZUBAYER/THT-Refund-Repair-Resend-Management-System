@@ -8,8 +8,8 @@ import UserContext from './context/UserContext';
 ReactDOM.render(
   <React.StrictMode>
     <UserContext>
-    <App />
-    <Toaster></Toaster>
+      <App />
+      <Toaster></Toaster>
     </UserContext>
   </React.StrictMode>,
   document.getElementById('root')

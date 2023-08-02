@@ -23,7 +23,7 @@ const ResendForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [remarks, setRemarks] = useState('');
-  const [applicantName, setApplicantName] = useState(user?.customerUserName );
+  const [applicantName, setApplicantName] = useState(user?.customerUserName);
   const [applicationDate, setApplicationDate] = useState(new Date().toLocaleDateString());
   const [countryCode, setCountryCode] = useState("");
   const [timeNumber, setTimeNumber] = useState("");
@@ -78,16 +78,16 @@ const ResendForm = () => {
       phoneNumber,
       address,
       remarks,
-      warehouseImg:"",
-      financeImg:"",
-      applicantName:user?.name,
+      warehouseImg: "",
+      financeImg: "",
+      applicantName: user?.name,
       applicationDate: applicationDate,
       customerServiceStatus: "true",
       customerServiceLeaderStatus: "false",
       warehouseReceivedStatus: "false",
       warehouseResendStatus: "false",
       special
-      
+
     };
 
     console.log(formData);
@@ -357,7 +357,7 @@ const ResendForm = () => {
           />
         </div>
 
-      
+
 
         {/* <div className="flex items-center justify-end space-x-2 my-3 hover:cursor-pointer">
           <input

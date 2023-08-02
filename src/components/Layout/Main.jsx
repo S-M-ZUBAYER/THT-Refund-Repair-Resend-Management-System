@@ -14,33 +14,33 @@ import PhilippinesNavbar from '../SharePage/Navbar/PhilippinesNavbar';
 
 const Main = () => {
 
-    const{selectedLanguage}=useContext(AuthContext);
+    const { selectedLanguage } = useContext(AuthContext);
     console.log(selectedLanguage);
     console.log(selectedLanguage)
 
     return (
         <div>
             {
-                selectedLanguage==="zh-CN" && <ChineseNavbar></ChineseNavbar>
-            
+                selectedLanguage === "zh-CN" && <ChineseNavbar></ChineseNavbar>
+
             }
             {
-                selectedLanguage==="en-US" && <Navbar></Navbar>
+                selectedLanguage === "en-US" && <Navbar></Navbar>
             }
             {
-                selectedLanguage==="fil-PH" && <PhilippinesNavbar></PhilippinesNavbar>
+                selectedLanguage === "fil-PH" && <PhilippinesNavbar></PhilippinesNavbar>
             }
             {
-                selectedLanguage==="ms-MY" && <MalaysiaNavbar></MalaysiaNavbar>
+                selectedLanguage === "ms-MY" && <MalaysiaNavbar></MalaysiaNavbar>
             }
             {
-                selectedLanguage==="th-TH" && <ThaiNavbar></ThaiNavbar>
+                selectedLanguage === "th-TH" && <ThaiNavbar></ThaiNavbar>
             }
             {
-                selectedLanguage==="vi-VN" && <VietnamNavbar></VietnamNavbar>
+                selectedLanguage === "vi-VN" && <VietnamNavbar></VietnamNavbar>
             }
             {
-                selectedLanguage==="id-ID" && <IndonesiaNavbar></IndonesiaNavbar>
+                selectedLanguage === "id-ID" && <IndonesiaNavbar></IndonesiaNavbar>
             }
             <Hero></Hero>
             <Outlet></Outlet>

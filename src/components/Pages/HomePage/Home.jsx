@@ -4,14 +4,14 @@ import RegisterSystem from './RegisterSystem';
 import ExportedCountries from './ExportedCountries';
 
 const Home = () => {
-    return (
-        <div>
+  return (
+    <div>
       <ShowProducts />
       <RegisterSystem />
       <ExportedCountries />
-     
-        </div>
-    );
+
+    </div>
+  );
 };
 
 export default Home;

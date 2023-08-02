@@ -17,7 +17,7 @@ const RefundProductList = ({ refundProducts }) => {
     setEditingRequest({ ...editingRequest, special: !special })
   };
 
-  const { allRefundRequest, setAllRefundRequest } = useContext(AuthContext);
+  const { allRefundRequest, setAllRefundRequest, selectedLanguage } = useContext(AuthContext);
 
   useEffect(() => {
     fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest')
@@ -32,6 +32,10 @@ const RefundProductList = ({ refundProducts }) => {
   }, []);
 
   const deleteUser = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this translation question?');
+    if (!confirmed) {
+      return;
+    }
     try {
       await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
@@ -76,14 +80,72 @@ const RefundProductList = ({ refundProducts }) => {
       <table className="w-full mb-10">
         <thead className="bg-gradient-to-r from-green-300 to-yellow-300">
           <tr className="py-2">
-            <th className="text-start pl-2 py-2">No</th>
-            <th className="text-start pl-2 py-2">Order Number</th>
-            <th className="text-start pl-2 py-2">Customer Name</th>
-            <th className="text-start py-2">Tracking Number</th>
-            <th className="text-start hidden md:block py-2">Order Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "zh-CN" ? "编号" : ""}
+              {selectedLanguage === "en-US" ? "No" : ""}
+              {selectedLanguage === "fil-PH" ? "Walang" : ""}
+              {selectedLanguage === "ms-MY" ? "Tidak" : ""}
+              {selectedLanguage === "th-TH" ? "ไม่" : ""}
+              {selectedLanguage === "vi-VN" ? "Không" : ""}
+              {selectedLanguage === "id-ID" ? "Tidak" : ""}
+            </th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "zh-CN" ? "订单号码" : ""}
+              {selectedLanguage === "en-US" ? "Order Number" : ""}
+              {selectedLanguage === "fil-PH" ? "Numero ng Order" : ""}
+              {selectedLanguage === "ms-MY" ? "Nombor Pesanan" : ""}
+              {selectedLanguage === "th-TH" ? "หมายเลขคำสั่งซื้อ" : ""}
+              {selectedLanguage === "vi-VN" ? "Số Đơn Hàng" : ""}
+              {selectedLanguage === "id-ID" ? "Nomor Pesanan" : ""}
+            </th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "zh-CN" ? "顾客名称" : ""}
+              {selectedLanguage === "en-US" ? "Customer Name" : ""}
+              {selectedLanguage === "fil-PH" ? "Pangalan ng Customer" : ""}
+              {selectedLanguage === "ms-MY" ? "Nama Pelanggan" : ""}
+              {selectedLanguage === "th-TH" ? "ชื่อลูกค้า" : ""}
+              {selectedLanguage === "vi-VN" ? "Tên Khách Hàng" : ""}
+              {selectedLanguage === "id-ID" ? "Nama Pelanggan" : ""}
+            </th>
+            <th className="text-start py-2">
+              {selectedLanguage === "zh-CN" ? "追踪号码" : ""}
+              {selectedLanguage === "en-US" ? "Tracking Number" : ""}
+              {selectedLanguage === "fil-PH" ? "Numero ng Pagganap" : ""}
+              {selectedLanguage === "ms-MY" ? "Nombor Pengesanan" : ""}
+              {selectedLanguage === "th-TH" ? "หมายเลขการติดตาม" : ""}
+              {selectedLanguage === "vi-VN" ? "Số Theo dõi" : ""}
+              {selectedLanguage === "id-ID" ? "Nomor Pelacakan" : ""}
+            </th>
+            <th className="text-start hidden md:block py-2">
+              {selectedLanguage === "zh-CN" ? "订单日期" : ""}
+              {selectedLanguage === "en-US" ? "Order Date" : ""}
+              {selectedLanguage === "fil-PH" ? "Petsa ng Order" : ""}
+              {selectedLanguage === "ms-MY" ? "Tarikh Pesanan" : ""}
+              {selectedLanguage === "th-TH" ? "วันที่สั่งซื้อ" : ""}
+              {selectedLanguage === "vi-VN" ? "Ngày Đặt Hàng" : ""}
+              {selectedLanguage === "id-ID" ? "Tanggal Pesanan" : ""}
+            </th>
+            <th className="text-start py-2">
+              {selectedLanguage === "zh-CN" ? "编辑" : ""}
+              {selectedLanguage === "en-US" ? "Edit" : ""}
+              {selectedLanguage === "fil-PH" ? "I-edit" : ""}
+              {selectedLanguage === "ms-MY" ? "Edit" : ""}
+              {selectedLanguage === "th-TH" ? "แก้ไข" : ""}
+              {selectedLanguage === "vi-VN" ? "Chỉnh sửa" : ""}
+              {selectedLanguage === "id-ID" ? "Edit" : ""}
+            </th>
+            <th className="text-start py-2">
+              {selectedLanguage === "zh-CN" ? "删除" : ""}
+              {selectedLanguage === "en-US" ? "Delete" : ""}
+              {selectedLanguage === "fil-PH" ? "Tanggalin" : ""}
+              {selectedLanguage === "ms-MY" ? "Padam" : ""}
+              {selectedLanguage === "th-TH" ? "ลบ" : ""}
+              {selectedLanguage === "vi-VN" ? "Xóa" : ""}
+              {selectedLanguage === "id-ID" ? "Hapus" : ""}
+            </th>
+
           </tr>
+
         </thead>
         <tbody>
           {loading ?
@@ -258,7 +320,7 @@ const RefundProductList = ({ refundProducts }) => {
                   onChange={(e) => setEditingRequest({ ...editingRequest, otherReason: e.target.value })}
                   className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                 /> </div>
-              
+
 
               {/* Add other input fields for the remaining form data */}
               {/* <input ... /> */}

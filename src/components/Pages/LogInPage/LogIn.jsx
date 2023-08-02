@@ -16,7 +16,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   // const {setLanguage}=useContext(AllProductContext);
-  const { user, setUser,selectedLanguage } = useContext(AuthContext);
+  const { user, setUser, selectedLanguage } = useContext(AuthContext);
 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -135,7 +135,7 @@ const Login = () => {
       body: JSON.stringify({ email }),
     })
       .then((response) => response.json())
-      .then((data) => { 
+      .then((data) => {
         // Handle the response data
         console.log(data);
       })
@@ -171,15 +171,15 @@ const Login = () => {
   return (
     <div className="bg-white flex justify-center items-center">
       <div className="shadow-lg lg:w-1/3 my-12 py-10 px-12" >
-      <h2 className="text-2xl mb-8 font-semibold my-4 flex justify-center">
-  {selectedLanguage === "zh-CN" && "登录"}
-  {selectedLanguage === "en-US" && "Sign In"}
-  {selectedLanguage === "fil-PH" && "Mag-sign In"}
-  {selectedLanguage === "ms-MY" && "Log Masuk"}
-  {selectedLanguage === "th-TH" && "เข้าสู่ระบบ"}
-  {selectedLanguage === "vi-VN" && "Đăng nhập"}
-  {selectedLanguage === "id-ID" && "Masuk"}
-</h2>
+        <h2 className="text-2xl mb-8 font-semibold my-4 flex justify-center">
+          {selectedLanguage === "zh-CN" && "登录"}
+          {selectedLanguage === "en-US" && "Sign In"}
+          {selectedLanguage === "fil-PH" && "Mag-sign In"}
+          {selectedLanguage === "ms-MY" && "Log Masuk"}
+          {selectedLanguage === "th-TH" && "เข้าสู่ระบบ"}
+          {selectedLanguage === "vi-VN" && "Đăng nhập"}
+          {selectedLanguage === "id-ID" && "Masuk"}
+        </h2>
 
 
         <form onSubmit={handleSubmit}>
@@ -204,49 +204,49 @@ const Login = () => {
                         <button>start to digit</button> */}
           </div>
           <div className="text-end text-sm mb-8">
-          <button type="button" className="text-[#65ABFF] font-semibold" onClick={openModal}>
-  {selectedLanguage === "zh-CN" && "忘记密码？"}
-  {selectedLanguage === "en-US" && "Forgot password?"}
-  {selectedLanguage === "fil-PH" && "Nakalimutan ang password?"}
-  {selectedLanguage === "ms-MY" && "Lupa kata laluan?"}
-  {selectedLanguage === "th-TH" && "ลืมรหัสผ่าน?"}
-  {selectedLanguage === "vi-VN" && "Quên mật khẩu?"}
-  {selectedLanguage === "id-ID" && "Lupa kata sandi?"}
-</button>
+            <button type="button" className="text-[#65ABFF] font-semibold" onClick={openModal}>
+              {selectedLanguage === "zh-CN" && "忘记密码？"}
+              {selectedLanguage === "en-US" && "Forgot password?"}
+              {selectedLanguage === "fil-PH" && "Nakalimutan ang password?"}
+              {selectedLanguage === "ms-MY" && "Lupa kata laluan?"}
+              {selectedLanguage === "th-TH" && "ลืมรหัสผ่าน?"}
+              {selectedLanguage === "vi-VN" && "Quên mật khẩu?"}
+              {selectedLanguage === "id-ID" && "Lupa kata sandi?"}
+            </button>
 
 
           </div>
           <div className="my-2 flex justify-center ">
-          <button className="bg-[#004368] text-white rounded-md px-32 py-1 text-xl font-semibold" type="submit">
-  {selectedLanguage === "zh-CN" && "登录"}
-  {selectedLanguage === "en-US" && "Sign In"}
-  {selectedLanguage === "fil-PH" && "Mag-sign In"}
-  {selectedLanguage === "ms-MY" && "Log Masuk"}
-  {selectedLanguage === "th-TH" && "เข้าสู่ระบบ"}
-  {selectedLanguage === "vi-VN" && "Đăng nhập"}
-  {selectedLanguage === "id-ID" && "Masuk"}
-</button>
+            <button className="bg-[#004368] text-white rounded-md px-32 py-1 text-xl font-semibold" type="submit">
+              {selectedLanguage === "zh-CN" && "登录"}
+              {selectedLanguage === "en-US" && "Sign In"}
+              {selectedLanguage === "fil-PH" && "Mag-sign In"}
+              {selectedLanguage === "ms-MY" && "Log Masuk"}
+              {selectedLanguage === "th-TH" && "เข้าสู่ระบบ"}
+              {selectedLanguage === "vi-VN" && "Đăng nhập"}
+              {selectedLanguage === "id-ID" && "Masuk"}
+            </button>
 
           </div>
         </form>
         <div className="text-sm my-3 flex justify-center">
-  {selectedLanguage === "zh-CN" && "没有账号？"}
-  {selectedLanguage === "en-US" && "Don't have an account? "}
-  {selectedLanguage === "fil-PH" && "Wala pang account? "}
-  {selectedLanguage === "ms-MY" && "Tiada akaun? "}
-  {selectedLanguage === "th-TH" && "ยังไม่มีบัญชีใช่ไหม? "}
-  {selectedLanguage === "vi-VN" && "Bạn chưa có tài khoản? "}
-  {selectedLanguage === "id-ID" && "Belum punya akun? "}
-  <Link onClick={handleClick} className="font-semibold text-[#65ABFF]" to="/">
-    {selectedLanguage === "zh-CN" && "创建一个账号"}
-    {selectedLanguage === "en-US" && "Create an account"}
-    {selectedLanguage === "fil-PH" && "Gumawa ng account"}
-    {selectedLanguage === "ms-MY" && "Buat akaun"}
-    {selectedLanguage === "th-TH" && "สร้างบัญชี"}
-    {selectedLanguage === "vi-VN" && "Tạo tài khoản"}
-    {selectedLanguage === "id-ID" && "Buat akun"}
-  </Link>
-</div>
+          {selectedLanguage === "zh-CN" && "没有账号？"}
+          {selectedLanguage === "en-US" && "Don't have an account? "}
+          {selectedLanguage === "fil-PH" && "Wala pang account? "}
+          {selectedLanguage === "ms-MY" && "Tiada akaun? "}
+          {selectedLanguage === "th-TH" && "ยังไม่มีบัญชีใช่ไหม? "}
+          {selectedLanguage === "vi-VN" && "Bạn chưa có tài khoản? "}
+          {selectedLanguage === "id-ID" && "Belum punya akun? "}
+          <Link onClick={handleClick} className="font-semibold text-[#65ABFF]" to="/">
+            {selectedLanguage === "zh-CN" && "创建一个账号"}
+            {selectedLanguage === "en-US" && "Create an account"}
+            {selectedLanguage === "fil-PH" && "Gumawa ng account"}
+            {selectedLanguage === "ms-MY" && "Buat akaun"}
+            {selectedLanguage === "th-TH" && "สร้างบัญชี"}
+            {selectedLanguage === "vi-VN" && "Tạo tài khoản"}
+            {selectedLanguage === "id-ID" && "Buat akun"}
+          </Link>
+        </div>
 
 
         {modalOpen && (

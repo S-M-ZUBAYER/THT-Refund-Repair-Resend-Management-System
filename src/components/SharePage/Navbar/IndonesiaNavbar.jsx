@@ -22,7 +22,7 @@ const IndonesiaNavbar = () => {
 
 
 
-  const { user, setUser,selectedLanguage, setSelectedLanguage } = useContext(AuthContext);
+  const { user, setUser, selectedLanguage, setSelectedLanguage } = useContext(AuthContext);
   console.log(user?.admin)
 
   const handleNav = () => {
@@ -50,7 +50,7 @@ const IndonesiaNavbar = () => {
     setSelectedLanguage(e.target.value);
   };
 
-console.log(selectedLanguage)
+  console.log(selectedLanguage)
 
   return (
     <div className='flex w-full justify-between items-center h-20 px-4 absolute z-10 text-white'>
@@ -72,16 +72,16 @@ console.log(selectedLanguage)
       </ul>
 
       <div className='flex justify-between items-center my-2'>
-      <select className="text-black px-2" value={selectedLanguage} onChange={handleLanguageChange}>
-        <option value="zh-CN">中文</option>
-        <option value="en-US">English</option>
-        <option value="th-TH">ไทย</option>
-        <option value="fil-PH">Philippines</option>
-        <option value="vi-VN">Tiếng Việt</option>
-        <option value="ms-MY">Malaysia</option>
-        <option value="id-ID">Indonesia</option>
-      </select>
-    </div>
+        <select className="text-black px-2" value={selectedLanguage} onChange={handleLanguageChange}>
+          <option value="zh-CN">中文</option>
+          <option value="en-US">English</option>
+          <option value="th-TH">ไทย</option>
+          <option value="fil-PH">Philippines</option>
+          <option value="vi-VN">Tiếng Việt</option>
+          <option value="ms-MY">Malaysia</option>
+          <option value="id-ID">Indonesia</option>
+        </select>
+      </div>
 
 
 

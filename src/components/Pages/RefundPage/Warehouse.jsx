@@ -7,6 +7,7 @@ import { RiDeleteBin7Line } from 'react-icons/ri';
 import DisplaySpinner from '../../Loading/DisplaySpinner';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../context/UserContext';
 
 const Warehouse = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +18,8 @@ const Warehouse = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchAllQuery, setSearchAllQuery] = useState('');
+
+  const { selectedLanguage } = useContext(AuthContext);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -73,8 +76,8 @@ const Warehouse = () => {
     try {
       await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
-      setAllWarehouseRequest((prevRequests) => prevRequests.filter((request) => request?.id !==id));
-      setAllWarehouseSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !==id));
+      setAllWarehouseRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
+      setAllWarehouseSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
     } catch (error) {
       console.error('Error deleting user:', error);
       toast.error('Failed to delete user');
@@ -160,7 +163,13 @@ const Warehouse = () => {
             className="bg-[#004368] hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-md"
             onClick={() => setSearchAllQuery('')}
           >
-            Clear
+            {selectedLanguage === "en-US" && "Clear"}
+            {selectedLanguage === "zh-CN" && "清除"}
+            {selectedLanguage === "fil-PH" && "Linisin"}
+            {selectedLanguage === "ms-MY" && "Bersihkan"}
+            {selectedLanguage === "th-TH" && "ล้างข้อมูล"}
+            {selectedLanguage === "vi-VN" && "Xóa trắng"}
+            {selectedLanguage === "id-ID" && "Hapus"}
           </btn>
         </div>
       </div>
@@ -168,13 +177,70 @@ const Warehouse = () => {
       <table className="w-full mb-10">
         <thead className="bg-gradient-to-r from-green-300 to-yellow-300">
           <tr className="py-2">
-            <th className="text-start pl-2 py-2">No</th>
-            <th className="text-start pl-2 py-2">Order Number</th>
-            <th className="text-start pl-2 py-2">Customer Name</th>
-            <th className="text-start py-2">Tracking Number</th>
-            <th className="text-start hidden md:block py-2">Details</th>
-            <th className="align-middle">Edit</th>
-            <th className="align-middle">Delete</th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "en-US" && "No"}
+              {selectedLanguage === "fil-PH" && "Numero"}
+              {selectedLanguage === "ms-MY" && "Nombor"}
+              {selectedLanguage === "th-TH" && "หมายเลข"}
+              {selectedLanguage === "vi-VN" && "Số"}
+              {selectedLanguage === "id-ID" && "Nomor"}
+              {selectedLanguage === "zh-CN" && "序号"}
+            </th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "en-US" && "Order Number"}
+              {selectedLanguage === "fil-PH" && "Numero ng Order"}
+              {selectedLanguage === "ms-MY" && "Nombor Pesanan"}
+              {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อ"}
+              {selectedLanguage === "vi-VN" && "Số Đơn Hàng"}
+              {selectedLanguage === "id-ID" && "Nomor Pesanan"}
+              {selectedLanguage === "zh-CN" && "订单编号"}
+            </th>
+            <th className="text-start pl-2 py-2">
+              {selectedLanguage === "en-US" && "Customer Name"}
+              {selectedLanguage === "fil-PH" && "Pangalan ng Customer"}
+              {selectedLanguage === "ms-MY" && "Nama Pelanggan"}
+              {selectedLanguage === "th-TH" && "ชื่อลูกค้า"}
+              {selectedLanguage === "vi-VN" && "Tên Khách Hàng"}
+              {selectedLanguage === "id-ID" && "Nama Pelanggan"}
+              {selectedLanguage === "zh-CN" && "客户名称"}
+            </th>
+            <th className="text-start py-2">
+              {selectedLanguage === "en-US" && "Tracking Number"}
+              {selectedLanguage === "fil-PH" && "Numero ng Pagmamanman"}
+              {selectedLanguage === "ms-MY" && "Nombor Pengesanan"}
+              {selectedLanguage === "th-TH" && "หมายเลขการติดตาม"}
+              {selectedLanguage === "vi-VN" && "Số Theo Dõi"}
+              {selectedLanguage === "id-ID" && "Nomor Pelacakan"}
+              {selectedLanguage === "zh-CN" && "跟踪号码"}
+            </th>
+            <th className="text-start py-2">
+              {selectedLanguage === "en-US" && "Details"}
+              {selectedLanguage === "fil-PH" && "Detalye"}
+              {selectedLanguage === "ms-MY" && "Maklumat Lanjut"}
+              {selectedLanguage === "th-TH" && "รายละเอียด"}
+              {selectedLanguage === "vi-VN" && "Chi tiết"}
+              {selectedLanguage === "id-ID" && "Rincian"}
+              {selectedLanguage === "zh-CN" && "详情"}
+            </th>
+            <th className="align-middle">
+              {selectedLanguage === "en-US" && "Edit"}
+              {selectedLanguage === "fil-PH" && "I-edit"}
+              {selectedLanguage === "ms-MY" && "Edit"}
+              {selectedLanguage === "th-TH" && "แก้ไข"}
+              {selectedLanguage === "vi-VN" && "Chỉnh Sửa"}
+              {selectedLanguage === "id-ID" && "Edit"}
+              {selectedLanguage === "zh-CN" && "编辑"}
+            </th>
+            <th className="align-middle">
+              {selectedLanguage === "en-US" && "Delete"}
+              {selectedLanguage === "fil-PH" && "Alisin"}
+              {selectedLanguage === "ms-MY" && "Padam"}
+              {selectedLanguage === "th-TH" && "ลบ"}
+              {selectedLanguage === "vi-VN" && "Xóa"}
+              {selectedLanguage === "id-ID" && "Hapus"}
+              {selectedLanguage === "zh-CN" && "删除"}
+            </th>
+
           </tr>
         </thead>
 
@@ -191,12 +257,19 @@ const Warehouse = () => {
                 <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                 <td className="text-start  py-2">{request?.customerUserName}</td>
                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
-                <Link to={`/refund/details/${request?.orderNumber}`}> 
-                <td className="text-start py-2 cursor-pointer">
-                    <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">Details</btn>
-                </td>
+                <Link to={`/refund/details/${request?.orderNumber}`}>
+                  <td className="text-start py-2 cursor-pointer">
+                    <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
+                      {selectedLanguage === "fil-PH" && "Detalye"}
+                      {selectedLanguage === "ms-MY" && "Butiran"}
+                      {selectedLanguage === "th-TH" && "รายละเอียด"}
+                      {selectedLanguage === "vi-VN" && "Chi tiết"}
+                      {selectedLanguage === "id-ID" && "Rincian"}
+                      {selectedLanguage === "zh-CN" && "详情"}
+                    </btn>
+                  </td>
                 </Link>
-                
+
                 <td>
                   <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
                     <FiEdit></FiEdit>
@@ -217,8 +290,71 @@ const Warehouse = () => {
       <div>
         <div className="mt-32 mb-5">
           <hr className='border-2 border-gray-800 my-5'></hr>
-          <h1><span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">Special Requests</span>  Need To Approved By Warehouse Man</h1>
-          <p className='py-4'>These are all the list of special refund request at these moment. Here you can check and update the special refund request information.And then please approved their refund request as soon as possible.  </p>
+          <h1><span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text"> {selectedLanguage === "en-US" && (
+            <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+              Special Requests
+            </span>
+          )}
+            {selectedLanguage === "fil-PH" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                Mga Special na Rekwest
+              </span>
+            )}
+            {selectedLanguage === "ms-MY" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                Permintaan Khas
+              </span>
+            )}
+            {selectedLanguage === "th-TH" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                คำขอคืบควบคุมพิเศษ
+              </span>
+            )}
+            {selectedLanguage === "vi-VN" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                Yêu cầu Đặc biệt
+              </span>
+            )}
+            {selectedLanguage === "id-ID" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                Permintaan Khusus
+              </span>
+            )}
+            {selectedLanguage === "zh-CN" && (
+              <span className="bg-gradient-to-r from-blue-800 to-red-800 text-transparent bg-clip-text">
+                特殊要求
+              </span>
+            )}
+
+          </span>  {selectedLanguage === "en-US" && "Need To Approved By Warehouse Man"}
+            {selectedLanguage === "fil-PH" && "Kailangan Ng Aprobahan Ng Warehouse Man"}
+            {selectedLanguage === "ms-MY" && "Perlu Diluluskan Oleh Warehouse Man"}
+            {selectedLanguage === "th-TH" && "ต้องอนุมัติโดย Warehouse Man"}
+            {selectedLanguage === "vi-VN" && "Cần Phê Duyệt Bởi Warehouse Man"}
+            {selectedLanguage === "id-ID" && "Perlu Disetujui Oleh Warehouse Man"}
+            {selectedLanguage === "zh-CN" && "需要经仓库负责人批准"}</h1>
+
+          <p className='py-4'> {selectedLanguage === "en-US" && (
+            <>These are all the list of special refund request at these moment. Here you can check and update the special refund request information. And then please approve their refund request as soon as possible.</>
+          )}
+            {selectedLanguage === "fil-PH" && (
+              <>Ito ay ang lahat ng listahan ng special refund request sa ngayon. Dito maaari mong suriin at i-update ang impormasyon ng special refund request. At pagkatapos ay paki-apruba ang kanilang kahilingan sa refund sa lalong madaling panahon.</>
+            )}
+            {selectedLanguage === "ms-MY" && (
+              <>Ini adalah senarai permintaan bayaran balik khas pada masa ini. Di sini anda boleh menyemak dan mengemaskini maklumat permintaan bayaran balik khas. Kemudian sila luluskan permintaan bayaran balik mereka secepat mungkin.</>
+            )}
+            {selectedLanguage === "th-TH" && (
+              <>นี่คือรายการคำขอคืบควบคุมพิเศษทั้งหมดในขณะนี้ ที่นี่คุณสามารถตรวจสอบและอัปเดตข้อมูลคำขอคืบควบคุมพิเศษ และจากนั้นโปรดอนุมัติคำขอคืบควบคุมพิเศษของพวกเขาโดยเร็วที่สุด</>
+            )}
+            {selectedLanguage === "vi-VN" && (
+              <>Dưới đây là danh sách tất cả các yêu cầu hoàn tiền đặc biệt trong thời điểm hiện tại. Ở đây bạn có thể kiểm tra và cập nhật thông tin yêu cầu hoàn tiền đặc biệt. Và sau đó, hãy phê duyệt yêu cầu hoàn tiền của họ trong thời gian sớm nhất.</>
+            )}
+            {selectedLanguage === "id-ID" && (
+              <>Berikut adalah daftar semua permintaan pengembalian dana khusus saat ini. Di sini Anda dapat memeriksa dan memperbarui informasi permintaan pengembalian dana khusus. Dan kemudian harap menyetujui permintaan pengembalian dana mereka sesegera mungkin.</>
+            )}
+            {selectedLanguage === "zh-CN" && (
+              <>这是目前所有特殊退款请求的列表。您可以在这里查看和更新特殊退款请求的信息。然后，请尽快批准他们的退款请求。</>
+            )}  </p>
         </div>
 
         <div className="flex justify-center">
@@ -235,7 +371,13 @@ const Warehouse = () => {
               className="bg-[#004368] hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-md"
               onClick={() => setSearchQuery('')}
             >
-              Clear
+              {selectedLanguage === "en-US" && "Clear"}
+              {selectedLanguage === "zh-CN" && "清除"}
+              {selectedLanguage === "fil-PH" && "Linisin"}
+              {selectedLanguage === "ms-MY" && "Bersihkan"}
+              {selectedLanguage === "th-TH" && "ล้างข้อมูล"}
+              {selectedLanguage === "vi-VN" && "Xóa trắng"}
+              {selectedLanguage === "id-ID" && "Hapus"}
             </btn>
           </div>
         </div>
@@ -244,13 +386,70 @@ const Warehouse = () => {
         <table className="w-full mb-10">
           <thead className="bg-gradient-to-r from-green-300 to-yellow-300">
             <tr className="py-2">
-              <th className="text-start pl-2 py-2">No</th>
-              <th className="text-start pl-2 py-2">Order Number</th>
-              <th className="text-start pl-2 py-2">Customer Name</th>
-              <th className="text-start py-2">Tracking Number</th>
-              <th className="text-start py-2">Details</th>
-              <th className="align-middle">Edit</th>
-              <th className="align-middle">Delete</th>
+              <th className="text-start pl-2 py-2">
+                {selectedLanguage === "en-US" && "No"}
+                {selectedLanguage === "fil-PH" && "Numero"}
+                {selectedLanguage === "ms-MY" && "Nombor"}
+                {selectedLanguage === "th-TH" && "หมายเลข"}
+                {selectedLanguage === "vi-VN" && "Số"}
+                {selectedLanguage === "id-ID" && "Nomor"}
+                {selectedLanguage === "zh-CN" && "序号"}
+              </th>
+              <th className="text-start pl-2 py-2">
+                {selectedLanguage === "en-US" && "Order Number"}
+                {selectedLanguage === "fil-PH" && "Numero ng Order"}
+                {selectedLanguage === "ms-MY" && "Nombor Pesanan"}
+                {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อ"}
+                {selectedLanguage === "vi-VN" && "Số Đơn Hàng"}
+                {selectedLanguage === "id-ID" && "Nomor Pesanan"}
+                {selectedLanguage === "zh-CN" && "订单编号"}
+              </th>
+              <th className="text-start pl-2 py-2">
+                {selectedLanguage === "en-US" && "Customer Name"}
+                {selectedLanguage === "fil-PH" && "Pangalan ng Customer"}
+                {selectedLanguage === "ms-MY" && "Nama Pelanggan"}
+                {selectedLanguage === "th-TH" && "ชื่อลูกค้า"}
+                {selectedLanguage === "vi-VN" && "Tên Khách Hàng"}
+                {selectedLanguage === "id-ID" && "Nama Pelanggan"}
+                {selectedLanguage === "zh-CN" && "客户名称"}
+              </th>
+              <th className="text-start py-2">
+                {selectedLanguage === "en-US" && "Tracking Number"}
+                {selectedLanguage === "fil-PH" && "Numero ng Pagmamanman"}
+                {selectedLanguage === "ms-MY" && "Nombor Pengesanan"}
+                {selectedLanguage === "th-TH" && "หมายเลขการติดตาม"}
+                {selectedLanguage === "vi-VN" && "Số Theo Dõi"}
+                {selectedLanguage === "id-ID" && "Nomor Pelacakan"}
+                {selectedLanguage === "zh-CN" && "跟踪号码"}
+              </th>
+              <th className="text-start py-2">
+                {selectedLanguage === "en-US" && "Details"}
+                {selectedLanguage === "fil-PH" && "Detalye"}
+                {selectedLanguage === "ms-MY" && "Maklumat Lanjut"}
+                {selectedLanguage === "th-TH" && "รายละเอียด"}
+                {selectedLanguage === "vi-VN" && "Chi tiết"}
+                {selectedLanguage === "id-ID" && "Rincian"}
+                {selectedLanguage === "zh-CN" && "详情"}
+              </th>
+              <th className="align-middle">
+                {selectedLanguage === "en-US" && "Edit"}
+                {selectedLanguage === "fil-PH" && "I-edit"}
+                {selectedLanguage === "ms-MY" && "Edit"}
+                {selectedLanguage === "th-TH" && "แก้ไข"}
+                {selectedLanguage === "vi-VN" && "Chỉnh Sửa"}
+                {selectedLanguage === "id-ID" && "Edit"}
+                {selectedLanguage === "zh-CN" && "编辑"}
+              </th>
+              <th className="align-middle">
+                {selectedLanguage === "en-US" && "Delete"}
+                {selectedLanguage === "fil-PH" && "Alisin"}
+                {selectedLanguage === "ms-MY" && "Padam"}
+                {selectedLanguage === "th-TH" && "ลบ"}
+                {selectedLanguage === "vi-VN" && "Xóa"}
+                {selectedLanguage === "id-ID" && "Hapus"}
+                {selectedLanguage === "zh-CN" && "删除"}
+              </th>
+
             </tr>
           </thead>
           <tbody>
@@ -266,12 +465,19 @@ const Warehouse = () => {
                   <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                   <td className="text-start py-2">{request?.customerUserName}</td>
                   <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
-                  <Link to={`/refund/details/${request?.orderNumber}`}> 
-                <td className="text-start py-2 cursor-pointer">
-                    <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">Details</btn>
-                </td>
-                </Link>
-                  
+                  <Link to={`/refund/details/${request?.orderNumber}`}>
+                    <td className="text-start py-2 cursor-pointer">
+                      <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
+                        {selectedLanguage === "fil-PH" && "Detalye"}
+                        {selectedLanguage === "ms-MY" && "Butiran"}
+                        {selectedLanguage === "th-TH" && "รายละเอียด"}
+                        {selectedLanguage === "vi-VN" && "Chi tiết"}
+                        {selectedLanguage === "id-ID" && "Rincian"}
+                        {selectedLanguage === "zh-CN" && "详情"}
+                      </btn>
+                    </td>
+                  </Link>
+
                   <td>
                     <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
                       <FiEdit></FiEdit>

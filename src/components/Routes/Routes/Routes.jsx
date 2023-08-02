@@ -15,56 +15,56 @@ import DetailsLayout from "../../Pages/RefundPage/DetailsLayout";
 
 
 
-export const  routes=createBrowserRouter([
-
-{
- path:"/",
- element:<Main></Main>,
- errorElement:<ErrorPage></ErrorPage>,
- children:[
-    {
-        path:"/",
-        element:<Home></Home>
-    },
-    {
-        path:"/home",
-        element:<Home></Home>
-    },
-    {
-        path:"/refund",
-        element:<PrivateRoute><Refund></Refund></PrivateRoute>
-    },
-    {
-        path:"refund/details/:orderNumber",
-        element:<PrivateRoute><DetailsLayout></DetailsLayout></PrivateRoute>,
-    },
-    {
-        path:"/resend",
-        element:<PrivateRoute><Resend></Resend></PrivateRoute>
-    },
-    {
-        path:"/supply",
-        element:<PrivateRoute><Supply></Supply></PrivateRoute>
-    },
-    {
-        path:"/repair",
-        element:<PrivateRoute><Repair></Repair></PrivateRoute>  
-    },
-    {
-        path:"/admin",
-        element:<PrivateRoute><Admin></Admin></PrivateRoute>  
-    },
-    {
-        path:"/about",
-        element:<About></About>
-    },
+export const routes = createBrowserRouter([
 
     {
-        path:"/login",
-        element:<FullLogInPage></FullLogInPage>
+        path: "/",
+        element: <Main></Main>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+            {
+                path: "/",
+                element: <Home></Home>
+            },
+            {
+                path: "/home",
+                element: <Home></Home>
+            },
+            {
+                path: "/refund",
+                element: <PrivateRoute><Refund></Refund></PrivateRoute>
+            },
+            {
+                path: "refund/details/:orderNumber",
+                element: <PrivateRoute><DetailsLayout></DetailsLayout></PrivateRoute>,
+            },
+            {
+                path: "/resend",
+                element: <PrivateRoute><Resend></Resend></PrivateRoute>
+            },
+            {
+                path: "/supply",
+                element: <PrivateRoute><Supply></Supply></PrivateRoute>
+            },
+            {
+                path: "/repair",
+                element: <PrivateRoute><Repair></Repair></PrivateRoute>
+            },
+            {
+                path: "/admin",
+                element: <PrivateRoute><Admin></Admin></PrivateRoute>
+            },
+            {
+                path: "/about",
+                element: <About></About>
+            },
+
+            {
+                path: "/login",
+                element: <FullLogInPage></FullLogInPage>
+            }
+        ]
+
     }
- ]
-    
-}
 
 ])
