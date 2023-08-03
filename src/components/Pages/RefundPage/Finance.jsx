@@ -45,7 +45,7 @@ const Finance = ({ refundProducts }) => {
     const fetchFinanceAllData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeRequest');
+            const response = await axios.get('http://localhost:5000/tht/financeRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllFinanceRequest(data);
@@ -59,7 +59,7 @@ const Finance = ({ refundProducts }) => {
     const fetchFinanceSpecialData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeSpecialRequest');
+            const response = await axios.get('http://localhost:5000/tht/financeSpecialRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllFinanceSpecialRequest(data);
@@ -83,7 +83,7 @@ const Finance = ({ refundProducts }) => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
+            await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
             toast.success('User deleted successfully');
             setAllFinanceRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
             setAllFinanceSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
@@ -104,7 +104,7 @@ const Finance = ({ refundProducts }) => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
             console.log(editingRequest)
             toast.success('User information updated successfully');
         } catch (error) {
@@ -123,7 +123,7 @@ const Finance = ({ refundProducts }) => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
 
             if (response.status === 200) {
                 // Update the warehouse status locally in the state

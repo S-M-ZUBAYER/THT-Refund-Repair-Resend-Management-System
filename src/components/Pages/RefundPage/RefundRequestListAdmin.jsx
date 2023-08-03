@@ -4,11 +4,11 @@ import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { BsSignNoRightTurn} from 'react-icons/bs';
 import { FcCheckmark} from 'react-icons/fc';
-import DisplaySpinner from '../../Loading/DisplaySpinner';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
+import DisplaySpinner from '../../Loading/DisplaySpinner';
 
-const RefundProductList = ({ refundProducts }) => {
+const RefundRequestListAdmin = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -192,20 +192,7 @@ const RefundProductList = ({ refundProducts }) => {
                 <td className="text-start">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block">{request?.orderDate}</td>
 
-                {user?.role === "Customer Service" && request?.customerServiceLeaderStatus === "false" ? (
-                  <>
-                    <td>
-                      <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                        <FiEdit />
-                      </btn>
-                    </td>
-                    <td>
-                      <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteUser(request?.id)}>
-                        <RiDeleteBin7Line />
-                      </btn>
-                    </td>
-                  </>
-                ) : (
+                {user?.admin === "true" && request?.financeStatus === "true" ? (
                   <>
                   <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={handleToToast}>
@@ -218,6 +205,20 @@ const RefundProductList = ({ refundProducts }) => {
                       </btn>
                     </td>
                     </>
+                 
+                ) : (
+                  <>
+                  <td>
+                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
+                      <FiEdit />
+                    </btn>
+                  </td>
+                  <td>
+                    <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteUser(request?.id)}>
+                      <RiDeleteBin7Line />
+                    </btn>
+                  </td>
+                </>
                 )}
 
 
@@ -406,4 +407,4 @@ const RefundProductList = ({ refundProducts }) => {
   );
 };
 
-export default RefundProductList;
+export default RefundRequestListAdmin;

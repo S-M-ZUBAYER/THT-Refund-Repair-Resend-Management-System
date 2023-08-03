@@ -53,7 +53,7 @@ const VietnamNavbar = () => {
   console.log(selectedLanguage)
 
   return (
-    <div className='flex w-full justify-between items-center h-20 px-4 absolute z-10 text-white'>
+    <div className='flex w-full justify-between items-center h-15 sticky top-0 px-4  z-10 text-black bg-gradient-to-t from-red-200 via-amber-200  to-lime-200'>
       <div className="hover:cursor-pointer">
         <h1 onClick={handleNav} className={logo ? 'hidden' : 'block'}>Grozziie</h1>
         {/* <img className="w-32 h-8" src={GrozzieeLogo}></img> */}

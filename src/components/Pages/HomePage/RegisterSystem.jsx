@@ -106,7 +106,7 @@ const RegisterSystem = () => {
 
     const form = event.target;
 
-    fetch('https://grozziie.zjweiting.com:8035/tht/check-user', {
+    fetch('http://localhost:5000/tht/check-user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const RegisterSystem = () => {
             return;
           }
 
-          fetch('https://grozziie.zjweiting.com:8035/tht/RFusers/add', {
+          fetch('http://localhost:5000/tht/RFusers/add', {
             method: 'POST',
             headers: {
               'content-type': 'application/json',
@@ -208,7 +208,7 @@ const RegisterSystem = () => {
 
 
   return (
-    <div id="register" ref={registerRef} className='max-w-[1240px] mx-auto grid lg:grid-cols-4 gap-4 px-4 py-16'>
+    <div id="register" ref={registerRef} className='max-w-[1240px] mx-auto grid lg:grid-cols-4 gap-4 px-4 pb-16'>
       <div className='lg:col-span-2 flex flex-col justify-evenly'>
         <div className="text-center">
 

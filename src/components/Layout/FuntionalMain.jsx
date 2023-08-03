@@ -12,12 +12,12 @@ import IndonesiaNavbar from '../SharePage/Navbar/IndonesiaNavbar';
 import PhilippinesNavbar from '../SharePage/Navbar/PhilippinesNavbar';
 
 
-const Main = () => {
+const FunctionalMain = () => {
 
     const { selectedLanguage } = useContext(AuthContext);
 
     return (
-        <div>
+        <div  className="text-black mb-5">
             {
                 selectedLanguage === "zh-CN" && <ChineseNavbar></ChineseNavbar>
 
@@ -40,11 +40,10 @@ const Main = () => {
             {
                 selectedLanguage === "id-ID" && <IndonesiaNavbar></IndonesiaNavbar>
             }
-            <Hero></Hero>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>
     );
 };
 
-export default Main;
+export default FunctionalMain ;

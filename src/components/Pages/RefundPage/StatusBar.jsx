@@ -41,7 +41,7 @@ const StatusBar = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/allNonSpecialRequest');
+            const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllWarehouseRequest(data);
@@ -55,7 +55,7 @@ const StatusBar = () => {
     const fetchSpecialData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/allSpecialRequest');
+            const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllWarehouseSpecialRequest(data);
@@ -73,7 +73,7 @@ const StatusBar = () => {
 
     const deleteRequest = async (id) => {
         try {
-            await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
+            await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
             toast.success('User deleted successfully');
             setAllWarehouseRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
             setAllWarehouseSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
@@ -90,7 +90,7 @@ const StatusBar = () => {
 
     const updateRequest = async (orderNumber, editingRequest) => {
         try {
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
             console.log(editingRequest)
             toast.success('User information updated successfully');
         } catch (error) {
@@ -133,7 +133,7 @@ const StatusBar = () => {
             // const formData = new FormData();
             // selectedImages.forEach((image) => formData.append('images', image));
 
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
 
             if (response.status === 200) {
                 // Update the warehouse status locally in the state

@@ -56,7 +56,7 @@ const DetailsLayout = () => {
 
 
         try {
-            await axios.put(`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${currentRequest?.orderNumber}`, formData, {
+            await axios.put(`http://localhost:5000/tht/warehouseImages/${currentRequest?.orderNumber}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -91,7 +91,7 @@ const DetailsLayout = () => {
 
 
         try {
-            await axios.put(`https://grozziie.zjweiting.com:8035/tht/financeImages/${currentRequest?.orderNumber}`, formData, {
+            await axios.put(`http://localhost:5000/tht/financeImages/${currentRequest?.orderNumber}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -118,7 +118,7 @@ const DetailsLayout = () => {
     // const fetchSpecialData = async () => {
     //     try {
     //         setLoading(true);
-    //         const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusSpecialRequest');
+    //         const response = await axios.get('http://localhost:5000/tht/LeaderStatusSpecialRequest');
     //         const data = response.data;
     //         console.log(data); // You can process the data as needed
     //         setCurrentRequest(data[0])
@@ -132,7 +132,7 @@ const DetailsLayout = () => {
     const fetchWarehoueManagerData = async (lastValue) => {
         try {
             setLoading(true);
-            const response = await axios.get(`https://grozziie.zjweiting.com:8035/tht/refundRequest/${lastValue}`);
+            const response = await axios.get(`http://localhost:5000/tht/refundRequest/${lastValue}`);
             const data = response.data;
             console.log(data); // You can process the data as needed
             setCurrentRequest(data);
@@ -178,7 +178,7 @@ const DetailsLayout = () => {
             console.log(status, "enter")
             try {
                 const response = await axios.put(
-                    `https://grozziie.zjweiting.com:8035/tht/updateWarehouseManagerStatus/${orderNumber}`
+                    `http://localhost:5000/tht/updateWarehouseManagerStatus/${orderNumber}`
                 );
 
                 if (response.status === 200) {
@@ -196,7 +196,7 @@ const DetailsLayout = () => {
             try {
                 console.log(status, "enter")
                 const response = await axios.put(
-                    `https://grozziie.zjweiting.com:8035/tht/updateFinanceStatus/${orderNumber}`
+                    `http://localhost:5000/tht/updateFinanceStatus/${orderNumber}`
                 );
 
                 if (response.status === 200) {
@@ -222,7 +222,7 @@ const DetailsLayout = () => {
             // const formData = new FormData();
             // selectedImages.forEach((image) => formData.append('images', image));
 
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
 
             if (response.status === 200) {
                 routeChange();
@@ -542,7 +542,7 @@ const DetailsLayout = () => {
         {[currentRequest?.warehouseImg].map((image, index) => (
           <img
             key={index}
-            src={`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${image[0]}`}
+            src={`http://localhost:5000/tht/warehouseImages/${image[0]}`}
             alt={`Warehouse Image ${index + 1}`}
             onClick={() => handleImageClick(image)}
             className="image-thumbnail"
@@ -561,9 +561,9 @@ const DetailsLayout = () => {
                         {currentRequest.warehouseImg.split(',').map((filename) => (
                             <img
                                 key={filename}
-                                src={`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${filename}`}
+                                src={`http://localhost:5000/tht/warehouseImages/${filename}`}
                                 alt={filename}
-                                onClick={() => handleImageClick(`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${filename}`)}
+                                onClick={() => handleImageClick(`http://localhost:5000/tht/warehouseImages/${filename}`)}
                                 className="w-24 h-24 object-cover cursor-pointer mx-4 my-2 rounded-lg"
                             />
                         ))}
@@ -594,9 +594,9 @@ const DetailsLayout = () => {
                         {currentRequest.financeImg.split(',').map((filename) => (
                             <img
                                 key={filename}
-                                src={`https://grozziie.zjweiting.com:8035/tht/financeImages/${filename}`}
+                                src={`http://localhost:5000/tht/financeImages/${filename}`}
                                 alt={filename}
-                                onClick={() => handleImageClick(`https://grozziie.zjweiting.com:8035/tht/financeImages/${filename}`)}
+                                onClick={() => handleImageClick(`http://localhost:5000/tht/financeImages/${filename}`)}
                                 className="w-24 h-24 object-cover cursor-pointer mx-4 my-2 rounded-lg"
                             />
                         ))}
@@ -607,7 +607,7 @@ const DetailsLayout = () => {
       {(currentRequest?.financeImg)?.map((image, index) => (
           <img
             key={index}
-            src={`https://grozziie.zjweiting.com:8035/tht/financeImages/${image}`}
+            src={`http://localhost:5000/tht/financeImages/${image}`}
             alt={`Finance Image ${index + 1}`}
             onClick={() => handleImageClick(image)}
             className="image-thumbnail"

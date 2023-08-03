@@ -12,6 +12,7 @@ import FullLogInPage from "../../Pages/LogInPage/FullLogInPage";
 import PrivateRoute from "../PrivateRoutes/PrivateRoute";
 import Admin from "../../Pages/AdminPage/Admin";
 import DetailsLayout from "../../Pages/RefundPage/DetailsLayout";
+import FunctionalMain from "../../Layout/FuntionalMain";
 
 
 
@@ -30,6 +31,19 @@ export const routes = createBrowserRouter([
                 path: "/home",
                 element: <Home></Home>
             },
+            {
+                path: "/about",
+                element: <About></About>
+            },
+        ]
+
+    },
+    {
+        path: "/",
+        element: <FunctionalMain></FunctionalMain>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+           
             {
                 path: "/refund",
                 element: <PrivateRoute><Refund></Refund></PrivateRoute>
@@ -58,7 +72,6 @@ export const routes = createBrowserRouter([
                 path: "/about",
                 element: <About></About>
             },
-
             {
                 path: "/login",
                 element: <FullLogInPage></FullLogInPage>

@@ -11,6 +11,7 @@ const RefundRequestForm = () => {
   const [orderTime, setOrderTime] = useState(new Date().toLocaleTimeString());
   const [shopName, setShopName] = useState('');
   const [customerUserName, setCustomerUserName] = useState('');
+  const [customerPhoneNo, setCustomerPhoneNo] = useState('');
   const [customerOrderNumber, setCustomerOrderNumber] = useState('');
   const [orderDate, setOrderDate] = useState('');
   const [orderAmount, setOrderAmount] = useState('');
@@ -27,8 +28,8 @@ const RefundRequestForm = () => {
   const [applicantName, setApplicantName] = useState(user?.customerUserName);
   const [applicationDate, setApplicationDate] = useState(new Date().toLocaleDateString());
   const [countryCode, setCountryCode] = useState("");
-  const [shopNames,setShopNames] = useState([]);
-  const [reasons,setReasons] = useState([]);
+  const [shopNames, setShopNames] = useState([]);
+  const [reasons, setReasons] = useState([]);
   const [timeNumber, setTimeNumber] = useState("");
   const [dataNumber, setDateNumber] = useState("");
   const [special, setSpecial] = useState(false);
@@ -38,19 +39,19 @@ const RefundRequestForm = () => {
 
   useEffect(() => {
     const fetchShopNamesReasons = async () => {
-        try {
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopNamesReasons');
-            const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
-            setShopNames((data.shopNames).split(","));
-            setReasons((data.reasons).split(","));
-            console.log(shopNames, reasons);
-        } catch (error) {
-            console.error('Error fetching shop names:', error);
-        }
+      try {
+        const response = await axios.get('http://localhost:5000/tht/shopNamesReasons');
+        const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
+        setShopNames((data.shopNames).split(","));
+        setReasons((data.reasons).split(","));
+        console.log(shopNames, reasons);
+      } catch (error) {
+        console.error('Error fetching shop names:', error);
+      }
     };
 
     fetchShopNamesReasons();
-}, []);
+  }, []);
 
 
   const handleOptionChange = () => {
@@ -63,13 +64,13 @@ const RefundRequestForm = () => {
     // Your function to generate a random number
     return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
   };
-  
+
   const handleToGenerateOrderNumber = () => {
     if (!user || !user.country) {
       // Return null or an error message if user is undefined, null, or country is not available
       return null;
     }
-  
+
     let countryCode = '';
     if (user.country === 'Bangladesh') {
       countryCode = '101';
@@ -85,21 +86,21 @@ const RefundRequestForm = () => {
       // Handle other countries or invalid cases here
       return null;
     }
-  
+
     const randomNumber = generateRandomNumber();
     const timeNumber = new Date().toLocaleTimeString().split(' ')[0].split(':');
     const dateNumber = new Date().toLocaleDateString().split('/');
     const orderNumber = `${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dateNumber[1]}${dateNumber[0]}${dateNumber[2]}${countryCode}${randomNumber}`;
-  
+
     setOrderNumber(orderNumber);
   };
 
- 
-  
+
+
   // orderNumber=handleToGenerateOrderNumber(user);
   console.log(orderNumber); // Output: "HHMMSSDDMMYY1011234" (generated order number based on user's country)
-  
-  
+
+
 
   // const handleToGenerateOrderNumber = () => {
   //   setCountryCode(user?.country === "Bangladesh" && "101" || user?.country === "China" && "102" || user?.country === "Indonesia" && "103" || user?.country === "Thailand" && "104" || user?.country === "Singapore" && "105" || user?.country === "Malaysia" && "105");
@@ -129,12 +130,35 @@ const RefundRequestForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    if (orderNumber === "" || shopName === "" || customerUserName === "" || customerPhoneNo === "" || customerOrderNumber === "" || orderDate === "" || orderAmount === "" || customerReturnTrackingNumber === "" || refundReason === "" || refundAmount === "" || customerReceivingAccount === "" || customerBankName === "" || customerReceivingAmount === "" || refundReason === "" || customerBankAccountName === "" || customerBankSwift === "") {
+      toast.error(
+        selectedLanguage === "en-US"
+          ? "Please input all information properly"
+          : selectedLanguage === "zh-CN"
+            ? "请输入正确的所有信息"
+            : selectedLanguage === "th-TH"
+              ? "โปรดป้อนข้อมูลทั้งหมดให้ถูกต้อง"
+              : selectedLanguage === "fil-PH"
+                ? "Mangyaring maglagay ng lahat ng impormasyon nang maayos"
+                : selectedLanguage === "vi-VN"
+                  ? "Vui lòng nhập đầy đủ thông tin một cách đúng đắn"
+                  : selectedLanguage === "ms-MY"
+                    ? "Sila masukkan semua maklumat dengan betul"
+                    : selectedLanguage === "id-ID"
+                      ? "Harap masukkan semua informasi dengan benar"
+                      : "Please input all information properly" // Default fallback language
+      );
+
+      return
+    }
+
     // Form data object
     const formData = {
       orderNumber,
       orderTime: orderTime,
       shopName,
       customerUserName,
+      customerPhoneNo,
       customerOrderNumber,
       orderDate,
       orderAmount,
@@ -163,7 +187,7 @@ const RefundRequestForm = () => {
     };
 
     console.log(formData);
-    fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest/add', {
+    fetch('http://localhost:5000/tht/refundRequest/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -181,6 +205,7 @@ const RefundRequestForm = () => {
         setOrderNumber("");
         setShopName("");
         setCustomerUserName("");
+        setCustomerPhoneNo("");
         setCustomerOrderNumber("");
         setOrderDate("");
         setOrderAmount("");
@@ -296,13 +321,13 @@ const RefundRequestForm = () => {
               }{
                 selectedLanguage === "id-ID" && "Pilih Nama Toko"
               }</option>
-              {
-                shopNames.map((shop,index)=>{
-                 return <option key={index} value={`${shop}`}>{shop}</option> 
-                })
-              }
-            
-            
+            {
+              shopNames.map((shop, index) => {
+                return <option key={index} value={`${shop}`}>{shop}</option>
+              })
+            }
+
+
             {/* Add more options as needed */}
           </select>
         </div>
@@ -333,6 +358,27 @@ const RefundRequestForm = () => {
             onChange={(e) => setCustomerUserName(e.target.value)}
           />
         </div>
+
+
+        <div className="mb-4 flex justify-between items-center">
+          <label htmlFor="customerPhoneNo">
+            {selectedLanguage === "zh-CN" && "客户手机号码"}
+            {selectedLanguage === "en-US" && "Customer Phone No"}
+            {selectedLanguage === "fil-PH" && "Numero ng Telepono ng Customer"}
+            {selectedLanguage === "ms-MY" && "Nombor Telefon Pelanggan"}
+            {selectedLanguage === "th-TH" && "หมายเลขโทรศัพท์ลูกค้า"}
+            {selectedLanguage === "vi-VN" && "Số Điện thoại Khách hàng"}
+            {selectedLanguage === "id-ID" && "Nomor Telepon Pelanggan"}
+          </label>
+          <input
+            type="text"
+            id="customerPhoneNo"
+            className="border rounded-md p-2 w-9/12"
+            value={customerPhoneNo}
+            onChange={(e) => setCustomerPhoneNo(e.target.value)}
+          />
+        </div>
+
 
 
         <div className="mb-4 flex justify-between items-center">
@@ -475,11 +521,11 @@ const RefundRequestForm = () => {
               }{
                 selectedLanguage === "id-ID" && "Pilih alasan"
               }</option>
-              {
-                reasons?.map((reason,index)=>{
-                 return <option key={index} value={`${reason}`}>{reason}</option> 
-                })
-              }
+            {
+              reasons?.map((reason, index) => {
+                return <option key={index} value={`${reason}`}>{reason}</option>
+              })
+            }
             <option value="Others">{
               selectedLanguage === "zh-CN" && "其他"
             }{

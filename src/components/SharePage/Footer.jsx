@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <footer aria-label="Site Footer" className="bg-gray-100 text-black ">
-      <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24">
+      <div className="mx-auto max-w-screen-xl px-4 pt-10 pb-6 sm:px-6 lg:px-8 lg:pt-10">
 
 
         <div
@@ -62,11 +62,8 @@ const Footer = () => {
 
           </div>
           <div className="text-center sm:text-left">
-            {/* <p className="text-lg font-medium text-gray-900 dark:text-black">
-            About Us
-          </p> */}
-
-            <nav aria-label="Footer About Nav" className="mt-8">
+          
+            <nav aria-label="Footer About Nav" className="">
               <ul className=" text-xs md:text-sm flex justify-center">
                 <li>
                   <a
@@ -170,7 +167,7 @@ const Footer = () => {
             About Us
           </p> */}
 
-            <nav aria-label="Footer About Nav" className="mt-8">
+            <nav aria-label="Footer About Nav" className="">
               <ul className=" text-sm">
                 <li className="flex justify-center">
                   <a
@@ -236,7 +233,7 @@ const Footer = () => {
 
         </div>
 
-        <div className="mt-12 border-t border-gray-100 pt-6 dark:border-gray-800">
+        <div className="mt-8 border-t border-gray-100 pt-6 dark:border-gray-800">
           <div className="text-center sm:flex sm:justify-between sm:text-left">
             <p className="text-sm text-black dark:text-gray-400">
               <span className="block sm:inline">All rights reserved.</span>

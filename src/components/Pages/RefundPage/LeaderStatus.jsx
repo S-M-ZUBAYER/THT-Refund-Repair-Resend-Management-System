@@ -35,6 +35,7 @@ const LeaderStatus = ({ refundProducts }) => {
     const filteredAllRequests = allLeaderRequest.filter((request) =>
         request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase())
     );
+console.log(allLeaderRequest)
 
 
     // const handleOptionChange = (special) => {
@@ -47,7 +48,7 @@ const LeaderStatus = ({ refundProducts }) => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusRequest');
+            const response = await axios.get('http://localhost:5000/tht/LeaderStatusRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllLeaderRequest(data);
@@ -62,7 +63,7 @@ const LeaderStatus = ({ refundProducts }) => {
 
         try {
             setLoading(true);
-            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusSpecialRequest');
+            const response = await axios.get('http://localhost:5000/tht/LeaderStatusSpecialRequest');
             const data = response.data;
             console.log(data); // You can process the data as needed
             setAllSpecialRequest(data)
@@ -84,7 +85,7 @@ const LeaderStatus = ({ refundProducts }) => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
+            await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
             toast.success('Refund Product deleted successfully');
             setAllLeaderRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
             setAllSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
@@ -105,7 +106,7 @@ const LeaderStatus = ({ refundProducts }) => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
+            const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
             toast.success('User information updated successfully');
         } catch (error) {
             console.error('Error updating user:', error);
@@ -120,7 +121,7 @@ const LeaderStatus = ({ refundProducts }) => {
         }
         try {
             const response = await axios.put(
-                `https://grozziie.zjweiting.com:8035/tht/updateLeaderStatus/${orderNumber}`
+                `http://localhost:5000/tht/updateLeaderStatus/${orderNumber}`
             );
 
             if (response.status === 200) {

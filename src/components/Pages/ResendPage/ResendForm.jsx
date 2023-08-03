@@ -91,7 +91,7 @@ const ResendForm = () => {
     };
 
     console.log(formData);
-    fetch('https://grozziie.zjweiting.com:8035/tht/resendRequest/add', {
+    fetch('http://localhost:5000/tht/resendRequest/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
