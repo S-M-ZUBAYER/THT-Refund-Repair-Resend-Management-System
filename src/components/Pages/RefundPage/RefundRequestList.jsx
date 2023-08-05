@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin7Line } from 'react-icons/ri';
-import { BsSignNoRightTurn} from 'react-icons/bs';
-import { FcCheckmark} from 'react-icons/fc';
+import { BsSignNoRightTurn } from 'react-icons/bs';
+import { FcCheckmark } from 'react-icons/fc';
 import DisplaySpinner from '../../Loading/DisplaySpinner';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
@@ -13,13 +13,18 @@ const RefundProductList = ({ refundProducts }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editingRequest, setEditingRequest] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+
+
 
   const handleOptionChange = (special) => {
     console.log(special)
     setEditingRequest({ ...editingRequest, special: !special })
   };
 
-  const handleToToast=()=>{
+  const handleToToast = () => {
     const getErrorMessage = () => {
       switch (selectedLanguage) {
         case "zh-CN":
@@ -57,6 +62,16 @@ const RefundProductList = ({ refundProducts }) => {
         console.error('Error occurred during the request:', error);
       });
   }, []);
+
+
+  const filteredRequests = allRefundRequest.filter((request) =>
+    request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+
 
   const deleteUser = async (id) => {
     const confirmed = window.confirm('Are you sure you want to delete this Product information?');
@@ -108,6 +123,32 @@ const RefundProductList = ({ refundProducts }) => {
 
   return (
     <div className="text-gray-800 w-full">
+
+      <div className="flex justify-center">
+        <div className="flex flex-col md:flex-row md:items-center mb-4">
+          <input
+            type="text"
+            placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
+            className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <btn
+
+            className="bg-[#004368] hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-md"
+            onChange={(e) => setSearchQuery("")}
+          >
+            {selectedLanguage === "en-US" && "Clear"}
+            {selectedLanguage === "zh-CN" && "清除"}
+            {selectedLanguage === "fil-PH" && "Linisin"}
+            {selectedLanguage === "ms-MY" && "Bersihkan"}
+            {selectedLanguage === "th-TH" && "ล้างข้อมูล"}
+            {selectedLanguage === "vi-VN" && "Xóa trắng"}
+            {selectedLanguage === "id-ID" && "Hapus"}
+          </btn>
+        </div>
+      </div>
+
       <table className="w-full mb-10">
         <thead className="bg-gradient-to-r from-green-300 to-yellow-300">
           <tr className="py-2">
@@ -184,7 +225,7 @@ const RefundProductList = ({ refundProducts }) => {
               <DisplaySpinner></DisplaySpinner>
             </div>
             :
-            allRefundRequest.map((request, index) => (
+            filteredRequests.map((request, index) => (
               <tr key={request.orderNumber} className="my-5">
                 <td className="text-start pl-2 py-2 font-semibold" >{index + 1}</td>
                 <td className="text-start pl-2 py-2 font-semibold" >{request?.orderNumber}</td>
@@ -192,7 +233,7 @@ const RefundProductList = ({ refundProducts }) => {
                 <td className="text-start">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block">{request?.orderDate}</td>
 
-                {user?.role === "Customer Service" && request?.customerServiceLeaderStatus === "false" ? (
+                {user?.role === "~Customer-Service~" && request?.customerServiceLeaderStatus === "false" ? (
                   <>
                     <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
@@ -207,9 +248,9 @@ const RefundProductList = ({ refundProducts }) => {
                   </>
                 ) : (
                   <>
-                  <td>
+                    <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={handleToToast}>
-                        <FcCheckmark/>
+                        <FcCheckmark />
                       </btn>
                     </td>
                     <td>
@@ -217,7 +258,7 @@ const RefundProductList = ({ refundProducts }) => {
                         <FcCheckmark />
                       </btn>
                     </td>
-                    </>
+                  </>
                 )}
 
 
@@ -372,14 +413,51 @@ const RefundProductList = ({ refundProducts }) => {
                 /> </div>
 
               {/* Add other input fields for the remaining form data */}
-              <div className="flex justify-between items-center mb-5">
-                <label htmlFor="customerOrderNumber">Other Reason:</label> <input
-                  type="text"
-                  placeholder="Other Reason"
-                  value={editingRequest.otherReason}
-                  onChange={(e) => setEditingRequest({ ...editingRequest, otherReason: e.target.value })}
-                  className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
-                /> </div>
+              {
+                editingRequest.otherReason &&
+                <>
+                  <div className="flex justify-between items-center mb-5">
+                    <label htmlFor="customerOrderNumber">Other Reason:</label> <input
+                      type="text"
+                      placeholder="Other Reason"
+                      value={editingRequest.otherReason}
+                      onChange={(e) => setEditingRequest({ ...editingRequest, otherReason: e.target.value })}
+                      className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                    /> </div>
+                </>
+              }
+
+              <div className="mb-1 flex justify-between items-center">
+                <div>
+                  <label htmlFor="Applicant Name">Name:</label> <input
+                    type="text"
+                    placeholder="applicantName"
+                    value={editingRequest.applicantName}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, applicantName: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="orderDate">Date:</label> <input
+                    type="text"
+                    placeholder="Order Date"
+                    value={editingRequest.orderDate}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, orderDate: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+                <div>
+
+
+                  <label htmlFor="orderTime">Time:</label> <input
+                    type="text"
+                    placeholder="order Time"
+                    value={editingRequest.orderTime}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, orderTime: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+              </div>
 
 
               {/* Add other input fields for the remaining form data */}

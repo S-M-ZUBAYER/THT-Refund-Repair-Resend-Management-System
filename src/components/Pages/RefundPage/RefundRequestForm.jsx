@@ -65,6 +65,8 @@ const RefundRequestForm = () => {
     return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
   };
 
+console.log(user,"kjsdafklajljfdlajl")
+
   const handleToGenerateOrderNumber = () => {
     if (!user || !user.country) {
       // Return null or an error message if user is undefined, null, or country is not available
@@ -720,6 +722,58 @@ const RefundRequestForm = () => {
             className="border rounded-md p-2 w-9/12"
             value={customerBankSwift}
             onChange={(e) => setCustomerBankSwift(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4 flex justify-between items-center">
+          <label htmlFor="remarks">
+  {selectedLanguage === "zh-CN" && "备注："}
+  {selectedLanguage === "en-US" && "Remarks:"}
+  {selectedLanguage === "fil-PH" && "Mga Tala:"}
+  {selectedLanguage === "ms-MY" && "Ulasan:"}
+  {selectedLanguage === "th-TH" && "หมายเหตุ:"}
+  {selectedLanguage === "vi-VN" && "Ghi Chú:"}
+  {selectedLanguage === "id-ID" && "Catatan:"}
+</label>
+
+          <textarea
+            id="remarks"
+            className="border rounded-md p-2 w-9/12"
+            value={remarks}
+            onChange={(e) => setRemarks(e.target.value)}
+          ></textarea>
+        </div>
+
+        <div className="mb-4 flex justify-between items-center">
+          <label htmlFor="applicantName">Applicant Name:</label>
+          <input
+            type="text"
+            id="applicantName"
+            className="border rounded-md p-2 w-9/12"
+            value={user?.name}
+            onChange={(e) => setApplicantName(user?.name)}
+          />
+        </div>
+
+        <div className="mb-4 flex justify-between items-center">
+          <label htmlFor="applicantName">Application Date:</label>
+          <input
+            type="text"
+            id="applicationTime"
+            className="border rounded-md p-2 w-9/12"
+            value={applicationDate}
+            onChange={(e) => setApplicationDate(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4 flex justify-between items-center">
+          <label htmlFor="applicantName">Application Time:</label>
+          <input
+            type="text"
+            id="applicationTime"
+            className="border rounded-md p-2 w-9/12"
+            value={orderTime}
+            onChange={(e) => setApplicationDate(e.target.value)}
           />
         </div>
 

@@ -31,13 +31,22 @@ const Finance = ({ refundProducts }) => {
     };
 
 
-    const filteredAllFinanceRequests = allFinanceRequest.filter((request) =>
-        request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-    );
+    
 
-    const filteredAllFinanceSpecialRequests = allFinanceSpecialRequest.filter((request) =>
-        request.customerReturnTrackingNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase())
-    );
+
+    const filteredAllFinanceRequests = allFinanceRequest.filter((request) =>
+    request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+  );
+
+  const filteredAllFinanceSpecialRequests = allFinanceSpecialRequest.filter((request) =>
+    request.customerUserName.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase())
+  );
 
 
     console.log(filteredAllFinanceSpecialRequests)
@@ -172,7 +181,7 @@ const Finance = ({ refundProducts }) => {
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Tracking No"
+                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                         className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchAllQuery}
                         onChange={handleSearchAllChange}
@@ -232,6 +241,15 @@ const Finance = ({ refundProducts }) => {
                             {selectedLanguage === "id-ID" && "Nomor Pelacakan"}
                             {selectedLanguage === "zh-CN" && "跟踪号码"}
                         </th>
+
+                        <th className="text-start hidden md:block py-2">{selectedLanguage === "en-US" && "Order Date"}
+              {selectedLanguage === "fil-PH" && "Petsa ng Order"}
+              {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
+              {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
+              {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
+              {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
+              {selectedLanguage === "zh-CN" && "订单日期"}</th>
+
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
                             {selectedLanguage === "fil-PH" && "Detalye"}
@@ -241,24 +259,7 @@ const Finance = ({ refundProducts }) => {
                             {selectedLanguage === "id-ID" && "Rincian"}
                             {selectedLanguage === "zh-CN" && "详情"}
                         </th>
-                        <th className="align-middle">
-                            {selectedLanguage === "en-US" && "Edit"}
-                            {selectedLanguage === "fil-PH" && "I-edit"}
-                            {selectedLanguage === "ms-MY" && "Edit"}
-                            {selectedLanguage === "th-TH" && "แก้ไข"}
-                            {selectedLanguage === "vi-VN" && "Chỉnh Sửa"}
-                            {selectedLanguage === "id-ID" && "Edit"}
-                            {selectedLanguage === "zh-CN" && "编辑"}
-                        </th>
-                        <th className="align-middle">
-                            {selectedLanguage === "en-US" && "Delete"}
-                            {selectedLanguage === "fil-PH" && "Alisin"}
-                            {selectedLanguage === "ms-MY" && "Padam"}
-                            {selectedLanguage === "th-TH" && "ลบ"}
-                            {selectedLanguage === "vi-VN" && "Xóa"}
-                            {selectedLanguage === "id-ID" && "Hapus"}
-                            {selectedLanguage === "zh-CN" && "删除"}
-                        </th>
+                        
 
                     </tr>
                 </thead>
@@ -276,8 +277,9 @@ const Finance = ({ refundProducts }) => {
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                                 <td className="text-start  py-2">{request?.customerUserName}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
-                                <Link to={`/refund/details/${request?.orderNumber}`}>
+                                <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
                                     <td className="text-start py-2 cursor-pointer">
+                                <Link to={`/refund/details/${request?.orderNumber}`}>
                                         <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                             {selectedLanguage === "fil-PH" && "Detalye"}
                                             {selectedLanguage === "ms-MY" && "Butiran"}
@@ -286,18 +288,8 @@ const Finance = ({ refundProducts }) => {
                                             {selectedLanguage === "id-ID" && "Rincian"}
                                             {selectedLanguage === "zh-CN" && "详情"}
                                         </btn>
-                                    </td>
                                 </Link>
-                                <td>
-                                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                                        <FiEdit></FiEdit>
-                                    </btn>
-                                </td>
-                                <td>
-                                    <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteRequest(request?.id)}>
-                                        <RiDeleteBin7Line></RiDeleteBin7Line>
-                                    </btn>
-                                </td>
+                                    </td>
                             </tr>
                         ))
                     )}
@@ -352,7 +344,7 @@ const Finance = ({ refundProducts }) => {
                     <div className="flex flex-col md:flex-row md:items-center mb-4">
                         <input
                             type="text"
-                            placeholder="Search by Tracking No"
+                            placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                             className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                             value={searchSpecialQuery}
                             onChange={handleSearchSpecialChange}
@@ -412,6 +404,14 @@ const Finance = ({ refundProducts }) => {
                                 {selectedLanguage === "id-ID" && "Nomor Pelacakan"}
                                 {selectedLanguage === "zh-CN" && "跟踪号码"}
                             </th>
+                            <th className="text-start hidden md:block py-2">{selectedLanguage === "en-US" && "Order Date"}
+              {selectedLanguage === "fil-PH" && "Petsa ng Order"}
+              {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
+              {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
+              {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
+              {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
+              {selectedLanguage === "zh-CN" && "订单日期"}</th>
+
                             <th className="text-start py-2">
                                 {selectedLanguage === "en-US" && "Details"}
                                 {selectedLanguage === "fil-PH" && "Detalye"}
@@ -421,24 +421,7 @@ const Finance = ({ refundProducts }) => {
                                 {selectedLanguage === "id-ID" && "Rincian"}
                                 {selectedLanguage === "zh-CN" && "详情"}
                             </th>
-                            <th className="align-middle">
-                                {selectedLanguage === "en-US" && "Edit"}
-                                {selectedLanguage === "fil-PH" && "I-edit"}
-                                {selectedLanguage === "ms-MY" && "Edit"}
-                                {selectedLanguage === "th-TH" && "แก้ไข"}
-                                {selectedLanguage === "vi-VN" && "Chỉnh Sửa"}
-                                {selectedLanguage === "id-ID" && "Edit"}
-                                {selectedLanguage === "zh-CN" && "编辑"}
-                            </th>
-                            <th className="align-middle">
-                                {selectedLanguage === "en-US" && "Delete"}
-                                {selectedLanguage === "fil-PH" && "Alisin"}
-                                {selectedLanguage === "ms-MY" && "Padam"}
-                                {selectedLanguage === "th-TH" && "ลบ"}
-                                {selectedLanguage === "vi-VN" && "Xóa"}
-                                {selectedLanguage === "id-ID" && "Hapus"}
-                                {selectedLanguage === "zh-CN" && "删除"}
-                            </th>
+                           
 
                         </tr>
                     </thead>
@@ -456,8 +439,9 @@ const Finance = ({ refundProducts }) => {
                                     <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                                     <td className="text-start  py-2">{request?.customerUserName}</td>
                                     <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
-                                    <Link to={`/refund/details/${request?.orderNumber}`}>
+                                    <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
                                         <td className="text-start py-2 cursor-pointer">
+                                    <Link to={`/refund/details/${request?.orderNumber}`}>
                                             <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                                 {selectedLanguage === "fil-PH" && "Detalye"}
                                                 {selectedLanguage === "ms-MY" && "Butiran"}
@@ -466,18 +450,8 @@ const Finance = ({ refundProducts }) => {
                                                 {selectedLanguage === "id-ID" && "Rincian"}
                                                 {selectedLanguage === "zh-CN" && "详情"}
                                             </btn>
-                                        </td>
                                     </Link>
-                                    <td>
-                                        <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                                            <FiEdit></FiEdit>
-                                        </btn>
-                                    </td>
-                                    <td>
-                                        <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteRequest(request?.id)}>
-                                            <RiDeleteBin7Line></RiDeleteBin7Line>
-                                        </btn>
-                                    </td>
+                                        </td>
                                 </tr>
                             ))
                         )}

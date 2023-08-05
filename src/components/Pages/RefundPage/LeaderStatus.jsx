@@ -7,13 +7,13 @@ import { RiDeleteBin7Line } from 'react-icons/ri';
 import DisplaySpinner from '../../Loading/DisplaySpinner';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
+import { Link } from 'react-router-dom';
 
-const LeaderStatus = ({ refundProducts }) => {
+const LeaderStatus = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editingRequest, setEditingRequest] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
     const [allLeaderRequest, setAllLeaderRequest] = useState([]);
     const [allSpecialRequest, setAllSpecialRequest] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,14 +28,20 @@ const LeaderStatus = ({ refundProducts }) => {
         setSearchAllQuery(event.target.value);
     };
 
-    const filteredSpecialRequests = allSpecialRequest.filter((request) =>
-        request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredAllRequests = allLeaderRequest.filter((request) =>
+        request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
     );
 
-    const filteredAllRequests = allLeaderRequest.filter((request) =>
-        request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase())
+    const filteredSpecialRequests = allSpecialRequest.filter((request) =>
+        request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchQuery.toLowerCase())
     );
-console.log(allLeaderRequest)
+
 
 
     // const handleOptionChange = (special) => {
@@ -170,7 +176,7 @@ console.log(allLeaderRequest)
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Customer Name"
+                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                         className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchAllQuery}
                         onChange={handleSearchAllChange}
@@ -236,20 +242,16 @@ console.log(allLeaderRequest)
                             {selectedLanguage === "vi-VN" && "Trạng Thái"}
                             {selectedLanguage === "id-ID" && "Status"}
                             {selectedLanguage === "zh-CN" && "状态"}</th>
-                        <th>{selectedLanguage === "en-US" && "Edit"}
-                            {selectedLanguage === "fil-PH" && "I-edit"}
-                            {selectedLanguage === "ms-MY" && "Edit"}
-                            {selectedLanguage === "th-TH" && "แก้ไข"}
-                            {selectedLanguage === "vi-VN" && "Chỉnh Sửa"}
-                            {selectedLanguage === "id-ID" && "Edit"}
-                            {selectedLanguage === "zh-CN" && "编辑"}</th>
-                        <th>{selectedLanguage === "en-US" && "Delete"}
-                            {selectedLanguage === "fil-PH" && "Tanggalin"}
-                            {selectedLanguage === "ms-MY" && "Padam"}
-                            {selectedLanguage === "th-TH" && "ลบ"}
-                            {selectedLanguage === "vi-VN" && "Xóa"}
-                            {selectedLanguage === "id-ID" && "Hapus"}
-                            {selectedLanguage === "zh-CN" && "删除"}</th>
+                        <th className="text-start py-2">
+                            {selectedLanguage === "en-US" && "Details"}
+                            {selectedLanguage === "zh-CN" && "详情"}
+
+                            {selectedLanguage === "fil-PH" && "Detalye"}
+                            {selectedLanguage === "ms-MY" && "Butiran"}
+                            {selectedLanguage === "th-TH" && "รายละเอียด"}
+                            {selectedLanguage === "vi-VN" && "Chi tiết"}
+                            {selectedLanguage === "id-ID" && "Rincian"}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -291,16 +293,22 @@ console.log(allLeaderRequest)
                                         </btn>
                                     )}
                                 </td>
-                                <td>
-                                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                                        <FiEdit></FiEdit>
-                                    </btn>
-                                </td>
-                                <td>
-                                    <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteRequest(request?.id)}>
-                                        <RiDeleteBin7Line></RiDeleteBin7Line>
-                                    </btn>
-                                </td>
+
+
+                                <Link to={`/refund/details/${request?.orderNumber}`}>
+                                    <td className="text-start py-2 cursor-pointer">
+                                        <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
+                                            {selectedLanguage === "zh-CN" && "详情"}
+                                            {selectedLanguage === "fil-PH" && "Detalye"}
+                                            {selectedLanguage === "ms-MY" && "Butiran"}
+                                            {selectedLanguage === "th-TH" && "รายละเอียด"}
+                                            {selectedLanguage === "vi-VN" && "Chi tiết"}
+                                            {selectedLanguage === "id-ID" && "Rincian"}</btn>
+                                    </td>
+                                </Link>
+
+
+
                             </tr>
                         ))
                     )}
@@ -321,9 +329,9 @@ console.log(allLeaderRequest)
                         {selectedLanguage === "vi-VN" && "Yêu cầu Đặc biệt"}
                         {selectedLanguage === "id-ID" && "Permintaan Khusus"}
                     </span>{" "}
-                    {selectedLanguage === "en-US" && "Need To Approved By Customer Service Leader"}
+                    {selectedLanguage === "en-US" && "Need To Approved By ~Customer-Service-Leader~"}
                     {selectedLanguage === "zh-CN" && "需要由客户服务主管批准"}
-                    {selectedLanguage === "fil-PH" && "Kailangang Aproba ng Customer Service Leader"}
+                    {selectedLanguage === "fil-PH" && "Kailangang Aproba ng ~Customer-Service-Leader~"}
                     {selectedLanguage === "ms-MY" && "Perlu Diluluskan Oleh Ketua Perkhidmatan Pelanggan"}
                     {selectedLanguage === "th-TH" && "ต้องได้รับการอนุมัติจากผู้นำการบริการลูกค้า"}
                     {selectedLanguage === "vi-VN" && "Cần phê duyệt bởi Người đứng đầu Dịch vụ Khách hàng"}
@@ -353,7 +361,7 @@ console.log(allLeaderRequest)
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Customer Name"
+                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                         className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchQuery}
                         onChange={handleSearchChange}
@@ -420,20 +428,16 @@ console.log(allLeaderRequest)
                             {selectedLanguage === "vi-VN" && "Trạng thái"}
                             {selectedLanguage === "id-ID" && "Status"}
                             {selectedLanguage === "zh-CN" && "状态"}</th>
-                        <th>{selectedLanguage === "en-US" && "Edit"}
-                            {selectedLanguage === "fil-PH" && "I-edit"}
-                            {selectedLanguage === "ms-MY" && "Edit"}
-                            {selectedLanguage === "th-TH" && "แก้ไข"}
-                            {selectedLanguage === "vi-VN" && "Chỉnh sửa"}
-                            {selectedLanguage === "id-ID" && "Edit"}
-                            {selectedLanguage === "zh-CN" && "编辑"}</th>
-                        <th>{selectedLanguage === "en-US" && "Delete"}
-                            {selectedLanguage === "fil-PH" && "Tanggalin"}
-                            {selectedLanguage === "ms-MY" && "Padam"}
-                            {selectedLanguage === "th-TH" && "ลบ"}
-                            {selectedLanguage === "vi-VN" && "Xóa"}
-                            {selectedLanguage === "id-ID" && "Hapus"}
-                            {selectedLanguage === "zh-CN" && "删除"}</th>
+                        <th className="text-start py-2">
+                            {selectedLanguage === "en-US" && "Details"}
+                            {selectedLanguage === "zh-CN" && "详情"}
+
+                            {selectedLanguage === "fil-PH" && "Detalye"}
+                            {selectedLanguage === "ms-MY" && "Butiran"}
+                            {selectedLanguage === "th-TH" && "รายละเอียด"}
+                            {selectedLanguage === "vi-VN" && "Chi tiết"}
+                            {selectedLanguage === "id-ID" && "Rincian"}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -463,16 +467,17 @@ console.log(allLeaderRequest)
                                         </btn>
                                     )}
                                 </td>
-                                <td>
-                                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                                        <FiEdit></FiEdit>
-                                    </btn>
-                                </td>
-                                <td>
-                                    <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteRequest(request?.id)}>
-                                        <RiDeleteBin7Line></RiDeleteBin7Line>
-                                    </btn>
-                                </td>
+                                <Link to={`/refund/details/${request?.orderNumber}`}>
+                                    <td className="text-start py-2 cursor-pointer">
+                                        <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
+                                            {selectedLanguage === "zh-CN" && "详情"}
+                                            {selectedLanguage === "fil-PH" && "Detalye"}
+                                            {selectedLanguage === "ms-MY" && "Butiran"}
+                                            {selectedLanguage === "th-TH" && "รายละเอียด"}
+                                            {selectedLanguage === "vi-VN" && "Chi tiết"}
+                                            {selectedLanguage === "id-ID" && "Rincian"}</btn>
+                                    </td>
+                                </Link>
                             </tr>
                         ))
                     )}

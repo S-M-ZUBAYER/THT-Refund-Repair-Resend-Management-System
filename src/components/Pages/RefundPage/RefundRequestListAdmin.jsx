@@ -232,8 +232,8 @@ const RefundRequestListAdmin = () => {
 
 
 
-      {/* modal part start from here to update a user information */}
-      {editingRequest && (
+     {/* modal part start from here to update a user information */}
+     {editingRequest && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-8 w-7/12 h-11/12 mx-auto">
             <h2 className="text-lg font-bold mb-1bg-gradient-to-r from-green-300 to-yellow-300">Edit Refund Request Information</h2>
@@ -373,14 +373,51 @@ const RefundRequestListAdmin = () => {
                 /> </div>
 
               {/* Add other input fields for the remaining form data */}
-              <div className="flex justify-between items-center mb-5">
-                <label htmlFor="customerOrderNumber">Other Reason:</label> <input
-                  type="text"
-                  placeholder="Other Reason"
-                  value={editingRequest.otherReason}
-                  onChange={(e) => setEditingRequest({ ...editingRequest, otherReason: e.target.value })}
-                  className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
-                /> </div>
+              {
+                editingRequest.otherReason &&
+                <>
+                  <div className="flex justify-between items-center mb-5">
+                    <label htmlFor="customerOrderNumber">Other Reason:</label> <input
+                      type="text"
+                      placeholder="Other Reason"
+                      value={editingRequest.otherReason}
+                      onChange={(e) => setEditingRequest({ ...editingRequest, otherReason: e.target.value })}
+                      className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                    /> </div>
+                </>
+              }
+
+              <div className="mb-1 flex justify-between items-center">
+                <div>
+                  <label htmlFor="Applicant Name">Name:</label> <input
+                    type="text"
+                    placeholder="applicantName"
+                    value={editingRequest.applicantName}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, applicantName: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="orderDate">Date:</label> <input
+                    type="text"
+                    placeholder="Order Date"
+                    value={editingRequest.orderDate}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, orderDate: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+                <div>
+
+
+                  <label htmlFor="orderTime">Time:</label> <input
+                    type="text"
+                    placeholder="order Time"
+                    value={editingRequest.orderTime}
+                    onChange={(e) => setEditingRequest({ ...editingRequest, orderTime: e.target.value })}
+                    className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                  />
+                </div>
+              </div>
 
 
               {/* Add other input fields for the remaining form data */}

@@ -33,6 +33,27 @@ const RegisterSystem = () => {
   const registerRef = useRef(null);
 
 
+  const [selectedRoles, setSelectedRoles] = useState([]);
+  const allRoles = [
+    "~Customer-Service~",
+    "~Customer-Service-Leader~",
+    "~Warehouse~",
+    "~Warehouse-Manager~",
+    "~Finance~",
+    "~Supplier~",
+
+  ];
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedRoles((prevSelected) => [...prevSelected, value]);
+    } else {
+      setSelectedRoles((prevSelected) => prevSelected.filter((role) => role !== value));
+    }
+  };
+
+  console.log(selectedRoles)
+
   //use this function to navigate the route after registration
   const navigate = useNavigate();
 
@@ -64,32 +85,12 @@ const RegisterSystem = () => {
     }
   }, []);
 
-  // const handleRegister = (e) => {
-  //     e.preventDefault();
 
-  //     const formData = {
-  //       email,
-  //       password,
-  //       confirmPassword,
-  //       name,
-  //       phoneNumber,
-  //       role,
-  //       country,
-  //       image,
-  //     };
-
-  //     console.log(formData);
-
-
-
-
-
-  //   };
 
   const handleRegister = (event) => {
     event.preventDefault();
 
-    if (name === "" || image === "" || phoneNumber === "" || language === "" || country === "" || email === "" || role === "") {
+    if (name === "" || image === "" || phoneNumber === "" || language === "" || country === "" || email === "" || selectedRoles === "") {
       toast.error("Please provide all the information");
       return;
     }
@@ -98,12 +99,12 @@ const RegisterSystem = () => {
       email,
       name,
       phoneNumber,
-      role,
+      role:selectedRoles,
       country,
       language,
       image
     };
-
+console.log(user?.role)
     const form = event.target;
 
     fetch('http://localhost:5000/tht/check-user', {
@@ -146,19 +147,19 @@ const RegisterSystem = () => {
               confirmPassword,
               name,
               phoneNumber,
-              role,
+              role:selectedRoles,
               language,
               country,
               image,
-              isAdmin: "false"
+              admin: "false"
             }),
           })
             .then((res) => res.json())
             .then((data) => {
               console.log(data)
               if (data) {
-                localStorage.setItem('RFuser', JSON.stringify(user));
-                setUser(user);
+                // localStorage.setItem('RFuser', JSON.stringify(user));
+                // setUser(user);
                 setLoading(false);
                 toast.success("Registration complete Successfully");
 
@@ -173,7 +174,7 @@ const RegisterSystem = () => {
                 setImage(null);
 
 
-                navigate("/");
+                navigate("/login");
               } else {
                 toast.error(data.message);
                 setLoading(false);
@@ -614,7 +615,7 @@ const RegisterSystem = () => {
             />
           </div>
           <div className='flex justify-between items-center my-2'>
-            <label className='mr-2'>
+            <label className='mr-2 w-1/12'>
               {selectedLanguage === "zh-CN" && "角色"}
               {selectedLanguage === "en-US" && "Role"}
               {selectedLanguage === "fil-PH" && "Papel"}
@@ -623,19 +624,20 @@ const RegisterSystem = () => {
               {selectedLanguage === "vi-VN" && "Vai trò"}
               {selectedLanguage === "id-ID" && "Peran"}
             </label>
-            <select
-              className='border rounded-md p-1 w-9/12'
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option>Select</option>
-              <option>Customer Service</option>
-              <option>Customer Service Leader</option>
-              <option>Warehouse</option>
-              <option>Warehouse Manager</option>
-              <option>Finance</option>
-              <option>Supplier</option>
-            </select>
+            <div className="text-start w-9/12 rounded-lg" style={{ maxHeight: '100px', overflowY: 'scroll', border: '1px solid #ccc' }}>
+            {allRoles.map((role, index) => (
+              <div className="px-3 flex justify-start " key={index}>
+                <input
+                  className="mr-2 text-start"
+                  type="checkbox"
+                  value={role}
+                  checked={selectedRoles.includes(role)}
+                  onChange={handleCheckboxChange}
+                />
+                {role}
+              </div>
+            ))}
+          </div>
           </div>
 
           <div className='flex justify-between items-center my-2'>
@@ -687,6 +689,9 @@ const RegisterSystem = () => {
               <option>Malaysia</option>
             </select>
           </div>
+
+         
+
           <div className='flex justify-between items-center my-2'>
             <label className='mr-2'>
               {selectedLanguage === "zh-CN" && "图像"}

@@ -7,12 +7,14 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
+import axios from 'axios';
 // import BtnSpinner from '../../Shared/Loading/BtnSpinner';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [Loading, setLoading] = useState(false);
+  const [role, setRole] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   // const {setLanguage}=useContext(AllProductContext);
@@ -21,6 +23,7 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
 
   const [show, setShow] = useState(false)
@@ -66,7 +69,7 @@ const Login = () => {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({ email: email, password: password })
+      body: JSON.stringify({ email: email, password: password,role })
     })
       .then(res => res.json())
       .then(data => {
@@ -88,10 +91,14 @@ const Login = () => {
           toast.error(data.message);
           setLoading(false);
         }
+        else if (data?.message === "User doesn't have the required role") {
+          toast.error(data.message);
+          setLoading(false);
+        }
+
         else {
-          console.log(data)
-          setUser(data[0])
-          localStorage.setItem('RFuser', JSON.stringify(data[0]));
+          setUser({email:data[0]?.email, name:data[0]?.name,country:data[0]?.country,role:role,admin:data[0]?.admin});
+          localStorage.setItem('RFuser', JSON.stringify({email:data[0]?.email, name:data[0]?.name,country:data[0]?.country, role:role,admin:data[0]?.admin}));
           setLoading(false);
           navigate(from, { replace: true })
           form.reset();
@@ -120,30 +127,33 @@ const Login = () => {
 
 
 
-  const handleToResetPassword = () => {
-    if (password !== confirmPassword) {
-      setErrorMessage('Password and confirm password do not match');
-      return;
-    }
+  const handleChangePassword = () => {
+    // Prepare the request body
+    const requestBody = {
+      myEmail: myEmail,
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    };
 
-    // Call the API endpoint to reset password with the email
-    fetch('http://localhost:5000/tht/reset-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data
-        console.log(data);
+    // Make the PATCH request to change the password
+    axios.patch('http://localhost:5000/tht/changePassword', requestBody)
+      .then((response) => {
+        console.log((response?.data)?.message)
+        if((response?.data)?.message === "Wrong email/old password combination!"){
+          toast.error("Wrong email/password combination!");
+          return
+        }
+        setShowModal(false);
+        toast.success('Password successfully changed!');
+        // Handle any further actions on success, e.g., show success message or redirect
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error changing password:', error.response?.data?.message || error.message);
+        toast.error('Error changing password:', error.response?.data?.message || error.message);
+        return
+        // Handle errors, e.g., show error message to the user
       });
   };
-
   const openModal = () => {
     console.log("click")
     setModalOpen(true);
@@ -154,19 +164,11 @@ const Login = () => {
     setModalOpen(false);
   };
 
-  // const handleToResetPassword = () => {
-  //     resetPassword(email)
-  //         .then(() => {
-  //             console.log(email)
-  //             toast.success('Please check your email to reset')
-  //             // setLoading(false);
-  //         })
-  //         .catch(err => {
-  //             toast.error(err.message);
-  //             console.log(err);
-  //             // setLoading(false);
-  //         })
-  // }
+  const [myEmail, setMyEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+
+  
 
   return (
     <div className="bg-white flex justify-center items-center">
@@ -186,6 +188,23 @@ const Login = () => {
           {/* <label htmlFor="email">Email:</label> */}
           <input className=" w-full pl-2 text-gray-800 bg-white" placeholder="username or email" type="email" id="email" value={email} onChange={handleEmailChange} />
           <hr className="  mb-10" ></hr>
+          <div className='w-full text-gray-800 bg-white'>
+            <select
+              className='w-full pl-2'
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option>Select</option>
+              <option>~Customer-Service~</option>
+              <option>~Customer-Service-Leader~</option>
+              <option>~Warehouse~</option>
+              <option>~Warehouse-Manager~</option>
+              <option>~Finance~</option>
+              <option>~Supplier~</option>
+            </select>
+             <hr className="  mb-10" ></hr>
+          </div>
+
           {/* <label htmlFor="password">Password:</label> */}
           <div className='relative'>
             <div className='flex items-center'>
@@ -203,8 +222,8 @@ const Login = () => {
             {/* <button>digit to start</button>
                         <button>start to digit</button> */}
           </div>
-          <div className="text-end text-sm mb-8">
-            <button type="button" className="text-[#65ABFF] font-semibold" onClick={openModal}>
+          <div className="text-end text-sm mt-3 mb-8">
+            <button type="button" className="text-[#65ABFF] font-semibold" onClick={() => setShowModal(true)}>
               {selectedLanguage === "zh-CN" && "忘记密码？"}
               {selectedLanguage === "en-US" && "Forgot password?"}
               {selectedLanguage === "fil-PH" && "Nakalimutan ang password?"}
@@ -276,7 +295,7 @@ const Login = () => {
                   />
                 </div>
                 <div>
-                  <label>Confirm Password:</label>
+                  <label>Change Password:</label>
                   <input
                     type="password"
                     value={confirmPassword}
@@ -284,7 +303,7 @@ const Login = () => {
                   />
                 </div>
 
-                <button type="button" onClick={handleToResetPassword}>
+                <button type="button" onClick={handleChangePassword}>
                   Save
                 </button>
               </form>
@@ -293,6 +312,30 @@ const Login = () => {
             </div>
           </div>
         )}
+
+
+          {/* Modal */}
+      {showModal && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-opacity-50 bg-black flex justify-center items-center">
+          <div className="bg-white p-8 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+            <div className="mb-4">
+              <label>Email:</label>
+              <input type="text" className="border rounded-md p-2 w-full" value={myEmail} onChange={(e) => setMyEmail(e.target.value)} />
+            </div>
+            <div className="mb-4">
+              <label>Old Password:</label>
+              <input type="password" className="border rounded-md p-2 w-full" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+            </div>
+            <div className="mb-4">
+              <label>New Password:</label>
+              <input type="password" className="border rounded-md p-2 w-full" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </div>
+            <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={handleChangePassword}>Change Password</button>
+            <button className="bg-red-500 text-white py-2 px-4 rounded ml-2" onClick={() => setShowModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
 
       </div>
     </div>

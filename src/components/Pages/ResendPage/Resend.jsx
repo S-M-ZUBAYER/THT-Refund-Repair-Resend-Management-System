@@ -18,10 +18,10 @@ const Resend = () => {
     return (
 
         <div className='max-w-[1240px] mx-auto py-16 px-4 text-center'>
-            {user?.role === "Customer Service" && <>
+            {user?.role === "~Customer-Service~" && <>
                 <div>
                     <h1>Please Complete the Resend/Shipped Again Form</h1>
-                    <p className='py-4'>Please fill all of the information carefully and submit to start the next step to get the approval from Customer Service Leader. </p>
+                    <p className='py-4'>Please fill all of the information carefully and submit to start the next step to get the approval from ~Customer-Service-Leader~. </p>
                 </div>
                 <ResendForm></ResendForm>
 
@@ -43,8 +43,8 @@ const Resend = () => {
             }
 
             {
-                user?.role === "Customer Service Leader" && <> <div className="mt-16 mb-5">
-                    <h1>Requests Need To Approved By Customer Service Leader</h1>
+                user?.role === "~Customer-Service-Leader~" && <> <div className="mt-16 mb-5">
+                    <h1>Requests Need To Approved By ~Customer-Service-Leader~</h1>
                     <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information.And then please approved their refund request.  </p>
                 </div>
 
@@ -52,8 +52,8 @@ const Resend = () => {
             }
 
             {
-                user?.role === "Warehouse Manager" && <> <div className="mt-16 mb-5">
-                    <h1>Requests Need To Approved By Warehouse Manager</h1>
+                user?.role === "~Warehouse-Manager~" && <> <div className="mt-16 mb-5">
+                    <h1>Requests Need To Approved By ~Warehouse-Manager~</h1>
                     <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information.And then please approved their refund request.  </p>
                 </div>
 

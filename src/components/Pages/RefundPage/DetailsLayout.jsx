@@ -183,13 +183,13 @@ const DetailsLayout = () => {
 
                 if (response.status === 200) {
                     routeChange();
-                    toast.success('Warehouse Manager status updated successfully');
+                    toast.success('~Warehouse-Manager~ status updated successfully');
                 } else {
-                    toast.error('Failed to update Warehouse Manager status');
+                    toast.error('Failed to update ~Warehouse-Manager~ status');
                 }
             } catch (error) {
-                console.error('Error updating Warehouse Manager status:', error);
-                toast.error('Failed to update Warehouse Manager status');
+                console.error('Error updating ~Warehouse-Manager~ status:', error);
+                toast.error('Failed to update ~Warehouse-Manager~ status');
             }
         }
         else {
@@ -675,7 +675,7 @@ const DetailsLayout = () => {
             } */}
 
             {
-                user?.role === "Warehouse Manager" && currentRequest?.warehouseManagerStatus === "false"
+                user?.role === "~Warehouse-Manager~" && currentRequest?.warehouseManagerStatus === "false"
                 &&
                 <div className="mt-10 flex justify-end items-center">
                     <div className=" flex justify-end ">

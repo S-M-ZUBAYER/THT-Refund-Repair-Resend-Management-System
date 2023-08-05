@@ -11,14 +11,17 @@ import Finance from './Finance';
 import StatusBar from './StatusBar';
 
 const Refund = () => {
-
     const { user, selectedLanguage } = useContext(AuthContext)
+
+
+
+  
 
 
     return (
 
         <div className='max-w-[1240px] mx-auto py-16 px-4 text-center'>
-            {user?.role === "Customer Service" && <>
+            {user?.role === "~Customer-Service~" && <>
                 <div>
                     {selectedLanguage === "zh-CN" &&
                         <>
@@ -30,7 +33,7 @@ const Refund = () => {
                     {selectedLanguage === "en-US" &&
                         <>
                             <h1>Please Complete the Refund Request Form</h1>
-                            <p className='py-4'>Please fill all of the information carefully and submit to start the next step to get the approval from Customer Service Leader.</p>
+                            <p className='py-4'>Please fill all of the information carefully and submit to start the next step to get the approval from ~Customer-Service-Leader~.</p>
                         </>
                     }
 
@@ -124,11 +127,13 @@ const Refund = () => {
                     }
 
                 </div>
+                
+
                 <RefundRequestList></RefundRequestList>
             </>}
 
             {
-                user?.role === "Warehouse" && <> <div className="mt-16 mb-5">
+                user?.role === "~Warehouse~" && <> <div className="mt-5 mb-5">
                     {selectedLanguage === "zh-CN" &&
                         <>
                             <h1>需要仓库管理员批准的请求</h1>
@@ -184,7 +189,7 @@ const Refund = () => {
             }
 
             {
-                user?.role === "Customer Service Leader" && <> <div className="mt-16 mb-5">
+                user?.role === "~Customer-Service-Leader~" && <> <div className="mt-5 mb-5">
                     {
                         selectedLanguage === "zh-CN" && (
                             <>
@@ -196,7 +201,7 @@ const Refund = () => {
                     {
                         selectedLanguage === "en-US" && (
                             <>
-                                <h1>Requests Need To Approved By Customer Service Leader</h1>
+                                <h1>Requests Need To Approved By ~Customer-Service-Leader~</h1>
                                 <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information. And then please approve their refund request.</p>
                             </>
                         )
@@ -248,7 +253,7 @@ const Refund = () => {
             }
 
             {
-                user?.role === "Warehouse Manager" && <> <div className="mt-16 mb-5">
+                user?.role === "~Warehouse-Manager~" && <> <div className="mt-5 mb-5">
                     {
                         selectedLanguage === "zh-CN" && (
                             <>
@@ -260,7 +265,7 @@ const Refund = () => {
                     {
                         selectedLanguage === "en-US" && (
                             <>
-                                <h1>Requests Need To Approved By Warehouse Manager</h1>
+                                <h1>Requests Need To Approved By ~Warehouse-Manager~</h1>
                                 <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information. And then please approved their refund request.</p>
                             </>
                         )
@@ -312,7 +317,7 @@ const Refund = () => {
             }
 
             {
-                user?.role === "Finance" && <> <div className="mt-16 mb-5">
+                user?.role === "~Finance~" && <> <div className="mt-16 mb-5">
                     {
                         selectedLanguage === "zh-CN" && (
                             <>

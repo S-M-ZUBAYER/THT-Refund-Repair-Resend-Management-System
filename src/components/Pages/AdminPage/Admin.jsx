@@ -534,6 +534,7 @@ const Admin = () => {
                                 onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
                                 className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
                             />
+                            
                             <input
                                 type="text"
                                 placeholder="Designation"

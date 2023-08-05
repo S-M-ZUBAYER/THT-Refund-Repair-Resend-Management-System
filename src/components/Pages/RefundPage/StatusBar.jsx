@@ -27,15 +27,28 @@ const StatusBar = () => {
         setSearchAllQuery(event.target.value);
     };
 
-    const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
-        request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
+    //     request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
+
+    // const filteredAllRequests = allWarehouseRequest.filter((request) =>
+    //     request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+    // );
 
     const filteredAllRequests = allWarehouseRequest.filter((request) =>
-        request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-    );
+    request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+  );
 
-
+    const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
+    request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
 
 
     const fetchData = async () => {
@@ -186,7 +199,7 @@ const StatusBar = () => {
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Tracking No"
+                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                         className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchAllQuery}
                         onChange={handleSearchAllChange}
@@ -476,7 +489,7 @@ const StatusBar = () => {
                     <div className="flex flex-col md:flex-row md:items-center mb-4">
                         <input
                             type="text"
-                            placeholder="Search by Tracking No"
+                            placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
                             className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                             value={searchQuery}
                             onChange={handleSearchChange}

@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <div>
       <ShowProducts />
-      <RegisterSystem />
       <ExportedCountries />
 
     </div>
