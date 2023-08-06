@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
-import { GrFacebook, GrGoogle } from "react-icons/gr";
 import { BsEyeFill, BsWechat } from "react-icons/bs";
 import { RiEyeCloseLine } from "react-icons/ri";
 // import { BsEyeFill } from "react-icons/bs";
@@ -20,9 +19,6 @@ const Login = () => {
   // const {setLanguage}=useContext(AllProductContext);
   const { user, setUser, selectedLanguage } = useContext(AuthContext);
 
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
 
@@ -35,10 +31,7 @@ const Login = () => {
 
   const handleClick = () => {
     const registerElement = document.getElementById('register');
-    console.log(registerElement)
     if (registerElement) {
-      // Access the element here
-      console.log(registerElement);
       registerElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -57,7 +50,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (email === "" || password === "") {
+    if (!email || !password || !role) {
       toast.error("please input all the information properly")
       return;
     }
@@ -69,20 +62,11 @@ const Login = () => {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({ email: email, password: password,role })
+      body: JSON.stringify({ email: email, password: password, role })
     })
       .then(res => res.json())
       .then(data => {
-        //     if (data?.message!=="Wrong email/password combination!"|| data?.message!=="User doesn't exist") {
-        //       console.log(data)
-        //     setUser(data[0])
-        //     localStorage.setItem('user', JSON.stringify(data[0]));
-        // setLoading(false);
-        // navigate(from,{replace:true})
-        // form.reset();
-        //         toast.success('User Login Successfully');
 
-        //     }
         if (data?.message === "Wrong email/password combination!") {
           toast.error(data.message);
           setLoading(false);
@@ -97,8 +81,8 @@ const Login = () => {
         }
 
         else {
-          setUser({email:data[0]?.email, name:data[0]?.name,country:data[0]?.country,role:role,admin:data[0]?.admin});
-          localStorage.setItem('RFuser', JSON.stringify({email:data[0]?.email, name:data[0]?.name,country:data[0]?.country, role:role,admin:data[0]?.admin}));
+          setUser({ email: data[0]?.email, name: data[0]?.name, country: data[0]?.country, role: role, image: data[0]?.image, admin: data[0]?.admin });
+          localStorage.setItem('RFuser', JSON.stringify({ email: data[0]?.email, name: data[0]?.name, country: data[0]?.country, role: role, admin: data[0]?.admin }));
           setLoading(false);
           navigate(from, { replace: true })
           form.reset();
@@ -138,8 +122,7 @@ const Login = () => {
     // Make the PATCH request to change the password
     axios.patch('http://localhost:5000/tht/changePassword', requestBody)
       .then((response) => {
-        console.log((response?.data)?.message)
-        if((response?.data)?.message === "Wrong email/old password combination!"){
+        if ((response?.data)?.message === "Wrong email/old password combination!") {
           toast.error("Wrong email/password combination!");
           return
         }
@@ -154,21 +137,13 @@ const Login = () => {
         // Handle errors, e.g., show error message to the user
       });
   };
-  const openModal = () => {
-    console.log("click")
-    setModalOpen(true);
-    console.log(modalOpen)
-  };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const [myEmail, setMyEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  
+
 
   return (
     <div className="bg-white flex justify-center items-center">
@@ -202,7 +177,7 @@ const Login = () => {
               <option>~Finance~</option>
               <option>~Supplier~</option>
             </select>
-             <hr className="  mb-10" ></hr>
+            <hr className="  mb-10" ></hr>
           </div>
 
           {/* <label htmlFor="password">Password:</label> */}
@@ -248,7 +223,7 @@ const Login = () => {
 
           </div>
         </form>
-        <div className="text-sm my-3 flex justify-center">
+        {/* <div className="text-sm my-3 flex justify-center">
           {selectedLanguage === "zh-CN" && "没有账号？"}
           {selectedLanguage === "en-US" && "Don't have an account? "}
           {selectedLanguage === "fil-PH" && "Wala pang account? "}
@@ -265,77 +240,33 @@ const Login = () => {
             {selectedLanguage === "vi-VN" && "Tạo tài khoản"}
             {selectedLanguage === "id-ID" && "Buat akun"}
           </Link>
-        </div>
+        </div> */}
 
 
-        {modalOpen && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={closeModal}>
-                &times;
-              </span>
 
-              <h2>Reset Password</h2>
 
-              <form>
-                <div>
-                  <label>Email:</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label>Password:</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label>Change Password:</label>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </div>
-
-                <button type="button" onClick={handleChangePassword}>
-                  Save
-                </button>
-              </form>
-
-              {errorMessage && <p>{errorMessage}</p>}
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed top-0 left-0 right-0 bottom-0 bg-opacity-50 bg-black flex justify-center items-center">
+            <div className="bg-white p-8 rounded-lg">
+              <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+              <div className="mb-4">
+                <label>Email:</label>
+                <input type="text" className="border rounded-md p-2 w-full" value={myEmail} onChange={(e) => setMyEmail(e.target.value)} />
+              </div>
+              <div className="mb-4">
+                <label>Old Password:</label>
+                <input type="password" className="border rounded-md p-2 w-full" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+              </div>
+              <div className="mb-4">
+                <label>New Password:</label>
+                <input type="password" className="border rounded-md p-2 w-full" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+              </div>
+              <btn className="bg-gradient-to-r from-green-300 to-yellow-300 text-black  text-base py-2 px-4 rounded cursor-pointer" onClick={handleChangePassword}>Change Password</btn>
+              <btn className="bg-gradient-to-r from-yellow-300 to-red-600 text-black py-2 px-4 rounded ml-2 cursor-pointer" onClick={() => setShowModal(false)}>Cancel</btn>
             </div>
           </div>
         )}
-
-
-          {/* Modal */}
-      {showModal && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-opacity-50 bg-black flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Change Password</h2>
-            <div className="mb-4">
-              <label>Email:</label>
-              <input type="text" className="border rounded-md p-2 w-full" value={myEmail} onChange={(e) => setMyEmail(e.target.value)} />
-            </div>
-            <div className="mb-4">
-              <label>Old Password:</label>
-              <input type="password" className="border rounded-md p-2 w-full" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-            </div>
-            <div className="mb-4">
-              <label>New Password:</label>
-              <input type="password" className="border rounded-md p-2 w-full" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            </div>
-            <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={handleChangePassword}>Change Password</button>
-            <button className="bg-red-500 text-white py-2 px-4 rounded ml-2" onClick={() => setShowModal(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
 
       </div>
     </div>

@@ -36,19 +36,19 @@ const StatusBar = () => {
     // );
 
     const filteredAllRequests = allWarehouseRequest.filter((request) =>
-    request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-  );
+        request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+    );
 
     const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
-    request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    request.customerOrderNumber.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
+        request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
 
 
     const fetchData = async () => {
@@ -56,7 +56,6 @@ const StatusBar = () => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllWarehouseRequest(data);
             setLoading(false);
         } catch (error) {
@@ -70,7 +69,6 @@ const StatusBar = () => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllWarehouseSpecialRequest(data);
             setLoading(false);
         } catch (error) {
@@ -104,7 +102,6 @@ const StatusBar = () => {
     const updateRequest = async (orderNumber, editingRequest) => {
         try {
             const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
-            console.log(editingRequest)
             toast.success('User information updated successfully');
         } catch (error) {
             console.error('Error updating user:', error);
@@ -134,8 +131,7 @@ const StatusBar = () => {
                 },
             });
 
-            // Handle success, display a message or do any other required actions
-            console.log('Images uploaded successfully!');
+
         } catch (error) {
             // Handle error
             console.error('Error uploading images:', error);

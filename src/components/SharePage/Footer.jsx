@@ -62,7 +62,7 @@ const Footer = () => {
 
           </div>
           <div className="text-center sm:text-left">
-          
+
             <nav aria-label="Footer About Nav" className="">
               <ul className=" text-xs md:text-sm flex justify-center">
                 <li>

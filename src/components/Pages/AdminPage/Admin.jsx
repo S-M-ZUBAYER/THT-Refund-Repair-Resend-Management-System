@@ -33,7 +33,6 @@ const Admin = () => {
                 const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
                 setShopNames((data.shopNames).split(","));
                 setReasons((data.reasons).split(","));
-                console.log(shopNames, reasons);
             } catch (error) {
                 console.error('Error fetching shop names:', error);
             }
@@ -52,7 +51,6 @@ const Admin = () => {
             const newShopNames = [...shopNames, shopName]
             setShopNames(newShopNames);
             //load current user data from database
-            console.log(newShopNames, "set All shopNames")
             fetch('http://localhost:5000/tht/shopNames', {
                 method: 'PUT',
                 headers: {
@@ -79,7 +77,6 @@ const Admin = () => {
 
     const handleReasonsChange = (e) => {
         setReason(e.target.value);
-        console.log(shopName, shopNames)
     };
 
     const handleAddReasons = () => {
@@ -87,7 +84,6 @@ const Admin = () => {
             const newReasons = [...reasons, reason]
             setReasons(newReasons);
             //load current user data from database
-            console.log(newReasons, "set All reasons")
             fetch('http://localhost:5000/tht/reasons', {
                 method: 'PUT',
                 headers: {
@@ -158,7 +154,6 @@ const Admin = () => {
         }
         try {
             const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, editingUser);
-            console.log(response)
             toast.success("user information updated successfully");
             // Optionally, you can show a success message to the user using a toast or other UI notification.
         } catch (error) {
@@ -183,17 +178,13 @@ const Admin = () => {
 
         try {
             const response = await axios.put(`http://localhost:5000/tht/RFusers/update/admin/${userId}`, isAdmin);
-            console.log(users)
-            console.log(response)
+
             setUsers(users?.map((user) => {
-                console.log(users)
                 if (user?.id === userId) {
                     user.admin = "true";
                 }
                 return user;
             }))
-
-            console.log(users)
 
 
             response?.statusText && toast.success("Make admin successfully");
@@ -312,26 +303,6 @@ const Admin = () => {
                             </th>
 
                             <th className="text-start">
-                                {selectedLanguage === "en-US" && "Language"}
-                                {selectedLanguage === "zh-CN" && "语言"}
-                                {selectedLanguage === "th-TH" && "ภาษา"}
-                                {selectedLanguage === "fil-PH" && "Wika"}
-                                {selectedLanguage === "vi-VN" && "Ngôn ngữ"}
-                                {selectedLanguage === "ms-MY" && "Bahasa"}
-                                {selectedLanguage === "id-ID" && "Bahasa"}
-                            </th>
-
-                            <th className="text-start">
-                                {selectedLanguage === "en-US" && "Country"}
-                                {selectedLanguage === "zh-CN" && "国家"}
-                                {selectedLanguage === "th-TH" && "ประเทศ"}
-                                {selectedLanguage === "fil-PH" && "Bansa"}
-                                {selectedLanguage === "vi-VN" && "Quốc gia"}
-                                {selectedLanguage === "ms-MY" && "Negara"}
-                                {selectedLanguage === "id-ID" && "Negara"}
-                            </th>
-
-                            <th className="text-start">
                                 {selectedLanguage === "en-US" && "Admin"}
                                 {selectedLanguage === "zh-CN" && "管理员"}
                                 {selectedLanguage === "th-TH" && "ผู้ดูแลระบบ"}
@@ -370,29 +341,43 @@ const Admin = () => {
                             </div>
                             :
                             users?.map((user, index) => (
-                                <tr key={user.id} className="my-5">
-                                    <td className="text-center pl-2 py-2 font-semibold" >{index + 1}</td>
+                                <tr key={user.id} className="my-5 border-b-2 py-1 ">
+                                    <td className="text-center pl-2 py-2 font-semibold my-auto" >{index + 1}</td>
                                     <td className="text-center pl-2 py-2 font-semibold" >{user?.name}</td>
-                                    <td className="text-center hidden md:block py-2">{user?.email}</td>
-                                    <td className="text-center">{user?.role}</td>
-                                    <td className="text-center">{user?.language}</td>
-                                    <td className="text-center">{user?.country}</td>
+                                    <td className="text-center py-2 ">{user?.email}</td>
+                                    <td className="text-center w-3/12">{user?.role}</td>
                                     <td>
                                         {
                                             user?.admin === "true" ?
-                                                <btn className=" bg-green-300 rounded-tl-lg rounded-br-lg py-1 px-2 text-center">Admin</btn>
+                                                <btn className=" bg-gradient-to-r from-green-300 to-yellow-300 rounded-tl-lg rounded-br-lg py-1 px-2 text-center">
+                                                    {selectedLanguage === "zh-CN" && "管理员"}
+                                                    {selectedLanguage === "en-US" && "Admin"}
+                                                    {selectedLanguage === "fil-PH" && "Admin"}
+                                                    {selectedLanguage === "ms-MY" && "Pentadbir"}
+                                                    {selectedLanguage === "th-TH" && "ผู้ดูแลระบบ"}
+                                                    {selectedLanguage === "vi-VN" && "Quản trị viên"}
+                                                    {selectedLanguage === "id-ID" && "Admin"}
+                                                </btn>
                                                 :
-                                                <btn onClick={() => updateUserToAdmin(user?.id)} className=" bg-red-400 rounded-tl-lg rounded-br-lg py-1 px-2 text-center hover:cursor-pointer">Make Admin</btn>
+                                                <btn onClick={() => updateUserToAdmin(user?.id)} className=" bg-gradient-to-r from-yellow-300 to-red-500 rounded-tl-lg rounded-br-lg py-1 px-2 text-center hover:cursor-pointer">
+                                                    {selectedLanguage === "zh-CN" && "设为管理员"}
+                                                    {selectedLanguage === "en-US" && "Make Admin"}
+                                                    {selectedLanguage === "fil-PH" && "Gawing Admin"}
+                                                    {selectedLanguage === "ms-MY" && "Jadikan Admin"}
+                                                    {selectedLanguage === "th-TH" && "ทำให้เป็นผู้ดูแลระบบ"}
+                                                    {selectedLanguage === "vi-VN" && "Đổi vai trò"}
+                                                    {selectedLanguage === "id-ID" && "Jadikan Admin"}
+                                                </btn>
 
                                         }
                                     </td>
                                     <td>
-                                        <btn className="text-blue-500 text-center cursor-pointer" onClick={() => openEditModal(user)}>
+                                        <btn className="text-blue-500 flex justify-center cursor-pointer" onClick={() => openEditModal(user)}>
                                             <FiEdit></FiEdit>
                                         </btn>
                                     </td>
                                     <td>
-                                        <btn className="text-red-500 text-center cursor-pointer" onClick={() => deleteUser(user.id)}>
+                                        <btn className="text-red-500 text-center cursor-pointer flex justify-center" onClick={() => deleteUser(user.id)}>
                                             <RiDeleteBin7Line></RiDeleteBin7Line>
                                         </btn>
                                     </td>
@@ -534,7 +519,7 @@ const Admin = () => {
                                 onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
                                 className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
                             />
-                            
+
                             <input
                                 type="text"
                                 placeholder="Designation"

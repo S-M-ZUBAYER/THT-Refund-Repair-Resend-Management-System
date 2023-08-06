@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { BsPerson } from 'react-icons/bs';
-import { BiSearch } from 'react-icons/bi';
+import { FaUserCircle} from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { HiOutlineMenuAlt4 } from 'react-icons/hi';
 import GrozzieeLogo from "../../assets/Grozziie_logo.jpg"
@@ -23,7 +23,7 @@ const Navbar = () => {
 
 
   const { user, setUser, selectedLanguage, setSelectedLanguage } = useContext(AuthContext);
-  console.log(user?.admin)
+
 
   const handleNav = () => {
     setNav(!nav);
@@ -50,7 +50,7 @@ const Navbar = () => {
     setSelectedLanguage(e.target.value);
   };
 
-  console.log(selectedLanguage)
+  
 
   return (
     <div className='flex w-full justify-between items-center h-15 sticky top-0 px-4  z-10 text-black bg-gradient-to-t from-red-200 via-amber-200  to-lime-200'>
@@ -84,6 +84,19 @@ const Navbar = () => {
         </select>
       </div>
 
+      {user && ( // Add a conditional check for the user object
+        <div className='hidden md:flex'>
+          <div className="flex items-center">
+            {user.image ? (
+              <img src={user.image} alt="User" className="w-10 h-10 rounded-full mr-4" />
+            ) : (
+              <FaUserCircle className="text-black text-2xl mr-4" />
+            )}
+            {user.name && <span className="text-black font-semibold">{user.name}</span>}
+          </div>
+        </div>
+      )}
+
 
 
       {
@@ -95,7 +108,7 @@ const Navbar = () => {
             <p className="hover:cursor-pointer">LogIn</p>
           </div></Link>
       }
-
+      
 
       {/* Hamburger */}
       <div onClick={handleNav} className='lg:hidden z-10'>
@@ -112,20 +125,20 @@ const Navbar = () => {
           <li><Link to='repair' className='border-b hover:cursor-pointer'>Supply</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>Repair</Link></li>
           {
-          user?.admin === "true" ? <li><Link to='admin' className="border-b hover:cursor-pointer">Admin</Link> </li> : ""
-        }
+            user?.admin === "true" ? <li><Link to='admin' className="border-b hover:cursor-pointer">Admin</Link> </li> : ""
+          }
           <li><Link to='about' className='border-b hover:cursor-pointer'>Contact</Link></li>
-          
 
-          
+
+
 
           {
-        user ?
-        <li onClick={handleToLogOut} className='border-b hover:cursor-pointer'>LogOut</li> :
-        <Link to="login"><div className='border-b hover:cursor-pointer'>
-        <li className="border-b hover:cursor-pointer">LogIn</li>
-      </div></Link>
-      }
+            user ?
+              <li onClick={handleToLogOut} className='border-b hover:cursor-pointer'>LogOut</li> :
+              <Link to="login"><div className='border-b hover:cursor-pointer'>
+                <li className="border-b hover:cursor-pointer">LogIn</li>
+              </div></Link>
+          }
 
           <div className='flex justify-between my-6'>
             <FaFacebook className='icon' />

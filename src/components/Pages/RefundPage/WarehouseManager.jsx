@@ -28,11 +28,11 @@ const WarehouseManager = ({ refundProducts }) => {
 
 
   const filteredAllWarehouseManagerRequests = allWarehouseManagerRequest.filter((request) =>
-  request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-  request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-  request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-  request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-);
+    request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+    request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+  );
 
 
 
@@ -42,7 +42,6 @@ const WarehouseManager = ({ refundProducts }) => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseManagerRequest');
       const data = response.data;
-      console.log(data); // You can process the data as needed
       setAllWarehouseManagerRequest(data);
       setLoading(false);
     } catch (error) {
@@ -59,9 +58,9 @@ const WarehouseManager = ({ refundProducts }) => {
 
   const deleteRequest = async (id) => {
     const confirmed = window.confirm('Are you sure you want to delete this product information?');
-        if (!confirmed) {
-            return; // Cancel the deletion if the user clicks Cancel or closes the modal
-        }
+    if (!confirmed) {
+      return; // Cancel the deletion if the user clicks Cancel or closes the modal
+    }
     try {
       await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
@@ -79,12 +78,11 @@ const WarehouseManager = ({ refundProducts }) => {
 
   const updateRequest = async (orderNumber, editingRequest) => {
     const confirmed = window.confirm('Are you sure you want to update these information?');
-        if (!confirmed) {
-            return; // Cancel the deletion if the user clicks Cancel or closes the modal
-        }
+    if (!confirmed) {
+      return; // Cancel the deletion if the user clicks Cancel or closes the modal
+    }
     try {
       const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
-      console.log(editingRequest)
       toast.success('User information updated successfully');
     } catch (error) {
       console.error('Error updating user:', error);
@@ -92,10 +90,6 @@ const WarehouseManager = ({ refundProducts }) => {
     }
   };
 
-  // const handleOptionChange = (special) => {
-  //   setEditingRequest({ ...editingRequest, special: !special });
-  //   console.log(editingRequest?.special);
-  // };
 
 
 
@@ -104,31 +98,6 @@ const WarehouseManager = ({ refundProducts }) => {
   };
 
 
-  // const updateWarehouseStatus = async (orderNumber) => {
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`
-  //     );
-
-  //     if (response.status === 200) {
-  //       setAllWarehouseRequest((prevRequests) =>
-  //         prevRequests.map((request) => {
-  //           if (request.orderNumber === orderNumber) {
-  //             return { ...request, warehouseStatus: true };
-  //           }
-  //           return request;
-  //         })
-  //       );
-
-  //       toast.success('Warehouse status updated successfully');
-  //     } else {
-  //       toast.error('Failed to update warehouse status');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating warehouse status:', error);
-  //     toast.error('Failed to update warehouse status');
-  //   }
-  // };
 
 
   const updateWarehouseStatus = async (orderNumber) => {
@@ -264,8 +233,8 @@ const WarehouseManager = ({ refundProducts }) => {
                 <td className="text-start  py-2">{request?.customerUserName}</td>
                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                  <td className="text-start py-2 cursor-pointer">
-                <Link to={`/refund/details/${request?.orderNumber}`}>
+                <td className="text-start py-2 cursor-pointer">
+                  <Link to={`/refund/details/${request?.orderNumber}`}>
                     <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                       {selectedLanguage === "fil-PH" && "Detalye"}
                       {selectedLanguage === "ms-MY" && "Butiran"}
@@ -274,9 +243,9 @@ const WarehouseManager = ({ refundProducts }) => {
                       {selectedLanguage === "id-ID" && "Rincian"}
                       {selectedLanguage === "zh-CN" && "详情"}
                     </btn>
-                </Link>
-                  </td>
-                
+                  </Link>
+                </td>
+
               </tr>
             ))
           )}

@@ -52,7 +52,6 @@ const RegisterSystem = () => {
     }
   };
 
-  console.log(selectedRoles)
 
   //use this function to navigate the route after registration
   const navigate = useNavigate();
@@ -99,12 +98,11 @@ const RegisterSystem = () => {
       email,
       name,
       phoneNumber,
-      role:selectedRoles,
+      role: selectedRoles,
       country,
       language,
       image
     };
-console.log(user?.role)
     const form = event.target;
 
     fetch('http://localhost:5000/tht/check-user', {
@@ -117,7 +115,6 @@ console.log(user?.role)
       .then((response) => response.json())
       .then((data) => {
         const userExists = data.exists;
-        console.log(userExists);
 
         if (!userExists) {
           // Validate password length
@@ -147,7 +144,7 @@ console.log(user?.role)
               confirmPassword,
               name,
               phoneNumber,
-              role:selectedRoles,
+              role: selectedRoles,
               language,
               country,
               image,
@@ -156,7 +153,6 @@ console.log(user?.role)
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log(data)
               if (data) {
                 // localStorage.setItem('RFuser', JSON.stringify(user));
                 // setUser(user);
@@ -494,7 +490,7 @@ console.log(user?.role)
       </div>
 
       <div className="lg:col-span-2 ml-5 border-2 px-3 pt-3">
-        <div className='border text-center bg-amber-200 font-semibold rounded-lg'>
+        <div className='border text-center bg-gradient-to-r from-green-300 to-yellow-300 font-semibold rounded-lg'>
           <p className='pt-2'>
             {selectedLanguage === "zh-CN" && "如果您没有任何帐户"}
             {selectedLanguage === "en-US" && "If You Don't Have Any Account"}
@@ -625,19 +621,19 @@ console.log(user?.role)
               {selectedLanguage === "id-ID" && "Peran"}
             </label>
             <div className="text-start w-9/12 rounded-lg" style={{ maxHeight: '100px', overflowY: 'scroll', border: '1px solid #ccc' }}>
-            {allRoles.map((role, index) => (
-              <div className="px-3 flex justify-start " key={index}>
-                <input
-                  className="mr-2 text-start"
-                  type="checkbox"
-                  value={role}
-                  checked={selectedRoles.includes(role)}
-                  onChange={handleCheckboxChange}
-                />
-                {role}
-              </div>
-            ))}
-          </div>
+              {allRoles.map((role, index) => (
+                <div className="px-3 flex justify-start " key={index}>
+                  <input
+                    className="mr-2 text-start"
+                    type="checkbox"
+                    value={role}
+                    checked={selectedRoles.includes(role)}
+                    onChange={handleCheckboxChange}
+                  />
+                  {role}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className='flex justify-between items-center my-2'>
@@ -690,7 +686,7 @@ console.log(user?.role)
             </select>
           </div>
 
-         
+
 
           <div className='flex justify-between items-center my-2'>
             <label className='mr-2'>

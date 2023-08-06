@@ -18,7 +18,7 @@ const DetailsLayout = () => {
     const currentPath = window.location.pathname;
 
 
-    console.log(currentRequest)
+
 
     // Split the path by '/'
     const segments = currentPath.split('/');
@@ -115,28 +115,13 @@ const DetailsLayout = () => {
     };
 
 
-    // const fetchSpecialData = async () => {
-    //     try {
-    //         setLoading(true);
-    //         const response = await axios.get('http://localhost:5000/tht/LeaderStatusSpecialRequest');
-    //         const data = response.data;
-    //         console.log(data); // You can process the data as needed
-    //         setCurrentRequest(data[0])
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.error('Error occurred during the request:', error);
-    //         setLoading(false);
-    //     }
-    // };
 
     const fetchWarehoueManagerData = async (lastValue) => {
         try {
             setLoading(true);
             const response = await axios.get(`http://localhost:5000/tht/refundRequest/${lastValue}`);
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setCurrentRequest(data);
-            console.log(currentRequest)
             if (data?.warehouseManagerStatus === "true") {
                 setStatus("Finance")
             }
@@ -158,7 +143,6 @@ const DetailsLayout = () => {
 
 
     const [selectedImage, setSelectedImage] = useState(null);
-    console.log(currentRequest)
 
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
@@ -173,9 +157,7 @@ const DetailsLayout = () => {
         if (!confirmed) {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
-        console.log(status)
         if (status === "warehouseManager") {
-            console.log(status, "enter")
             try {
                 const response = await axios.put(
                     `http://localhost:5000/tht/updateWarehouseManagerStatus/${orderNumber}`
@@ -194,7 +176,6 @@ const DetailsLayout = () => {
         }
         else {
             try {
-                console.log(status, "enter")
                 const response = await axios.put(
                     `http://localhost:5000/tht/updateFinanceStatus/${orderNumber}`
                 );
@@ -238,7 +219,6 @@ const DetailsLayout = () => {
         }
     };
     // setWarehouseImages((currentRequest?.warehouseImg).split(","))
-    console.log([currentRequest?.warehouseImg], "warehouse")
 
     return (
         <div className='max-w-[1240px] mx-auto py-16 px-4 text-center'>

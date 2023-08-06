@@ -23,7 +23,7 @@ const PhilippinesNavbar = () => {
 
 
   const { user, setUser, selectedLanguage, setSelectedLanguage } = useContext(AuthContext);
-  console.log(user?.admin)
+
 
   const handleNav = () => {
     setNav(!nav);
@@ -50,7 +50,6 @@ const PhilippinesNavbar = () => {
     setSelectedLanguage(e.target.value);
   };
 
-  console.log(selectedLanguage)
 
   return (
     <div className='flex w-full justify-between items-center h-15 sticky top-0 px-4  z-10 text-black bg-gradient-to-t from-red-200 via-amber-200  to-lime-200'>

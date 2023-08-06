@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin7Line } from 'react-icons/ri';
-import { BsSignNoRightTurn} from 'react-icons/bs';
-import { FcCheckmark} from 'react-icons/fc';
+import { BsSignNoRightTurn } from 'react-icons/bs';
+import { FcCheckmark } from 'react-icons/fc';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
 import DisplaySpinner from '../../Loading/DisplaySpinner';
@@ -15,11 +15,10 @@ const RefundRequestListAdmin = () => {
   const [editingRequest, setEditingRequest] = useState(null);
 
   const handleOptionChange = (special) => {
-    console.log(special)
     setEditingRequest({ ...editingRequest, special: !special })
   };
 
-  const handleToToast=()=>{
+  const handleToToast = () => {
     const getErrorMessage = () => {
       switch (selectedLanguage) {
         case "zh-CN":
@@ -51,7 +50,6 @@ const RefundRequestListAdmin = () => {
       .then((response) => response.json())
       .then((data) => {
         setAllRefundRequest(data);
-        console.log(data)
       })
       .catch((error) => {
         console.error('Error occurred during the request:', error);
@@ -194,9 +192,9 @@ const RefundRequestListAdmin = () => {
 
                 {user?.admin === "true" && request?.financeStatus === "true" ? (
                   <>
-                  <td>
+                    <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={handleToToast}>
-                        <FcCheckmark/>
+                        <FcCheckmark />
                       </btn>
                     </td>
                     <td>
@@ -204,21 +202,21 @@ const RefundRequestListAdmin = () => {
                         <FcCheckmark />
                       </btn>
                     </td>
-                    </>
-                 
+                  </>
+
                 ) : (
                   <>
-                  <td>
-                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
-                      <FiEdit />
-                    </btn>
-                  </td>
-                  <td>
-                    <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteUser(request?.id)}>
-                      <RiDeleteBin7Line />
-                    </btn>
-                  </td>
-                </>
+                    <td>
+                      <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
+                        <FiEdit />
+                      </btn>
+                    </td>
+                    <td>
+                      <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteUser(request?.id)}>
+                        <RiDeleteBin7Line />
+                      </btn>
+                    </td>
+                  </>
                 )}
 
 
@@ -232,17 +230,33 @@ const RefundRequestListAdmin = () => {
 
 
 
-     {/* modal part start from here to update a user information */}
-     {editingRequest && (
+      {/* modal part start from here to update a user information */}
+      {editingRequest && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-8 w-7/12 h-11/12 mx-auto">
-            <h2 className="text-lg font-bold mb-1bg-gradient-to-r from-green-300 to-yellow-300">Edit Refund Request Information</h2>
+            <h2 className="text-lg font-bold mb-1bg-gradient-to-r from-green-300 to-yellow-300">
+              {selectedLanguage === "zh-CN" && "编辑退款请求信息"}
+              {selectedLanguage === "en-US" && "Edit Refund Request Information"}
+              {selectedLanguage === "fil-PH" && "I-edit ang Impormasyon ng Refund Request"}
+              {selectedLanguage === "ms-MY" && "Kemaskini Maklumat Permintaan Pembayaran Balik"}
+              {selectedLanguage === "th-TH" && "แก้ไขข้อมูลคำขอคืนเงิน"}
+              {selectedLanguage === "vi-VN" && "Chỉnh Sửa Thông Tin Yêu Cầu Hoàn Tiền"}
+              {selectedLanguage === "id-ID" && "Edit Informasi Permintaan Pengembalian Dana"}
+            </h2>
 
 
             <div className="border-2 p-5  border-cyan-400">
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer User Name:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户用户名："}
+                  {selectedLanguage === "en-US" && "Customer User Name:"}
+                  {selectedLanguage === "fil-PH" && "Pangalan ng Customer User:"}
+                  {selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"}
+                </label> <input
                   type="text"
                   placeholder="customer User Name"
                   value={editingRequest.customerUserName}
@@ -251,7 +265,15 @@ const RefundRequestListAdmin = () => {
                 /> </div>
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Phone No:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户电话号码："}
+                  {selectedLanguage === "en-US" && "Customer Phone No:"}
+                  {selectedLanguage === "fil-PH" && "Numero ng Telepono ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Nombor Telefon Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "หมายเลขโทรศัพท์ลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Số Điện thoại Khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Nomor Telepon Pelanggan:"}
+                </label> <input
                   type="text"
                   placeholder="customer Phone No"
                   value={editingRequest.customerPhoneNo}
@@ -261,7 +283,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Shope Name:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "店铺名称："}
+                  {selectedLanguage === "en-US" && "Shop Name:"}
+                  {selectedLanguage === "fil-PH" && "Pangalan ng Tindahan:"}
+                  {selectedLanguage === "ms-MY" && "Nama Kedai:"}
+                  {selectedLanguage === "th-TH" && "ชื่อร้านค้า:"}
+                  {selectedLanguage === "vi-VN" && "Tên Cửa hàng:"}
+                  {selectedLanguage === "id-ID" && "Nama Toko:"}
+                </label> <input
                   type="text"
                   placeholder="Shop Name"
                   value={editingRequest.shopName}
@@ -272,7 +302,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Bank Name:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户银行名称："}
+                  {selectedLanguage === "en-US" && "Customer Bank Name:"}
+                  {selectedLanguage === "fil-PH" && "Pangalan ng Bangko ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Nama Bank Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "ชื่อธนาคารของลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Tên Ngân hàng Khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Nama Bank Pelanggan:"}
+                </label> <input
                   type="text"
                   placeholder="customer Bank Name"
                   value={editingRequest.customerBankName}
@@ -281,7 +319,15 @@ const RefundRequestListAdmin = () => {
                 /> </div>
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Bank Account Name:</label>
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "银行账户名称："}
+                  {selectedLanguage === "en-US" && "Bank Account Name:"}
+                  {selectedLanguage === "fil-PH" && "Pangalan ng Bank Account:"}
+                  {selectedLanguage === "ms-MY" && "Nama Akaun Bank:"}
+                  {selectedLanguage === "th-TH" && "ชื่อบัญชีธนาคาร:"}
+                  {selectedLanguage === "vi-VN" && "Tên Tài khoản Ngân hàng:"}
+                  {selectedLanguage === "id-ID" && "Nama Rekening Bank:"}
+                </label>
                 <input
                   type="text"
                   placeholder="Customer Bank Account Name"
@@ -293,7 +339,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Bank Swift:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户银行 Swift 号码："}
+                  {selectedLanguage === "en-US" && "Customer Bank Swift:"}
+                  {selectedLanguage === "fil-PH" && "Swift ng Bank ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Kod SWIFT Bank Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "รหัส Swift ของธนาคารของลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Mã Swift của ngân hàng khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Kode SWIFT Bank Pelanggan:"}
+                </label> <input
                   type="text"
                   placeholder="customer Bank Swift"
                   value={editingRequest.customerBankSwift}
@@ -302,7 +356,15 @@ const RefundRequestListAdmin = () => {
                 /> </div>
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Order Number:</label>
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户订单号码："}
+                  {selectedLanguage === "en-US" && "Customer Order Number:"}
+                  {selectedLanguage === "fil-PH" && "Numero ng Order ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Nombor Pesanan Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อของลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Số Đơn đặt hàng của khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Nomor Pesanan Bank Pelanggan:"}
+                </label>
                 <input
                   type="text"
                   placeholder="Customer Order Number"
@@ -313,7 +375,15 @@ const RefundRequestListAdmin = () => {
               </div>
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Receiving Account:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户收款账户："}
+                  {selectedLanguage === "en-US" && "Customer Receiving Account:"}
+                  {selectedLanguage === "fil-PH" && "Account ng Pagtanggap ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Akaun Penerimaan Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "บัญชีรับเงินของลูกค้า:"}
+                  {selectedLanguage === "vi-VN" && "Tài khoản nhận tiền của khách hàng:"}
+                  {selectedLanguage === "id-ID" && "Akun Penerimaan Bank Pelanggan:"}
+                </label> <input
                   type="text"
                   placeholder="customer Receiving Account"
                   value={editingRequest.customerReceivingAccount}
@@ -321,7 +391,15 @@ const RefundRequestListAdmin = () => {
                   className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                 /> </div>
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Customer Receiving Amount:</label>
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "客户收款金额："}
+                  {selectedLanguage === "en-US" && "Customer Receiving Amount:"}
+                  {selectedLanguage === "fil-PH" && "Halaga ng Pagtanggap ng Customer:"}
+                  {selectedLanguage === "ms-MY" && "Jumlah Penerimaan Pelanggan:"}
+                  {selectedLanguage === "th-TH" && "จำนวนเงินที่ลูกค้าได้รับ:"}
+                  {selectedLanguage === "vi-VN" && "Số tiền khách hàng nhận được:"}
+                  {selectedLanguage === "id-ID" && "Jumlah Penerimaan Bank Pelanggan:"}
+                </label>
                 <input
                   type="text"
                   placeholder="customer Receiving Amount"
@@ -332,7 +410,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Return Tracking Number:</label>
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "退货跟踪号："}
+                  {selectedLanguage === "en-US" && "Return Tracking Number:"}
+                  {selectedLanguage === "fil-PH" && "Numero ng Pagsubaybay sa Pagbalik:"}
+                  {selectedLanguage === "ms-MY" && "Nombor Jejak Kembali:"}
+                  {selectedLanguage === "th-TH" && "หมายเลขการติดตามการคืนสินค้า:"}
+                  {selectedLanguage === "vi-VN" && "Số theo dõi hoàn trả:"}
+                  {selectedLanguage === "id-ID" && "Nomor Lacak Pengembalian:"}
+                </label>
                 <input
                   type="text"
                   placeholder="Customer Return Tracking Number"
@@ -344,7 +430,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Order Amount:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "订单金额："}
+                  {selectedLanguage === "en-US" && "Order Amount:"}
+                  {selectedLanguage === "fil-PH" && "Halaga ng Order:"}
+                  {selectedLanguage === "ms-MY" && "Jumlah Pesanan:"}
+                  {selectedLanguage === "th-TH" && "จำนวนเงินในคำสั่งซื้อ:"}
+                  {selectedLanguage === "vi-VN" && "Số tiền đặt hàng:"}
+                  {selectedLanguage === "id-ID" && "Jumlah Pesanan:"}
+                </label> <input
                   type="text"
                   placeholder="Order Amount"
                   value={editingRequest.orderAmount}
@@ -354,7 +448,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Refund Amount:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "退款金额："}
+                  {selectedLanguage === "en-US" && "Refund Amount:"}
+                  {selectedLanguage === "fil-PH" && "Halaga ng Refund:"}
+                  {selectedLanguage === "ms-MY" && "Jumlah Bayaran Balik:"}
+                  {selectedLanguage === "th-TH" && "จำนวนเงินที่คืน:"}
+                  {selectedLanguage === "vi-VN" && "Số tiền hoàn tiền:"}
+                  {selectedLanguage === "id-ID" && "Jumlah Pengembalian:"}
+                </label> <input
                   type="text"
                   placeholder="Refund Amount"
                   value={editingRequest.refundAmount}
@@ -364,7 +466,15 @@ const RefundRequestListAdmin = () => {
 
 
               <div className="mb-1 flex justify-between items-center">
-                <label htmlFor="customerOrderNumber">Refund Reason:</label> <input
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "退款原因："}
+                  {selectedLanguage === "en-US" && "Refund Reason:"}
+                  {selectedLanguage === "fil-PH" && "Dahilan ng Pagbabalik ng Halaga:"}
+                  {selectedLanguage === "ms-MY" && "Sebab Pampasan:"}
+                  {selectedLanguage === "th-TH" && "เหตุผลในการขอคืนเงิน:"}
+                  {selectedLanguage === "vi-VN" && "Lý do hoàn tiền:"}
+                  {selectedLanguage === "id-ID" && "Alasan Pengembalian:"}
+                </label> <input
                   type="text"
                   placeholder="Refund Reason"
                   value={editingRequest.refundReason}
@@ -377,7 +487,15 @@ const RefundRequestListAdmin = () => {
                 editingRequest.otherReason &&
                 <>
                   <div className="flex justify-between items-center mb-5">
-                    <label htmlFor="customerOrderNumber">Other Reason:</label> <input
+                    <label htmlFor="customerOrderNumber">
+                      {selectedLanguage === "zh-CN" && "其他原因："}
+                      {selectedLanguage === "en-US" && "Other Reason:"}
+                      {selectedLanguage === "fil-PH" && "Iba pang Dahilan:"}
+                      {selectedLanguage === "ms-MY" && "Sebab Lain:"}
+                      {selectedLanguage === "th-TH" && "เหตุผลอื่นๆ:"}
+                      {selectedLanguage === "vi-VN" && "Lý do khác:"}
+                      {selectedLanguage === "id-ID" && "Alasan Lain:"}
+                    </label> <input
                       type="text"
                       placeholder="Other Reason"
                       value={editingRequest.otherReason}
@@ -389,7 +507,15 @@ const RefundRequestListAdmin = () => {
 
               <div className="mb-1 flex justify-between items-center">
                 <div>
-                  <label htmlFor="Applicant Name">Name:</label> <input
+                  <label htmlFor="Applicant Name">
+                    {selectedLanguage === "zh-CN" && "姓名："}
+                    {selectedLanguage === "en-US" && "Name:"}
+                    {selectedLanguage === "fil-PH" && "Pangalan:"}
+                    {selectedLanguage === "ms-MY" && "Nama:"}
+                    {selectedLanguage === "th-TH" && "ชื่อ:"}
+                    {selectedLanguage === "vi-VN" && "Tên:"}
+                    {selectedLanguage === "id-ID" && "Nama:"}
+                  </label> <input
                     type="text"
                     placeholder="applicantName"
                     value={editingRequest.applicantName}
@@ -398,7 +524,15 @@ const RefundRequestListAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="orderDate">Date:</label> <input
+                  <label htmlFor="orderDate">
+                    {selectedLanguage === "zh-CN" && "日期："}
+                    {selectedLanguage === "en-US" && "Date:"}
+                    {selectedLanguage === "fil-PH" && "Petsa:"}
+                    {selectedLanguage === "ms-MY" && "Tarikh:"}
+                    {selectedLanguage === "th-TH" && "วันที่:"}
+                    {selectedLanguage === "vi-VN" && "Ngày:"}
+                    {selectedLanguage === "id-ID" && "Tanggal:"}
+                  </label> <input
                     type="text"
                     placeholder="Order Date"
                     value={editingRequest.orderDate}
@@ -409,7 +543,15 @@ const RefundRequestListAdmin = () => {
                 <div>
 
 
-                  <label htmlFor="orderTime">Time:</label> <input
+                  <label htmlFor="orderTime">
+                    {selectedLanguage === "zh-CN" && "时间："}
+                    {selectedLanguage === "en-US" && "Time:"}
+                    {selectedLanguage === "fil-PH" && "Oras:"}
+                    {selectedLanguage === "ms-MY" && "Masa:"}
+                    {selectedLanguage === "th-TH" && "เวลา:"}
+                    {selectedLanguage === "vi-VN" && "Thời gian:"}
+                    {selectedLanguage === "id-ID" && "Waktu:"}
+                  </label> <input
                     type="text"
                     placeholder="order Time"
                     value={editingRequest.orderTime}
@@ -427,13 +569,25 @@ const RefundRequestListAdmin = () => {
                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:cursor-pointer"
                 onClick={() => saveUser(editingRequest.orderNumber, editingRequest)}
               >
-                Update
+                {selectedLanguage === "zh-CN" && "更新"}
+                {selectedLanguage === "en-US" && "Update"}
+                {selectedLanguage === "fil-PH" && "I-update"}
+                {selectedLanguage === "ms-MY" && "Kemas kini"}
+                {selectedLanguage === "th-TH" && "อัปเดต"}
+                {selectedLanguage === "vi-VN" && "Cập nhật"}
+                {selectedLanguage === "id-ID" && "Perbarui"}
               </btn>
               <btn
                 className="bg-yellow-500 text-white px-4 py-2 rounded-md ml-2 hover:cursor-pointer"
                 onClick={() => setEditingRequest(null)}
               >
-                Cancel
+                {selectedLanguage === "zh-CN" && "取消"}
+                {selectedLanguage === "en-US" && "Cancel"}
+                {selectedLanguage === "fil-PH" && "Kanselahin"}
+                {selectedLanguage === "ms-MY" && "Batal"}
+                {selectedLanguage === "th-TH" && "ยกเลิก"}
+                {selectedLanguage === "vi-VN" && "Hủy bỏ"}
+                {selectedLanguage === "id-ID" && "Batal"}
               </btn>
             </div>
           </div>

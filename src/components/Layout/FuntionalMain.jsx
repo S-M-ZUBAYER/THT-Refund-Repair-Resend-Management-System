@@ -17,7 +17,7 @@ const FunctionalMain = () => {
     const { selectedLanguage } = useContext(AuthContext);
 
     return (
-        <div  className="text-black mb-5">
+        <div className="text-black mb-5">
             {
                 selectedLanguage === "zh-CN" && <ChineseNavbar></ChineseNavbar>
 
@@ -46,4 +46,4 @@ const FunctionalMain = () => {
     );
 };
 
-export default FunctionalMain ;
+export default FunctionalMain;

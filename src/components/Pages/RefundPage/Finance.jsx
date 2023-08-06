@@ -31,32 +31,30 @@ const Finance = ({ refundProducts }) => {
     };
 
 
-    
+
 
 
     const filteredAllFinanceRequests = allFinanceRequest.filter((request) =>
-    request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
-    request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-  );
+        request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+    );
 
-  const filteredAllFinanceSpecialRequests = allFinanceSpecialRequest.filter((request) =>
-    request.customerUserName.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
-    request.customerReturnTrackingNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
-    request.customerPhoneNo.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
-    request.customerOrderNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase())
-  );
+    const filteredAllFinanceSpecialRequests = allFinanceSpecialRequest.filter((request) =>
+        request.customerUserName.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+        request.customerReturnTrackingNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+        request.customerPhoneNo.toLowerCase().includes(searchSpecialQuery.toLowerCase()) ||
+        request.customerOrderNumber.toLowerCase().includes(searchSpecialQuery.toLowerCase())
+    );
 
 
-    console.log(filteredAllFinanceSpecialRequests)
 
     const fetchFinanceAllData = async () => {
         try {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/financeRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllFinanceRequest(data);
             setLoading(false);
         } catch (error) {
@@ -70,7 +68,6 @@ const Finance = ({ refundProducts }) => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/financeSpecialRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllFinanceSpecialRequest(data);
             setLoading(false);
         } catch (error) {
@@ -114,7 +111,6 @@ const Finance = ({ refundProducts }) => {
         }
         try {
             const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
-            console.log(editingRequest)
             toast.success('User information updated successfully');
         } catch (error) {
             console.error('Error updating user:', error);
@@ -125,7 +121,7 @@ const Finance = ({ refundProducts }) => {
 
 
 
-  
+
     const updateWarehouseStatus = async (orderNumber) => {
         const confirmed = window.confirm('Are you sure you want to approve?');
         if (!confirmed) {
@@ -243,12 +239,12 @@ const Finance = ({ refundProducts }) => {
                         </th>
 
                         <th className="text-start hidden md:block py-2">{selectedLanguage === "en-US" && "Order Date"}
-              {selectedLanguage === "fil-PH" && "Petsa ng Order"}
-              {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
-              {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
-              {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
-              {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
-              {selectedLanguage === "zh-CN" && "订单日期"}</th>
+                            {selectedLanguage === "fil-PH" && "Petsa ng Order"}
+                            {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
+                            {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
+                            {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
+                            {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
+                            {selectedLanguage === "zh-CN" && "订单日期"}</th>
 
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
@@ -259,7 +255,7 @@ const Finance = ({ refundProducts }) => {
                             {selectedLanguage === "id-ID" && "Rincian"}
                             {selectedLanguage === "zh-CN" && "详情"}
                         </th>
-                        
+
 
                     </tr>
                 </thead>
@@ -278,8 +274,8 @@ const Finance = ({ refundProducts }) => {
                                 <td className="text-start  py-2">{request?.customerUserName}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                                    <td className="text-start py-2 cursor-pointer">
-                                <Link to={`/refund/details/${request?.orderNumber}`}>
+                                <td className="text-start py-2 cursor-pointer">
+                                    <Link to={`/refund/details/${request?.orderNumber}`}>
                                         <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                             {selectedLanguage === "fil-PH" && "Detalye"}
                                             {selectedLanguage === "ms-MY" && "Butiran"}
@@ -288,8 +284,8 @@ const Finance = ({ refundProducts }) => {
                                             {selectedLanguage === "id-ID" && "Rincian"}
                                             {selectedLanguage === "zh-CN" && "详情"}
                                         </btn>
-                                </Link>
-                                    </td>
+                                    </Link>
+                                </td>
                             </tr>
                         ))
                     )}
@@ -405,12 +401,12 @@ const Finance = ({ refundProducts }) => {
                                 {selectedLanguage === "zh-CN" && "跟踪号码"}
                             </th>
                             <th className="text-start hidden md:block py-2">{selectedLanguage === "en-US" && "Order Date"}
-              {selectedLanguage === "fil-PH" && "Petsa ng Order"}
-              {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
-              {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
-              {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
-              {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
-              {selectedLanguage === "zh-CN" && "订单日期"}</th>
+                                {selectedLanguage === "fil-PH" && "Petsa ng Order"}
+                                {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
+                                {selectedLanguage === "th-TH" && "วันที่คำสั่งซื้อ"}
+                                {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
+                                {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
+                                {selectedLanguage === "zh-CN" && "订单日期"}</th>
 
                             <th className="text-start py-2">
                                 {selectedLanguage === "en-US" && "Details"}
@@ -421,7 +417,7 @@ const Finance = ({ refundProducts }) => {
                                 {selectedLanguage === "id-ID" && "Rincian"}
                                 {selectedLanguage === "zh-CN" && "详情"}
                             </th>
-                           
+
 
                         </tr>
                     </thead>
@@ -440,8 +436,8 @@ const Finance = ({ refundProducts }) => {
                                     <td className="text-start  py-2">{request?.customerUserName}</td>
                                     <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                     <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                                        <td className="text-start py-2 cursor-pointer">
-                                    <Link to={`/refund/details/${request?.orderNumber}`}>
+                                    <td className="text-start py-2 cursor-pointer">
+                                        <Link to={`/refund/details/${request?.orderNumber}`}>
                                             <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                                 {selectedLanguage === "fil-PH" && "Detalye"}
                                                 {selectedLanguage === "ms-MY" && "Butiran"}
@@ -450,8 +446,8 @@ const Finance = ({ refundProducts }) => {
                                                 {selectedLanguage === "id-ID" && "Rincian"}
                                                 {selectedLanguage === "zh-CN" && "详情"}
                                             </btn>
-                                    </Link>
-                                        </td>
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))
                         )}

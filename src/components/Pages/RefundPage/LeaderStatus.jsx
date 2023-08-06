@@ -44,10 +44,6 @@ const LeaderStatus = () => {
 
 
 
-    // const handleOptionChange = (special) => {
-    //     console.log(special)
-    //     setEditingRequest({ ...editingRequest, special: !special })
-    // };
 
 
 
@@ -56,7 +52,6 @@ const LeaderStatus = () => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/LeaderStatusRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllLeaderRequest(data);
             setLoading(false);
         } catch (error) {
@@ -71,7 +66,6 @@ const LeaderStatus = () => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/LeaderStatusSpecialRequest');
             const data = response.data;
-            console.log(data); // You can process the data as needed
             setAllSpecialRequest(data)
             setLoading(false);
         } catch (error) {

@@ -44,7 +44,6 @@ const RefundRequestForm = () => {
         const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
         setShopNames((data.shopNames).split(","));
         setReasons((data.reasons).split(","));
-        console.log(shopNames, reasons);
       } catch (error) {
         console.error('Error fetching shop names:', error);
       }
@@ -55,7 +54,6 @@ const RefundRequestForm = () => {
 
 
   const handleOptionChange = () => {
-    console.log(special)
     setSpecial((prevState) => !prevState);
   };
 
@@ -65,7 +63,7 @@ const RefundRequestForm = () => {
     return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
   };
 
-console.log(user,"kjsdafklajljfdlajl")
+
 
   const handleToGenerateOrderNumber = () => {
     if (!user || !user.country) {
@@ -99,19 +97,6 @@ console.log(user,"kjsdafklajljfdlajl")
 
 
 
-  // orderNumber=handleToGenerateOrderNumber(user);
-  console.log(orderNumber); // Output: "HHMMSSDDMMYY1011234" (generated order number based on user's country)
-
-
-
-  // const handleToGenerateOrderNumber = () => {
-  //   setCountryCode(user?.country === "Bangladesh" && "101" || user?.country === "China" && "102" || user?.country === "Indonesia" && "103" || user?.country === "Thailand" && "104" || user?.country === "Singapore" && "105" || user?.country === "Malaysia" && "105");
-  //   const randomNumber = generateRandomNumber();
-  //   setTimeNumber((((new Date().toLocaleTimeString()).split(" ")[0]).split(":")));
-  //   setDateNumber((new Date().toLocaleDateString()).split("/"))
-  //   setOrderNumber(`${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dataNumber[0]}${dataNumber[1]}${dataNumber[2]}${countryCode}${randomNumber} `);
-  // }
-
 
   const handleToSetDateTime = () => {
     setApplicationDate(new Date().toLocaleDateString());
@@ -119,13 +104,6 @@ console.log(user,"kjsdafklajljfdlajl")
 
 
   }
-
-  // function generateRandomNumber() {
-  //   const min = 1000; // Minimum four-digit number (inclusive)
-  //   const max = 9999; // Maximum four-digit number (inclusive)
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // }
-
 
 
 
@@ -188,7 +166,7 @@ console.log(user,"kjsdafklajljfdlajl")
 
     };
 
-    console.log(formData);
+
     fetch('http://localhost:5000/tht/refundRequest/add', {
       method: 'POST',
       headers: {
@@ -198,7 +176,6 @@ console.log(user,"kjsdafklajljfdlajl")
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data stored successfully:', data);
         toast.success("Data stored successfully");
         setAllRefundRequest([...allRefundRequest, formData]);
 
@@ -727,14 +704,14 @@ console.log(user,"kjsdafklajljfdlajl")
 
         <div className="mb-4 flex justify-between items-center">
           <label htmlFor="remarks">
-  {selectedLanguage === "zh-CN" && "备注："}
-  {selectedLanguage === "en-US" && "Remarks:"}
-  {selectedLanguage === "fil-PH" && "Mga Tala:"}
-  {selectedLanguage === "ms-MY" && "Ulasan:"}
-  {selectedLanguage === "th-TH" && "หมายเหตุ:"}
-  {selectedLanguage === "vi-VN" && "Ghi Chú:"}
-  {selectedLanguage === "id-ID" && "Catatan:"}
-</label>
+            {selectedLanguage === "zh-CN" && "备注："}
+            {selectedLanguage === "en-US" && "Remarks:"}
+            {selectedLanguage === "fil-PH" && "Mga Tala:"}
+            {selectedLanguage === "ms-MY" && "Ulasan:"}
+            {selectedLanguage === "th-TH" && "หมายเหตุ:"}
+            {selectedLanguage === "vi-VN" && "Ghi Chú:"}
+            {selectedLanguage === "id-ID" && "Catatan:"}
+          </label>
 
           <textarea
             id="remarks"

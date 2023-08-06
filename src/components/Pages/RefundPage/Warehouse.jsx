@@ -49,7 +49,6 @@ const Warehouse = () => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseRequest');
       const data = response.data;
-      console.log(data); // You can process the data as needed
       setAllWarehouseRequest(data);
       setLoading(false);
     } catch (error) {
@@ -63,7 +62,6 @@ const Warehouse = () => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseSpecialRequest');
       const data = response.data;
-      console.log(data); // You can process the data as needed
       setAllWarehouseSpecialRequest(data);
       setLoading(false);
     } catch (error) {
@@ -105,7 +103,6 @@ const Warehouse = () => {
     }
     try {
       const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
-      console.log(editingRequest)
       toast.success('User information updated successfully');
     } catch (error) {
       console.error('Error updating user:', error);
@@ -136,7 +133,6 @@ const Warehouse = () => {
       });
 
       // Handle success, display a message or do any other required actions
-      console.log('Images uploaded successfully!');
     } catch (error) {
       // Handle error
       console.error('Error uploading images:', error);
