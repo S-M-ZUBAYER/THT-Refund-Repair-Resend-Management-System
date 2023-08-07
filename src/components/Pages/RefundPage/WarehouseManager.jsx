@@ -140,8 +140,8 @@ const WarehouseManager = ({ refundProducts }) => {
         <div className="flex flex-col md:flex-row md:items-center mb-4">
           <input
             type="text"
-            placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
-            className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+            placeholder="Name, Tracking Number, Phone, or Order Number"
+            className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
             value={searchAllQuery}
             onChange={handleSearchAllChange}
           />
@@ -191,6 +191,15 @@ const WarehouseManager = ({ refundProducts }) => {
               {selectedLanguage === "zh-CN" && "客户名称"}
             </th>
             <th className="text-start py-2">
+            {selectedLanguage === "en-US" && "Customer Order Number"}
+                            {selectedLanguage === "zh-CN" && "客户订单号"}
+                            {selectedLanguage === "fil-PH" && "Numero ng Order ng Customer"}
+                            {selectedLanguage === "ms-MY" && "Nombor Pesanan Pelanggan"}
+                            {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อของลูกค้า"}
+                            {selectedLanguage === "vi-VN" && "Số Đơn đặt hàng của Khách hàng"}
+                            {selectedLanguage === "id-ID" && "Nomor Pesanan Pelanggan"}
+            </th>
+            <th className="text-start py-2">
               {selectedLanguage === "en-US" && "Tracking Number"}
               {selectedLanguage === "fil-PH" && "Numero ng Pagmamanman"}
               {selectedLanguage === "ms-MY" && "Nombor Pengesanan"}
@@ -231,6 +240,7 @@ const WarehouseManager = ({ refundProducts }) => {
                 <td className="text-start pl-2 py-2 font-semibold">{index + 1}</td>
                 <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                 <td className="text-start  py-2">{request?.customerUserName}</td>
+                <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
                 <td className="text-start py-2 cursor-pointer">
@@ -253,7 +263,7 @@ const WarehouseManager = ({ refundProducts }) => {
       </table>
 
 
-      {/* modal part start from here to update a user information */}
+      modal part start from here to update a user information
       {editingRequest && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-8 w-7/12 mx-auto">

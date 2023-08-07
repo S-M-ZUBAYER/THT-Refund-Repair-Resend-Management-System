@@ -152,6 +152,46 @@ const DetailsLayout = () => {
         setSelectedImage(null);
     };
 
+   
+
+    
+
+
+
+    const updateLeaderStatus = async (orderNumber) => {
+        const confirmed = window.confirm('Are you sure you want to approved this refund request?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
+        try {
+            const response = await axios.put(
+                `http://localhost:5000/tht/updateLeaderStatus/${orderNumber}`
+            );
+
+            if (response.status === 200) {
+                if (response.status === 200) {
+                    routeChange();
+                    toast.success('~Customer-Service-Leader~ status updated successfully');
+                } else {
+                    toast.error('Failed to update ~Customer-Service-Leader~ status');
+                }
+                // Update the button's className and innerText
+                const warehouseStatusBtn = document.getElementById(`warehouseStatusBtn${orderNumber}`);
+                if (warehouseStatusBtn) {
+                    warehouseStatusBtn.className = "bg-lime-200 px-5 rounded-tl-lg rounded-br-lg py-1";
+                    warehouseStatusBtn.innerText = "Done";
+                }
+                toast.success('Customer service Leader status updated successfully');
+            } else {
+                toast.error('Failed to update warehouse status');
+            }
+        } catch (error) {
+            console.error('Error updating service Leader status:', error);
+            toast.error('Failed to update service Leader status');
+        }
+    };
+
+    
     const handleToUpdateWarehouseManagerStatus = async (orderNumber) => {
         const confirmed = window.confirm('Are you sure you want to approve this refund product?');
         if (!confirmed) {
@@ -504,13 +544,19 @@ const DetailsLayout = () => {
 
 
                 {
-                    user?.role === "Warehouse" && currentRequest?.wareHouseStatus === "false"
+                    user?.role === "~Warehouse~" && currentRequest?.wareHouseStatus === "false"
                     &&
 
                     <div className=" grid  grid-cols-2 text-start mr-14">
 
                         <input className=' required bg-white' type="file" multiple onChange={handleImageChange} accept="image/*" />
-                        <btn onClick={handleSubmit} className=" bg-green-400 px-3 py-1 w-20 rounded hover:cursor-pointer">Upload</btn>
+                        <btn onClick={handleSubmit} className=" bg-green-400 h-10 px-3 py-1 w-20 rounded hover:cursor-pointer">{selectedLanguage === "en-US" && "Upload"}
+                            {selectedLanguage === "zh-CN" && "上传"}
+                            {selectedLanguage === "fil-PH" && "Mag-upload"}
+                            {selectedLanguage === "ms-MY" && "Muat naik"}
+                            {selectedLanguage === "th-TH" && "อัปโหลด"}
+                            {selectedLanguage === "vi-VN" && "Tải lên"}
+                            {selectedLanguage === "id-ID" && "Unggah"}</btn>
                     </div>
 
                 }
@@ -551,12 +597,12 @@ const DetailsLayout = () => {
                 )}
 
                 {
-                    user?.role === "Finance" && currentRequest?.financeStatus === "false"
+                    user?.role === "~Finance~" && currentRequest?.financeStatus === "false"
                     &&
                     <div className="grid  grid-cols-2 text-start mr-14">
 
                         <input className='required bg-white' type="file" multiple onChange={handleImageChange} accept="image/*" />
-                        <button onClick={handleFinanceSubmit} className=" bg-green-400 px-3 py-1 w-20 rounded hover:cursor-pointer">{selectedLanguage === "en-US" && "Upload"}
+                        <button onClick={handleFinanceSubmit} className=" bg-green-400 h-10 px-3 py-1 w-20 rounded hover:cursor-pointer">{selectedLanguage === "en-US" && "Upload"}
                             {selectedLanguage === "zh-CN" && "上传"}
                             {selectedLanguage === "fil-PH" && "Mag-upload"}
                             {selectedLanguage === "ms-MY" && "Muat naik"}
@@ -623,7 +669,7 @@ const DetailsLayout = () => {
 
 
             {
-                user?.role === "Warehouse" && currentRequest?.wareHouseStatus === "false"
+                user?.role === "~Warehouse~" && currentRequest?.wareHouseStatus === "false"
                 &&
                 <div className="mt-10 flex justify-end items-center">
                     <div className=" flex justify-end ">
@@ -634,6 +680,22 @@ const DetailsLayout = () => {
 
                     <div className=" flex justify-end ">
                         <btn onClick={() => updateWarehouseStatus(currentRequest?.orderNumber)} className="font-semibold hover:cursor-pointer bg-yellow-200 px-5 py-2 rounded-tl-lg rounded-br-lg">Approve</btn>
+                    </div>
+                </div>
+            }
+
+            {
+                user?.role === "~Customer-Service-Leader~" && currentRequest?.customerServiceLeaderStatus ==="false"
+                &&
+                <div className="mt-10 flex justify-end items-center">
+                    <div className=" flex justify-end ">
+                        <Link to="/refund">
+                            <btn className="font-semibold mr-5 hover:cursor-pointer bg-red-300 px-5 py-2 rounded-tl-lg rounded-br-lg">Cancel</btn>
+                        </Link>
+                    </div>
+
+                    <div className=" flex justify-end ">
+                        <btn onClick={() => updateLeaderStatus(currentRequest?.orderNumber)} className="font-semibold hover:cursor-pointer bg-yellow-200 px-5 py-2 rounded-tl-lg rounded-br-lg">Approve</btn>
                     </div>
                 </div>
             }
@@ -671,7 +733,7 @@ const DetailsLayout = () => {
             }
 
             {
-                user?.role === "Finance" && currentRequest?.financeStatus === "false"
+                user?.role === "~Finance~" && currentRequest?.financeStatus === "false"
                 &&
                 <div className="mt-10 flex justify-end items-center">
                     <div className=" flex justify-end ">

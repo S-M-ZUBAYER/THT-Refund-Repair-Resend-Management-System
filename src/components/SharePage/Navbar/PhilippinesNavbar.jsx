@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
+import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { HiOutlineMenuAlt4 } from 'react-icons/hi';
 import {
@@ -57,7 +58,7 @@ const PhilippinesNavbar = () => {
         <h1 onClick={handleNav} className={logo ? 'hidden' : 'block'}>Grozziie</h1>
         {/* <img className="w-32 h-8" src={GrozzieeLogo}></img> */}
       </div>
-      <ul className='hidden md:flex'>
+      <ul className='hidden lg:flex'>
         <li><Link to='home' className="hover:cursor-pointer">Tahanan</Link> </li>
         <li><Link to='refund' className="hover:cursor-pointer">Refund</Link> </li>
         <li><Link to='resend' className="hover:cursor-pointer"> Ipadala ulit</Link> </li>
@@ -84,9 +85,23 @@ const PhilippinesNavbar = () => {
       </div>
 
 
+      {user && ( // Add a conditional check for the user object
+        <div className='hidden md:flex'>
+          <div className="flex items-center">
+            {user.image ? (
+              <img src={user.image} alt="User" className="w-10 h-10 rounded-full mr-4" />
+            ) : (
+              <FaUserCircle className="text-black text-2xl mr-4" />
+            )}
+            {user.name && <span className="text-black font-semibold">{user.name}</span>}
+          </div>
+        </div>
+      )}
+
+
       {
         user ?
-          <div className='hidden md:flex'>
+          <div className='hidden lg:flex'>
             <p onClick={handleToLogOut} className="hover:cursor-pointer">Mag-log Out</p>
           </div> :
           <Link to="login"><div className='hidden md:flex'>
@@ -96,7 +111,7 @@ const PhilippinesNavbar = () => {
 
 
       {/* Hamburger */}
-      <div onClick={handleNav} className='md:hidden z-10'>
+      <div onClick={handleNav} className='lg:hidden z-10'>
         {nav ? <AiOutlineClose className='text-black' size={20} /> : <HiOutlineMenuAlt4 size={20} />}
       </div>
 

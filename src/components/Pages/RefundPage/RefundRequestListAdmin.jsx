@@ -233,7 +233,7 @@ const RefundRequestListAdmin = () => {
       {/* modal part start from here to update a user information */}
       {editingRequest && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-8 w-7/12 h-11/12 mx-auto">
+          <div className="bg-white p-8 w-7/12 max-h-fit mx-auto">
             <h2 className="text-lg font-bold mb-1bg-gradient-to-r from-green-300 to-yellow-300">
               {selectedLanguage === "zh-CN" && "编辑退款请求信息"}
               {selectedLanguage === "en-US" && "Edit Refund Request Information"}
@@ -464,6 +464,23 @@ const RefundRequestListAdmin = () => {
                   className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                 /> </div>
 
+              <div className="mb-1 flex justify-between items-center">
+                <label htmlFor="customerOrderNumber">
+                  {selectedLanguage === "zh-CN" && "退款金额："}
+                  {selectedLanguage === "en-US" && "Remarks:"}
+                  {selectedLanguage === "fil-PH" && "Halaga ng Refund:"}
+                  {selectedLanguage === "ms-MY" && "Jumlah Bayaran Balik:"}
+                  {selectedLanguage === "th-TH" && "จำนวนเงินที่คืน:"}
+                  {selectedLanguage === "vi-VN" && "Số tiền hoàn tiền:"}
+                  {selectedLanguage === "id-ID" && "Jumlah Pengembalian:"}
+                </label> <input
+                  type="text"
+                  placeholder="remarks"
+                  value={editingRequest.remarks}
+                  onChange={(e) => setEditingRequest({ ...editingRequest, remarks: e.target.value })}
+                  className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
+                /> </div>
+
 
               <div className="mb-1 flex justify-between items-center">
                 <label htmlFor="customerOrderNumber">
@@ -518,8 +535,8 @@ const RefundRequestListAdmin = () => {
                   </label> <input
                     type="text"
                     placeholder="applicantName"
+                    readOnly
                     value={editingRequest.applicantName}
-                    onChange={(e) => setEditingRequest({ ...editingRequest, applicantName: e.target.value })}
                     className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                   />
                 </div>
@@ -535,8 +552,8 @@ const RefundRequestListAdmin = () => {
                   </label> <input
                     type="text"
                     placeholder="Order Date"
+                    readOnly
                     value={editingRequest.orderDate}
-                    onChange={(e) => setEditingRequest({ ...editingRequest, orderDate: e.target.value })}
                     className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                   />
                 </div>
@@ -554,8 +571,8 @@ const RefundRequestListAdmin = () => {
                   </label> <input
                     type="text"
                     placeholder="order Time"
+                    readOnly
                     value={editingRequest.orderTime}
-                    onChange={(e) => setEditingRequest({ ...editingRequest, orderTime: e.target.value })}
                     className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                   />
                 </div>

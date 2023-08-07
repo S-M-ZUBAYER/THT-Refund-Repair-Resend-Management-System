@@ -191,12 +191,12 @@ const StatusBar = () => {
 
     return (
         <div className="text-gray-800 w-full">
-            <div className="flex justify-center">
-                <div className="flex flex-col md:flex-row md:items-center mb-4">
+            <div className="flex  justify-center">
+                <div className="flex w-full justify-center flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
-                        className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+                        placeholder="Name,Tracking Number,Phone,or Order Number"
+                        className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchAllQuery}
                         onChange={handleSearchAllChange}
                     />
@@ -485,8 +485,8 @@ const StatusBar = () => {
                     <div className="flex flex-col md:flex-row md:items-center mb-4">
                         <input
                             type="text"
-                            placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
-                            className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+                            placeholder="Name, Tracking Number, Phone, or Order Number"
+                            className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />

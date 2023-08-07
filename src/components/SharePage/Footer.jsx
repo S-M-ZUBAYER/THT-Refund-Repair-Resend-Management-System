@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import GrozzieeLogo from "../.../../../assets/Grozziie_logo.jpg"
+import GrozzieeLogo from "../.../../../assets/Grozziie_logo.png"
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 

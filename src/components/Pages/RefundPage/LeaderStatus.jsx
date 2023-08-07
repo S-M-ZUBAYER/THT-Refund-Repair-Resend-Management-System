@@ -170,8 +170,8 @@ const LeaderStatus = () => {
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
-                        className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+                        placeholder="Name, Tracking Number, Phone, or Order Number"
+                        className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchAllQuery}
                         onChange={handleSearchAllChange}
                     />
@@ -215,6 +215,14 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Tên Khách Hàng"}
                             {selectedLanguage === "id-ID" && "Nama Pelanggan"}
                             {selectedLanguage === "zh-CN" && "客户名称"}</th>
+                        <th className="text-start py-2">{selectedLanguage === "en-US" && "Customer Order Number"}
+                            {selectedLanguage === "zh-CN" && "客户订单号"}
+                            {selectedLanguage === "fil-PH" && "Numero ng Order ng Customer"}
+                            {selectedLanguage === "ms-MY" && "Nombor Pesanan Pelanggan"}
+                            {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อของลูกค้า"}
+                            {selectedLanguage === "vi-VN" && "Số Đơn đặt hàng của Khách hàng"}
+                            {selectedLanguage === "id-ID" && "Nomor Pesanan Pelanggan"}
+                        </th>
                         <th className="text-start py-2">{selectedLanguage === "en-US" && "Tracking Number"}
                             {selectedLanguage === "fil-PH" && "Numero ng Pagmamanman"}
                             {selectedLanguage === "ms-MY" && "Nombor Pengesanan"}
@@ -229,13 +237,7 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
                             {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
                             {selectedLanguage === "zh-CN" && "订单日期"}</th>
-                        <th className="text-start py-2">{selectedLanguage === "en-US" && "Status"}
-                            {selectedLanguage === "fil-PH" && "Katayuan"}
-                            {selectedLanguage === "ms-MY" && "Status"}
-                            {selectedLanguage === "th-TH" && "สถานะ"}
-                            {selectedLanguage === "vi-VN" && "Trạng Thái"}
-                            {selectedLanguage === "id-ID" && "Status"}
-                            {selectedLanguage === "zh-CN" && "状态"}</th>
+                       
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
                             {selectedLanguage === "zh-CN" && "详情"}
@@ -260,37 +262,14 @@ const LeaderStatus = () => {
                                 <td className="text-start pl-2 py-2 font-semibold">{index + 1}</td>
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                                 <td className="text-start py-2">{request?.customerUserName}</td>
+                                <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                                <td className="text-start py-2">
-                                    {request?.customerServiceLeaderStatus === true ? (
-                                        <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Done"}
-                                            {selectedLanguage === "fil-PH" && "Tapos na"}
-                                            {selectedLanguage === "ms-MY" && "Selesai"}
-                                            {selectedLanguage === "th-TH" && "เสร็จสิ้น"}
-                                            {selectedLanguage === "vi-VN" && "Hoàn tất"}
-                                            {selectedLanguage === "id-ID" && "Selesai"}
-                                            {selectedLanguage === "zh-CN" && "完成"}</btn>
-                                    ) : (
-                                        <btn
-                                            onClick={() => updateLeaderStatus(request?.orderNumber)}
-                                            id={`warehouseStatusBtn${request?.orderNumber}`}
-                                            className="bg-red-300 rounded-tl-lg rounded-br-lg px-2 py-1 hover:cursor-pointer"
-                                        >
-                                            {selectedLanguage === "en-US" && "Approve"}
-                                            {selectedLanguage === "fil-PH" && "Aprobado"}
-                                            {selectedLanguage === "ms-MY" && "Lulus"}
-                                            {selectedLanguage === "th-TH" && "อนุมัติ"}
-                                            {selectedLanguage === "vi-VN" && "Phê Duyệt"}
-                                            {selectedLanguage === "id-ID" && "Setuju"}
-                                            {selectedLanguage === "zh-CN" && "批准"}
-                                        </btn>
-                                    )}
-                                </td>
+                              
 
 
-                                <Link to={`/refund/details/${request?.orderNumber}`}>
-                                    <td className="text-start py-2 cursor-pointer">
+                                <td className="text-start py-2 cursor-pointer">
+                                    <Link to={`/refund/details/${request?.orderNumber}`}>
                                         <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                             {selectedLanguage === "zh-CN" && "详情"}
                                             {selectedLanguage === "fil-PH" && "Detalye"}
@@ -298,8 +277,8 @@ const LeaderStatus = () => {
                                             {selectedLanguage === "th-TH" && "รายละเอียด"}
                                             {selectedLanguage === "vi-VN" && "Chi tiết"}
                                             {selectedLanguage === "id-ID" && "Rincian"}</btn>
-                                    </td>
-                                </Link>
+                                    </Link>
+                                </td>
 
 
 
@@ -355,8 +334,8 @@ const LeaderStatus = () => {
                 <div className="flex flex-col md:flex-row md:items-center mb-4">
                     <input
                         type="text"
-                        placeholder="Search by Customer Name, Tracking Number, Phone Number, or Order Number"
-                        className="border border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+                        placeholder="Name, Tracking Number, Phone, or Order Number"
+                        className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />
@@ -408,6 +387,13 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Số lượng theo dõi"}
                             {selectedLanguage === "id-ID" && "Nomor Pelacakan"}
                             {selectedLanguage === "zh-CN" && "追踪号码"}</th>
+                        <th className="text-start py-2"> {selectedLanguage === "en-US" && "Customer Order Number"}
+                            {selectedLanguage === "zh-CN" && "客户订单号"}
+                            {selectedLanguage === "fil-PH" && "Numero ng Order ng Customer"}
+                            {selectedLanguage === "ms-MY" && "Nombor Pesanan Pelanggan"}
+                            {selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อของลูกค้า"}
+                            {selectedLanguage === "vi-VN" && "Số Đơn đặt hàng của Khách hàng"}
+                            {selectedLanguage === "id-ID" && "Nomor Pesanan Pelanggan"}</th>
                         <th className="text-start hidden md:block py-2">{selectedLanguage === "en-US" && "Order Date"}
                             {selectedLanguage === "fil-PH" && "Petsa ng Order"}
                             {selectedLanguage === "ms-MY" && "Tarikh Pesanan"}
@@ -415,13 +401,7 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Ngày đặt hàng"}
                             {selectedLanguage === "id-ID" && "Tanggal Pesanan"}
                             {selectedLanguage === "zh-CN" && "订单日期"}</th>
-                        <th className="text-start py-2">{selectedLanguage === "en-US" && "Status"}
-                            {selectedLanguage === "fil-PH" && "Katayuan"}
-                            {selectedLanguage === "ms-MY" && "Status"}
-                            {selectedLanguage === "th-TH" && "สถานะ"}
-                            {selectedLanguage === "vi-VN" && "Trạng thái"}
-                            {selectedLanguage === "id-ID" && "Status"}
-                            {selectedLanguage === "zh-CN" && "状态"}</th>
+                        
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
                             {selectedLanguage === "zh-CN" && "详情"}
@@ -446,6 +426,7 @@ const LeaderStatus = () => {
                                 <td className="text-start pl-2 py-2 font-semibold">{index + 1}</td>
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.orderNumber}</td>
                                 <td className="text-start py-2">{request?.customerUserName}</td>
+                                <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
                                 <td className="text-start py-2">

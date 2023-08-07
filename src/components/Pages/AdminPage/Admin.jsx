@@ -144,6 +144,9 @@ const Admin = () => {
         setEditingUser(user);
     };
 
+    const handleToCancel = () => {
+        openEditModal();
+    }
 
 
     //create a function to update a user from the frontend and database both side 
@@ -495,7 +498,7 @@ const Admin = () => {
                 {/* modal part start from here to update a user information */}
                 {editingUser && (
                     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                        <div className="bg-white p-8">
+                        <div className="bg-white  w-7/12 p-8">
                             <h2 className="text-lg font-bold mb-4">Edit User</h2>
                             <input
                                 type="text"
@@ -539,14 +542,21 @@ const Admin = () => {
                                 placeholder="Country"
                                 value={editingUser.country}
                                 onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                className="mb-8 px-4 py-2 border border-gray-300 rounded-md w-full"
                             />
-                            <button
-                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                            <btn
+                                className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
                                 onClick={() => saveUser(editingUser.id, editingUser)}
                             >
                                 Save
-                            </button>
+                            </btn>
+                            <btn
+                                className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
+                                onClick={handleToCancel}
+                            >
+                                cancel
+                            </btn>
+
                         </div>
                     </div>
                 )}

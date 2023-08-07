@@ -317,7 +317,7 @@ const Refund = () => {
             }
 
             {
-                user?.role === "~Finance~" && <> <div className="mt-16 mb-5">
+                user?.role === "~Finance~" && <> <div className="mt-5 mb-5">
                     {
                         selectedLanguage === "zh-CN" && (
                             <>

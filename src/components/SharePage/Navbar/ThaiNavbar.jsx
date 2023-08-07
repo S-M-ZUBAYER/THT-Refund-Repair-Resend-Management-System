@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
+import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { HiOutlineMenuAlt4 } from 'react-icons/hi';
 import {
@@ -58,7 +59,7 @@ const ThaiNavbar = () => {
         <h1 onClick={handleNav} className={logo ? 'hidden' : 'block'}>Grozziie</h1>
         {/* <img className="w-32 h-8" src={GrozzieeLogo}></img> */}
       </div>
-      <ul className='hidden md:flex'>
+      <ul className='hidden lg:flex'>
         <li><Link to='home' className="hover:cursor-pointer">หน้าแรก</Link> </li>
         <li><Link to='refund' className="hover:cursor-pointer">คืนเงิน</Link> </li>
         <li><Link to='resend' className="hover:cursor-pointer">ส่งใหม่</Link> </li>
@@ -83,6 +84,19 @@ const ThaiNavbar = () => {
           <option value="id-ID">Indonesia</option>
         </select>
       </div>
+
+      {user && ( // Add a conditional check for the user object
+        <div className='hidden md:flex'>
+          <div className="flex items-center">
+            {user.image ? (
+              <img src={user.image} alt="User" className="w-10 h-10 rounded-full mr-4" />
+            ) : (
+              <FaUserCircle className="text-black text-2xl mr-4" />
+            )}
+            {user.name && <span className="text-black font-semibold">{user.name}</span>}
+          </div>
+        </div>
+      )}
 
 
       {
