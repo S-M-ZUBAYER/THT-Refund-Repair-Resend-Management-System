@@ -429,21 +429,8 @@ const LeaderStatus = () => {
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                                <td className="text-start py-2">
-                                    {request?.customerServiceLeaderStatus === true ? (
-                                        <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">Done</btn>
-                                    ) : (
-                                        <btn
-                                            onClick={() => updateLeaderStatus(request?.orderNumber)}
-                                            id={`warehouseStatusBtn${request?.orderNumber}`}
-                                            className="bg-red-300 rounded-tl-lg rounded-br-lg px-2 py-1 hover:cursor-pointer"
-                                        >
-                                            Approve
-                                        </btn>
-                                    )}
-                                </td>
-                                <Link to={`/refund/details/${request?.orderNumber}`}>
                                     <td className="text-start py-2 cursor-pointer">
+                                <Link to={`/refund/details/${request?.orderNumber}`}>
                                         <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                             {selectedLanguage === "zh-CN" && "详情"}
                                             {selectedLanguage === "fil-PH" && "Detalye"}
@@ -451,8 +438,8 @@ const LeaderStatus = () => {
                                             {selectedLanguage === "th-TH" && "รายละเอียด"}
                                             {selectedLanguage === "vi-VN" && "Chi tiết"}
                                             {selectedLanguage === "id-ID" && "Rincian"}</btn>
-                                    </td>
                                 </Link>
+                                    </td>
                             </tr>
                         ))
                     )}

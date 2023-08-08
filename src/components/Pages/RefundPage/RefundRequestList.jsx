@@ -231,7 +231,7 @@ const RefundProductList = ({ refundProducts }) => {
                 <td className="text-start">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block">{request?.orderDate}</td>
 
-                {user?.role === "~Customer-Service~" && request?.customerServiceLeaderStatus === "false" ? (
+                {user?.role === "~Customer-Service~" && user?.email===request?.applicantEmail && request?.customerServiceLeaderStatus === "false" ? (
                   <>
                     <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>

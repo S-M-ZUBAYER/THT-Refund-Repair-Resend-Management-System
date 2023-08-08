@@ -30,8 +30,6 @@ const RefundRequestForm = () => {
   const [countryCode, setCountryCode] = useState("");
   const [shopNames, setShopNames] = useState([]);
   const [reasons, setReasons] = useState([]);
-  const [timeNumber, setTimeNumber] = useState("");
-  const [dataNumber, setDateNumber] = useState("");
   const [special, setSpecial] = useState(false);
 
 
@@ -162,6 +160,7 @@ const RefundRequestForm = () => {
       warehouseManagerStatus: "false",
       financeStatus: "false",
       supplierStatus: "false",
+      applicantEmail:user?.email,
       special
 
     };
@@ -239,7 +238,7 @@ const RefundRequestForm = () => {
       <div className="grid grid-cols-1">
 
         <div onClick={handleToGenerateOrderNumber} className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderNumber">{
+          <label className="text-left" htmlFor="orderNumber">{
             selectedLanguage === "zh-CN" && "订单号码："
           }{
               selectedLanguage === "en-US" && "Order Number:"
@@ -257,14 +256,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="orderNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderNumber}
             onChange={(e) => setOrderNumber(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="shopName">{
+          <label className="text-left" htmlFor="shopName">{
             selectedLanguage === "zh-CN" && "店铺名称："
           }{
               selectedLanguage === "en-US" && "Shop Name:"
@@ -281,7 +280,7 @@ const RefundRequestForm = () => {
             }</label>
           <select
             id="shopName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={shopName}
             onChange={(e) => setShopName(e.target.value)}
           >
@@ -314,7 +313,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerUsername">{
+          <label className="text-left" htmlFor="customerUsername">{
             selectedLanguage === "zh-CN" && "客户用户名："
           }{
               selectedLanguage === "en-US" && "Customer User Name:"
@@ -332,7 +331,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerUsername"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerUserName}
             onChange={(e) => setCustomerUserName(e.target.value)}
           />
@@ -340,7 +339,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerPhoneNo">
+          <label className="text-left" htmlFor="customerPhoneNo">
             {selectedLanguage === "zh-CN" && "客户手机号码"}
             {selectedLanguage === "en-US" && "Customer Phone No"}
             {selectedLanguage === "fil-PH" && "Numero ng Telepono ng Customer"}
@@ -352,7 +351,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerPhoneNo"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerPhoneNo}
             onChange={(e) => setCustomerPhoneNo(e.target.value)}
           />
@@ -361,7 +360,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerOrderNumber">{
+          <label className="text-left" htmlFor="customerOrderNumber">{
             selectedLanguage === "zh-CN" && "客户订单编号："
           }{
               selectedLanguage === "en-US" && "Customer Order Number:"
@@ -379,7 +378,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerOrderNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerOrderNumber}
             onChange={(e) => setCustomerOrderNumber(e.target.value)}
           />
@@ -387,7 +386,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderDate">{
+          <label className="text-left" htmlFor="orderDate">{
             selectedLanguage === "zh-CN" && "订单日期："
           }{
               selectedLanguage === "en-US" && "Order Date:"
@@ -405,14 +404,14 @@ const RefundRequestForm = () => {
           <input
             type="date"
             id="orderDate"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderDate}
             onChange={(e) => setOrderDate(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderAmount">{
+          <label className="text-left" htmlFor="orderAmount">{
             selectedLanguage === "zh-CN" && "订单金额："
           }{
               selectedLanguage === "en-US" && "Order Amount:"
@@ -430,7 +429,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="orderAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderAmount}
             onChange={(e) => setOrderAmount(e.target.value)}
           />
@@ -438,7 +437,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerReturnTrackingNumber">{
+          <label className="text-left" htmlFor="customerReturnTrackingNumber">{
             selectedLanguage === "zh-CN" && "运输追踪号码："
           }{
               selectedLanguage === "en-US" && "Shipping Tracking Number:"
@@ -456,7 +455,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerReturnTrackingNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerReturnTrackingNumber}
             onChange={(e) => setCustomerReturnTrackingNumber(e.target.value)}
           />
@@ -464,7 +463,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="refundReason">{
+          <label className="text-left" htmlFor="refundReason">{
             selectedLanguage === "zh-CN" && "退款原因："
           }{
               selectedLanguage === "en-US" && "Refund Reason:"
@@ -481,7 +480,7 @@ const RefundRequestForm = () => {
             }</label>
           <select
             id="refundReason"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={refundReason}
             onChange={(e) => setRefundReason(e.target.value)}
           >
@@ -523,7 +522,7 @@ const RefundRequestForm = () => {
           </select>
           {refundReason === 'Others' && (
             <div className="mt-2 flex justify-between items-center">
-              <label htmlFor="otherReason">{
+              <label className="text-left" htmlFor="otherReason">{
                 selectedLanguage === "zh-CN" && "其他原因："
               }{
                   selectedLanguage === "en-US" && "Other Reason:"
@@ -541,7 +540,7 @@ const RefundRequestForm = () => {
               <textarea
                 type="text"
                 id="otherReason"
-                className="border rounded-md p-2 w-9/12"
+                className="border rounded-md p-2 w-8/12"
                 value={otherReason}
                 onChange={(e) => setOtherReason(e.target.value)}
               />
@@ -552,7 +551,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="refundAmount">{
+          <label className="text-left" htmlFor="refundAmount">{
             selectedLanguage === "zh-CN" && "退款金额："
           }{
               selectedLanguage === "en-US" && "Refund Amount:"
@@ -570,14 +569,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="refundAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={refundAmount}
             onChange={(e) => setRefundAmount(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerReceivingAmount">{
+          <label className="text-left" htmlFor="customerReceivingAmount">{
             selectedLanguage === "zh-CN" && "客户收款金额："
           }{
               selectedLanguage === "en-US" && "Customer Receiving Amount:"
@@ -595,14 +594,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerReceivingAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerReceivingAmount}
             onChange={(e) => setCustomerReceivingAmount(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerReceivingAccount">{
+          <label className="text-left" htmlFor="customerReceivingAccount">{
             selectedLanguage === "zh-CN" && "客户收款账户："
           }{
               selectedLanguage === "en-US" && "Customer Receiving Account:"
@@ -620,7 +619,7 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerReceivingAccount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerReceivingAccount}
             onChange={(e) => setCustomerReceivingAccount(e.target.value)}
           />
@@ -628,7 +627,7 @@ const RefundRequestForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerBankName">{
+          <label className="text-left" htmlFor="customerBankName">{
             selectedLanguage === "zh-CN" && "客户银行名称："
           }{
               selectedLanguage === "en-US" && "Customer Bank Name:"
@@ -646,14 +645,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerBankName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerBankName}
             onChange={(e) => setCustomerBankName(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerBankAccountName">{
+          <label className="text-left" htmlFor="customerBankAccountName">{
             selectedLanguage === "zh-CN" && "客户银行账户名："
           }{
               selectedLanguage === "en-US" && "Customer Bank Account Name:"
@@ -671,14 +670,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerBankAccountName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerBankAccountName}
             onChange={(e) => setCustomerBankAccountName(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerBankSwift">{
+          <label className="text-left" htmlFor="customerBankSwift">{
             selectedLanguage === "zh-CN" && "客户银行 Swift 号码："
           }{
               selectedLanguage === "en-US" && "Customer Bank Swift:"
@@ -696,14 +695,14 @@ const RefundRequestForm = () => {
           <input
             type="text"
             id="customerBankSwift"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerBankSwift}
             onChange={(e) => setCustomerBankSwift(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="remarks">
+          <label className="text-left" htmlFor="remarks">
             {selectedLanguage === "zh-CN" && "备注："}
             {selectedLanguage === "en-US" && "Remarks:"}
             {selectedLanguage === "fil-PH" && "Mga Tala:"}
@@ -715,40 +714,40 @@ const RefundRequestForm = () => {
 
           <textarea
             id="remarks"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={remarks}
             onChange={(e) => setRemarks(e.target.value)}
           ></textarea>
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Applicant Name:</label>
+          <label className="text-left" htmlFor="applicantName">Applicant Name:</label>
           <input
             type="text"
             id="applicantName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={user?.name}
             onChange={(e) => setApplicantName(user?.name)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Application Date:</label>
+          <label className="text-left" htmlFor="applicantName">Application Date:</label>
           <input
             type="text"
             id="applicationTime"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={applicationDate}
             onChange={(e) => setApplicationDate(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Application Time:</label>
+          <label className="text-left" htmlFor="applicantName">Application Time:</label>
           <input
             type="text"
             id="applicationTime"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderTime}
             onChange={(e) => setApplicationDate(e.target.value)}
           />

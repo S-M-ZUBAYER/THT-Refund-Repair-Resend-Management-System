@@ -76,60 +76,7 @@ const Refund = () => {
                 <RefundRequestForm></RefundRequestForm>
 
 
-                <div className="mt-16 mb-5">
-                    {selectedLanguage === "zh-CN" &&
-                        <>
-                            <h1>显示可用的退款请求列表</h1>
-                            <p className='py-4'>这是当前所有的退款请求列表。您可以在此处检查并更新退款请求信息。</p>
-                        </>
-                    }
 
-                    {selectedLanguage === "en-US" &&
-                        <>
-                            <h1>Show The List Available Refund Request</h1>
-                            <p className='py-4'>These are all the list of refund request at these moment. Here you can check and update the refund request information.</p>
-                        </>
-                    }
-
-                    {selectedLanguage === "fil-PH" &&
-                        <>
-                            <h1>Ipakita ang Listahan ng Magagamit na Kahilingan sa Pagbabalik</h1>
-                            <p className='py-4'>Ito ay lahat ng listahan ng kahilingan sa pagbabalik sa sandaling ito. Dito maaari mong suriin at i-update ang impormasyon ng kahilingan sa pagbabalik.</p>
-                        </>
-                    }
-
-                    {selectedLanguage === "ms-MY" &&
-                        <>
-                            <h1>Paparkan Senarai Permintaan Pembayaran Balik yang Tersedia</h1>
-                            <p className='py-4'>Ini adalah senarai semua permintaan pembayaran balik pada masa ini. Di sini anda boleh menyemak dan mengemas kini maklumat permintaan pembayaran balik.</p>
-                        </>
-                    }
-
-                    {selectedLanguage === "th-TH" &&
-                        <>
-                            <h1>แสดงรายการคำขอคืนเงินที่มีให้</h1>
-                            <p className='py-4'>นี้คือรายการคำขอคืนเงินทั้งหมดในขณะนี้ ที่นี่คุณสามารถตรวจสอบและอัปเดตข้อมูลคำขอคืนเงินได้</p>
-                        </>
-                    }
-
-                    {selectedLanguage === "vi-VN" &&
-                        <>
-                            <h1>Hiển thị Danh sách Yêu cầu Hoàn tiền Hiện có</h1>
-                            <p className='py-4'>Dưới đây là tất cả danh sách yêu cầu hoàn tiền hiện có. Ở đây bạn có thể kiểm tra và cập nhật thông tin yêu cầu hoàn tiền.</p>
-                        </>
-                    }
-
-                    {selectedLanguage === "id-ID" &&
-                        <>
-                            <h1>Tampilkan Daftar Permintaan Pengembalian Dana yang Tersedia</h1>
-                            <p className='py-4'>Ini adalah semua daftar permintaan pengembalian dana pada saat ini. Di sini Anda dapat memeriksa dan memperbarui informasi permintaan pengembalian dana.</p>
-                        </>
-                    }
-
-                </div>
-
-
-                <RefundRequestList></RefundRequestList>
             </>}
 
             {

@@ -19,12 +19,39 @@ const Admin = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [shopName, setShopName] = useState('');
-    const [shopNames, setShopNames] = useState('');
+    const [shopNames, setShopNames] = useState([]);
+    const [warehouseName, setWarehouseName] = useState();
+    const [warehouseNames, setWarehouseNames] = useState([]);
     const [reasons, setReasons] = useState('');
 
     const [reason, setReason] = useState([]);
+    const [allFinance, setAllFinance] = useState([]);
+    const [selectedFinance, setSelectedFinance] = useState('');
 
     const { user, selectedLanguage } = useContext(AuthContext);
+    // const handleCheckboxChange = (event) => {
+    //     const selectedWarehouse = event.target.value;
+    //     const isChecked = event.target.checked;
+
+    //     if (isChecked) {
+    //         setWarehouseNames((prevNames) => [...prevNames, selectedWarehouse]);
+    //     } else {
+    //         setWarehouseNames((prevNames) =>
+    //             prevNames.filter((name) => name !== selectedWarehouse)
+    //         );
+    //     }
+    // };
+    const [selectedWarehouses, setSelectedWarehouses] = useState([]);
+
+    const handleCheckboxChange = (event) => {
+        const warehouseName = event.target.value;
+        if (event.target.checked) {
+            setSelectedWarehouses((prevSelected) => [...prevSelected, warehouseName]);
+        } else {
+            setSelectedWarehouses((prevSelected) => prevSelected.filter((name) => name !== warehouseName));
+        }
+    };
+
 
     useEffect(() => {
         const fetchShopNamesReasons = async () => {
@@ -33,35 +60,96 @@ const Admin = () => {
                 const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
                 setShopNames((data.shopNames).split(","));
                 setReasons((data.reasons).split(","));
+                setWarehouseNames((data.warehouseNames).split(","));
             } catch (error) {
                 console.error('Error fetching shop names:', error);
             }
         };
 
+        const fetchAllFinance = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/tht/finance');
+                const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+                setAllFinance(data);
+
+            } catch (error) {
+                console.error('Error fetching shop names:', error);
+            }
+        };
+        fetchAllFinance();
         fetchShopNamesReasons();
     }, []);
 
+    console.log(allFinance)
 
     const handleShopNamesChange = (e) => {
         setShopName(e.target.value);
     };
+    const handleWarehouseNamesChange = (e) => {
+        setWarehouseName(e.target.value);
+    };
+
+    const handleFinanceChange = (e) => {
+        setSelectedFinance(e.target.value);
+    };
 
     const handleAddShopNames = () => {
+        const shopDetails={
+            shopeName:shopName,
+            finance:selectedFinance,
+            warehouses:selectedWarehouses
+        }
         if (shopName.trim() !== '') {
-            const newShopNames = [...shopNames, shopName]
-            setShopNames(newShopNames);
-            //load current user data from database
+           
             fetch('http://localhost:5000/tht/shopNames', {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify(newShopNames)
+                body: JSON.stringify(shopDetails)
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data?.changedRows) {
-                        toast.success('New ShopName stored Successfully');
+                        toast.success('New Shop details stored Successfully');
+
+                    }
+                    else {
+                        toast.error(data.message);
+                    }
+
+                })
+            setShopName('');
+        }
+
+    };
+
+    // const handleCheckboxChange = (event) => {
+    //     const { value, checked } = event.target;
+    //     if (checked) {
+    //         setWarehouseNames((prevSelected) => [...prevSelected, value]);
+    //     } else {
+    //         setWarehouseNames((prevSelected) => prevSelected.filter((shop) => shop !== value));
+    //     }
+    // };
+
+
+    const handleAddWarehouseNames = () => {
+        if (warehouseName.trim() !== '') {
+            const newWarehouseNames = [...warehouseNames, warehouseName]
+            setWarehouseNames(newWarehouseNames);
+            //load current user data from database
+            fetch('http://localhost:5000/tht/warehouseNames', {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(newWarehouseNames)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data?.changedRows) {
+                        toast.success('New Warehouse stored Successfully');
 
                     }
                     else {
@@ -197,11 +285,7 @@ const Admin = () => {
             // Optionally, you can show an error message to the user using a toast or other UI notification.
         }
     };
-    // const saveUser = (userId,updatedUser) => {
-    //   updateUser(userId, updatedUser);
-    //   setUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
-    //   setEditingUser(null);
-    // };
+
 
 
 
@@ -396,81 +480,82 @@ const Admin = () => {
 
                     {selectedLanguage === "en-US" && (
                         <>
-                            <h1>Add New Shop Name and Product Refund Reason</h1>
-                            <p className='py-4'>These are two input fields to add the new shop name and add product refund reason.</p>
+                            <h1>Add New Warehouse Name, Shop Name and Product Refund Reason</h1>
+                            <p className='py-4'>These are three input fields to add the new warehouse name, new shop name, warehouse name, and add product refund reason.</p>
                         </>
                     )}
 
                     {selectedLanguage === "zh-CN" && (
                         <>
-                            <h1>添加新店名和产品退款原因</h1>
-                            <p className='py-4'>这是两个输入字段，用于添加新的店名和添加产品退款原因。</p>
+                            <h1>添加新仓库名称、店铺名称和产品退款原因</h1>
+                            <p className='py-4'>这是三个输入字段，用于添加新仓库名称、新店铺名称、仓库名称和添加产品退款原因。</p>
                         </>
                     )}
 
                     {selectedLanguage === "th-TH" && (
                         <>
-                            <h1>เพิ่มชื่อร้านค้าและเหตุผลการคืนสินค้าใหม่</h1>
-                            <p className='py-4'>นี่คือสองช่องกรอกข้อมูลที่ใช้ในการเพิ่มชื่อร้านค้าใหม่และเพิ่มเหตุผลในการคืนสินค้า</p>
+                            <h1>เพิ่มชื่อคลังสินค้าใหม่ ชื่อร้านค้า และเหตุผลการคืนสินค้า</h1>
+                            <p className='py-4'>นี่คือสามฟิลด์ป้อนข้อมูลเพื่อเพิ่มชื่อคลังสินค้าใหม่ ชื่อร้านค้าใหม่ ชื่อคลังสินค้าและเพิ่มเหตุผลในการคืนสินค้า</p>
                         </>
                     )}
 
                     {selectedLanguage === "fil-PH" && (
                         <>
-                            <h1>Magdagdag ng Bagong Pangalan ng Tindahan at Rason sa Pagbabalik ng Produkto</h1>
-                            <p className='py-4'>Ito ay dalawang patlang ng input upang magdagdag ng bagong pangalan ng tindahan at magdagdag ng rason sa pagbabalik ng produkto.</p>
+                            <h1>Magdagdag ng Bagong Pangalan ng Warehouse, Pangalan ng Tindahan at Rason para sa Pagsasauli ng Produkto</h1>
+                            <p className='py-4'>Ito ay tatlong input fields upang magdagdag ng bagong pangalan ng warehouse, bagong pangalan ng tindahan, pangalan ng warehouse, at magdagdag ng rason para sa pagsasauli ng produkto.</p>
                         </>
                     )}
 
                     {selectedLanguage === "vi-VN" && (
                         <>
-                            <h1>Thêm Tên Cửa Hàng Mới và Lý Do Hoàn Tiền Sản Phẩm</h1>
-                            <p className='py-4'>Đây là hai trường nhập liệu để thêm tên cửa hàng mới và thêm lý do hoàn tiền sản phẩm.</p>
+                            <h1>"Thêm Tên Kho Mới, Tên Cửa Hàng và Lý Do Hoàn Trả Sản Phẩm</h1>
+                            <p className='py-4'>Đây là ba trường nhập liệu để thêm tên kho mới, tên cửa hàng mới, tên kho và thêm lý do hoàn trả sản phẩm.</p>
                         </>
                     )}
 
                     {selectedLanguage === "ms-MY" && (
                         <>
-                            <h1>Tambah Nama Kedai Baru dan Sebab Pembayaran Balik Produk</h1>
-                            <p className='py-4'>Ini adalah dua medan input untuk menambahkan nama kedai baru dan menambahkan sebab pembayaran balik produk.</p>
+                            <h1>Tambah Nama Gudang Baru, Nama Kedai dan Sebab Pulangan Produk</h1>
+                            <p className='py-4'>Ini adalah tiga medan input untuk menambah nama gudang baru, nama kedai baru, nama gudang, dan tambah sebab pulangan produk.</p>
                         </>
                     )}
 
                     {selectedLanguage === "id-ID" && (
                         <>
-                            <h1>Tambahkan Nama Toko Baru dan Alasan Pengembalian Produk</h1>
-                            <p className='py-4'>Ini adalah dua kolom input untuk menambahkan nama toko baru dan menambahkan alasan pengembalian produk.</p>
+                            <h1>Tambahkan Nama Gudang Baru, Nama Toko dan Alasan Pengembalian Produk</h1>
+                            <p className='py-4'>"Ini adalah tiga kolom input untuk menambahkan nama gudang baru, nama toko baru, nama gudang, dan menambahkan alasan pengembalian produk.</p>
                         </>
                     )}
 
 
 
-                    <div className="md:grid grid-cols-3 gap-4">
+                    <div className=" grid grid-cols-2 gap-4">
+
                         <div className=" w-full">
                             <h1 className="text-2xl font-bold text-yellow-900 my-5">
-                                {selectedLanguage === "en-US" && "Add ShopNames:"}
-                                {selectedLanguage === "fil-PH" && "Magdagdag ng Mga ShopNames:"}
-                                {selectedLanguage === "ms-MY" && "Tambah ShopNames:"}
-                                {selectedLanguage === "th-TH" && "เพิ่ม ShopNames:"}
-                                {selectedLanguage === "vi-VN" && "Thêm ShopNames:"}
-                                {selectedLanguage === "id-ID" && "Tambah ShopNames:"}
-                                {selectedLanguage === "zh-CN" && "添加商店名称："}</h1>
-                            <input type="text" value={shopName} onChange={(e) => handleShopNamesChange(e)} placeholder="Enter ShopName name" className="border-2 rounded-lg py-1 pl-2 text-center bg-white text-gray-800" />
+                                {selectedLanguage === "en-US" && "Add Warehouse Name:"}
+                                {selectedLanguage === "fil-PH" && "Magdagdag ng Pangalan ng Warehouse:"}
+                                {selectedLanguage === "ms-MY" && "Tambah Nama Gudang:"}
+                                {selectedLanguage === "th-TH" && "เพิ่มชื่อคลังสินค้า:"}
+                                {selectedLanguage === "vi-VN" && "Thêm Tên Kho:"}
+                                {selectedLanguage === "id-ID" && "Tambah Nama Gudang:"}
+                                {selectedLanguage === "zh-CN" && "添加仓库名称:"}</h1>
+                            <input type="text" value={warehouseName} onChange={(e) => handleWarehouseNamesChange(e)} placeholder="Enter New Warehouse name" className="border-2 w-full rounded-lg py-1 pl-2 text-center bg-white text-gray-800" />
                             <div className="mt-8">
 
-                                <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddShopNames}>
-                                    {selectedLanguage === "en-US" && "Add ShopName:"}
-                                    {selectedLanguage === "fil-PH" && "Magdagdag ng ShopName:"}
-                                    {selectedLanguage === "ms-MY" && "Tambah ShopName:"}
-                                    {selectedLanguage === "th-TH" && "เพิ่ม ShopName:"}
-                                    {selectedLanguage === "vi-VN" && "Thêm ShopName:"}
-                                    {selectedLanguage === "id-ID" && "Tambah ShopName:"}
-                                    {selectedLanguage === "zh-CN" && "添加商店名称："}
+                                <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddWarehouseNames}>
+                                    {selectedLanguage === "en-US" && "Add Warehouse Name"}
+                                    {selectedLanguage === "fil-PH" && "Magdagdag ng Pangalan ng Warehouse"}
+                                    {selectedLanguage === "ms-MY" && "Tambah Nama Gudang"}
+                                    {selectedLanguage === "th-TH" && "เพิ่มชื่อคลังสินค้า"}
+                                    {selectedLanguage === "vi-VN" && "Thêm Tên Kho"}
+                                    {selectedLanguage === "id-ID" && "Tambah Nama Gudang"}
+                                    {selectedLanguage === "zh-CN" && "添加仓库名称"}
                                 </btn>
                             </div>
                         </div>
 
-                        <div className=" col-span-2 text-center">
+                        <div className=" w-full text-center">
                             <h1 className="text-2xl font-bold text-yellow-900 my-5">  {selectedLanguage === "en-US" && "Add Reasons:"}
                                 {selectedLanguage === "fil-PH" && "Magdagdag ng Mga Dahilan:"}
                                 {selectedLanguage === "ms-MY" && "Tambah Sebab:"}
@@ -478,7 +563,7 @@ const Admin = () => {
                                 {selectedLanguage === "vi-VN" && "Thêm Lý Do:"}
                                 {selectedLanguage === "id-ID" && "Tambah Alasan:"}
                                 {selectedLanguage === "zh-CN" && "添加原因："}</h1>
-                            <input type="text" value={reason} onChange={(e) => handleReasonsChange(e)} placeholder="Enter Reasons" className="border-2 rounded-lg py-1 pl-2 text-center bg-white text-gray-800 w-full" />
+                            <input type="text" value={reason} onChange={(e) => handleReasonsChange(e)} placeholder="Enter New Reasons To Add" className="border-2 rounded-lg py-1 pl-2 text-center bg-white text-gray-800 w-full" />
                             <div className="mt-8">
 
                                 <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddReasons}>  {selectedLanguage === "en-US" && "Add Reasons:"}
@@ -490,7 +575,96 @@ const Admin = () => {
                                     {selectedLanguage === "zh-CN" && "添加原因："}</btn>
                             </div>
                         </div>
+
+
+
+
+
+
                     </div>
+
+                    <>
+
+                        <h1 className="text-2xl font-bold text-yellow-900 mt-20 mb-5">
+                            {selectedLanguage === "en-US" && "Add Shop Name:"}
+                            {selectedLanguage === "fil-PH" && "Magdagdag ng Pangalan ng Tindahan:"}
+                            {selectedLanguage === "ms-MY" && "Tambah Nama Kedai:"}
+                            {selectedLanguage === "th-TH" && "เพิ่มชื่อร้านค้า:"}
+                            {selectedLanguage === "vi-VN" && "Thêm Tên Cửa Hàng:"}
+                            {selectedLanguage === "id-ID" && "Tambah Nama Toko:"}
+                            {selectedLanguage === "zh-CN" && "添加商店名称："}</h1>
+
+                    </>
+
+
+                    <div className=" w-full mt-8 grid grid-cols-3 gap-4">
+                        <div className="col-span-2">
+
+                            <input type="text" value={shopName} onChange={(e) => handleShopNamesChange(e)} placeholder="Enter New ShopName Name" className="border-2 w-full rounded-lg py-1 pl-2 text-center bg-white text-gray-800" />
+                            <select
+                                value={selectedFinance}
+                                onChange={handleFinanceChange}
+                                className="border-2 w-full rounded-lg py-1 pl-2 mt-5 text-center bg-white text-gray-800"
+                            >
+                                <option value="">Select Finance</option>
+                                {allFinance?.map((finance, index) => (
+                                    <option key={index} value={finance?.name}>
+                                        {finance?.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <div>
+                                <div className="border-2 py-5 text-left pl-8">
+                                    {warehouseNames.map((warehouseName, index) => (
+                                        <div key={index}>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    className="mr-3"
+                                                    value={warehouseName}
+                                                    checked={selectedWarehouses.includes(warehouseName)}
+                                                    onChange={handleCheckboxChange}
+                                                />
+                                                {warehouseName}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div className="mt-8">
+
+                        <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddShopNames}>
+                            {selectedLanguage === "en-US" && "Add Shop Name"}
+                            {selectedLanguage === "fil-PH" && "Magdagdag ng Pangalan ng Tindahan"}
+                            {selectedLanguage === "ms-MY" && "Tambah Nama Kedai"}
+                            {selectedLanguage === "th-TH" && "เพิ่มชื่อร้านค้า"}
+                            {selectedLanguage === "vi-VN" && "Thêm Tên Cửa Hàng"}
+                            {selectedLanguage === "id-ID" && "Tambah Nama Toko"}
+                            {selectedLanguage === "zh-CN" && "添加商店名称"}
+                        </btn>
+                    </div>
+
+
+                    <div>
+                        <h1>{shopName}</h1>
+                        <h1>{selectedFinance}</h1>
+                        <div>
+                            {selectedWarehouses.map((selectedWarehouse, index) => (
+                                <div key={index}>{selectedWarehouse}</div>
+                            ))}
+                        </div>
+                    </div>
+
+
 
 
                 </div>

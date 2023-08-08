@@ -142,32 +142,32 @@ const ResendForm = () => {
       <div className="grid grid-cols-1">
 
         <div onClick={handleToGenerateOrderNumber} className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderNumber">Order Number:</label>
+          <label className="text-start"  htmlFor="orderNumber">Order Number:</label>
           <input
             type="text"
             id="orderNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderNumber}
             onChange={(e) => setOrderNumber(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Work Order Time:</label>
+          <label className="text-start"  htmlFor="applicantName">Work Order Time:</label>
           <input
             type="text"
             id="applicationTime"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderTime}
             onChange={(e) => setOrderTime(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="shopName">Shop Name:</label>
+          <label className="text-start"  htmlFor="shopName">Shop Name:</label>
           <select
             id="shopName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={shopName}
             onChange={(e) => setShopName(e.target.value)}
           >
@@ -181,43 +181,43 @@ const ResendForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerOrderNumber">Customer User Name:</label>
+          <label className="text-start"  htmlFor="customerOrderNumber">Customer User Name:</label>
           <input
             type="text"
             id="customerUserName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerUserName}
             onChange={(e) => setCustomerUserName(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerOrderNumber">Customer Order Number:</label>
+          <label className="text-start"  htmlFor="customerOrderNumber">Customer Order Number:</label>
           <input
             type="text"
             id="customerOrderNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerOrderNumber}
             onChange={(e) => setCustomerOrderNumber(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderDate">Order Date:</label>
+          <label className="text-start"  htmlFor="orderDate">Order Date:</label>
           <input
             type="date"
             id="orderDate"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={orderDate}
             onChange={(e) => setOrderDate(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="refundReason">Resend/Shipped Again Item:</label>
+          <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Item:</label>
           <select
             id="refundReason"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={resendItem}
             onChange={(e) => setResendItem(e.target.value)}
           >
@@ -229,11 +229,11 @@ const ResendForm = () => {
           </select>
           {resendItem === 'Others' && (
             <div className="mt-2 flex justify-between items-center">
-              <label htmlFor="otherReason">Other Item:</label>
+              <label className="text-start"  htmlFor="otherReason">Other Item:</label>
               <textarea
                 type="text"
                 id="otherReason"
-                className="border rounded-md p-2 w-9/12"
+                className="border rounded-md p-2 w-8/12"
                 value={otherItem}
                 onChange={(e) => setOtherItem(e.target.value)}
               />
@@ -242,11 +242,11 @@ const ResendForm = () => {
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="orderAmount">Resend Item Quantity:</label>
+          <label className="text-start"  htmlFor="orderAmount">Resend Item Quantity:</label>
           <input
             type="text"
             id="orderAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={itemQuantity}
             onChange={(e) => setItemQuantity(e.target.value)}
           />
@@ -255,42 +255,42 @@ const ResendForm = () => {
 
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="refundAmount">Recipient Name:</label>
+          <label className="text-start"  htmlFor="refundAmount">Recipient Name:</label>
           <input
             type="text"
             id="refundAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={recipientName}
             onChange={(e) => setRecipientName(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerReceivingAmount">Recipient Phone Number:</label>
+          <label className="text-start"  htmlFor="customerReceivingAmount">Recipient Phone Number:</label>
           <input
             type="text"
             id="customerReceivingAmount"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="remarks">Recipient Address:</label>
+          <label className="text-start"  htmlFor="remarks">Recipient Address:</label>
           <textarea
             id="remarks"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           ></textarea>
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="refundReason">Resend/Shipped Again Reason:</label>
+          <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Reason:</label>
           <select
             id="refundReason"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={resendReason}
             onChange={(e) => setResendReason(e.target.value)}
           >
@@ -302,11 +302,11 @@ const ResendForm = () => {
           </select>
           {resendReason === 'Others' && (
             <div className="mt-2 flex justify-between items-center">
-              <label htmlFor="otherReason">Other Reason:</label>
+              <label className="text-start"  htmlFor="otherReason">Other Reason:</label>
               <textarea
                 type="text"
                 id="otherReason"
-                className="border rounded-md p-2 w-9/12"
+                className="border rounded-md p-2 w-8/12"
                 value={otherReason}
                 onChange={(e) => setOtherReason(e.target.value)}
               />
@@ -315,43 +315,43 @@ const ResendForm = () => {
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="customerReturnTrackingNumber">Shipping Tracking Number:</label>
+          <label className="text-start"  htmlFor="customerReturnTrackingNumber">Shipping Tracking Number:</label>
           <input
             type="text"
             id="customerReturnTrackingNumber"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={customerReturnTrackingNumber}
             onChange={(e) => setCustomerReturnTrackingNumber(e.target.value)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="remarks">Remarks:</label>
+          <label className="text-start"  htmlFor="remarks">Remarks:</label>
           <textarea
             id="remarks"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={remarks}
             onChange={(e) => setRemarks(e.target.value)}
           ></textarea>
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Applicant Name:</label>
+          <label className="text-start"  htmlFor="applicantName">Applicant Name:</label>
           <input
             type="text"
             id="applicantName"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={user?.name}
             onChange={(e) => setApplicantName(user?.name)}
           />
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label htmlFor="applicantName">Application Date:</label>
+          <label className="text-start"  htmlFor="applicantName">Application Date:</label>
           <input
             type="text"
             id="applicationTime"
-            className="border rounded-md p-2 w-9/12"
+            className="border rounded-md p-2 w-8/12"
             value={applicationDate}
             onChange={(e) => setApplicationDate(e.target.value)}
           />

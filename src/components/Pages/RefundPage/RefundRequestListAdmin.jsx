@@ -191,6 +191,30 @@ const RefundRequestListAdmin = () => {
                 <td className="text-start hidden md:block">{request?.orderDate}</td>
 
                 {user?.admin === "true" && request?.financeStatus === "true" ? (
+
+                  <td>
+                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={handleToToast}>
+                      <FcCheckmark />
+                    </btn>
+                  </td>
+
+
+                ) : (
+
+                  <td>
+                    <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
+                      <FiEdit />
+                    </btn>
+                  </td>
+
+                )}
+
+                <td>
+                  <btn className="text-red-500 flex justify-center hover:cursor-pointer" onClick={() => deleteUser(request?.id)}>
+                    <RiDeleteBin7Line />
+                  </btn>
+                </td>
+                {/* {user?.admin === "true" && request?.financeStatus === "true" ? (
                   <>
                     <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={handleToToast}>
@@ -217,7 +241,7 @@ const RefundRequestListAdmin = () => {
                       </btn>
                     </td>
                   </>
-                )}
+                )} */}
 
 
 
@@ -233,7 +257,7 @@ const RefundRequestListAdmin = () => {
       {/* modal part start from here to update a user information */}
       {editingRequest && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-8 w-7/12 max-h-fit mx-auto">
+          <div className="bg-white p-8 w-7/12 max-h-screen overflow-scroll mx-auto">
             <h2 className="text-lg font-bold mb-1bg-gradient-to-r from-green-300 to-yellow-300">
               {selectedLanguage === "zh-CN" && "编辑退款请求信息"}
               {selectedLanguage === "en-US" && "Edit Refund Request Information"}
