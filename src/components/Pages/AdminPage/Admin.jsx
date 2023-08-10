@@ -1,5 +1,3 @@
-
-
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
@@ -14,51 +12,37 @@ import RefundRequestListAdmin from '../RefundPage/RefundRequestListAdmin';
 
 const Admin = () => {
 
-    //create useState for the user and update 
+    //Declare the variable with useState to manage the state of any variable 
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [shopName, setShopName] = useState('');
-    const [shopNames, setShopNames] = useState([]);
     const [warehouseName, setWarehouseName] = useState();
     const [warehouseNames, setWarehouseNames] = useState([]);
     const [reasons, setReasons] = useState('');
-
     const [reason, setReason] = useState([]);
     const [allFinance, setAllFinance] = useState([]);
+    const [allShopDetails, setAllShopDetails] = useState([]);
     const [selectedFinance, setSelectedFinance] = useState('');
-
-    const { user, selectedLanguage } = useContext(AuthContext);
-    // const handleCheckboxChange = (event) => {
-    //     const selectedWarehouse = event.target.value;
-    //     const isChecked = event.target.checked;
-
-    //     if (isChecked) {
-    //         setWarehouseNames((prevNames) => [...prevNames, selectedWarehouse]);
-    //     } else {
-    //         setWarehouseNames((prevNames) =>
-    //             prevNames.filter((name) => name !== selectedWarehouse)
-    //         );
-    //     }
-    // };
     const [selectedWarehouses, setSelectedWarehouses] = useState([]);
+    const [selectedUserWarehouses, setSelectedUserWarehouses] = useState([]);
 
-    const handleCheckboxChange = (event) => {
-        const warehouseName = event.target.value;
-        if (event.target.checked) {
-            setSelectedWarehouses((prevSelected) => [...prevSelected, warehouseName]);
-        } else {
-            setSelectedWarehouses((prevSelected) => prevSelected.filter((name) => name !== warehouseName));
-        }
-    };
+    //import teh necessary value from user context to use in this component
+    const { user, selectedLanguage } = useContext(AuthContext);
 
 
+
+
+
+
+    //use useEffect to get the Reasons, warehouse name,  shopDetails and finance 
     useEffect(() => {
+
+        //create this function to  get the Reasons, warehouse venue
         const fetchShopNamesReasons = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/tht/shopNamesReasons');
                 const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
-                setShopNames((data.shopNames).split(","));
                 setReasons((data.reasons).split(","));
                 setWarehouseNames((data.warehouseNames).split(","));
             } catch (error) {
@@ -66,6 +50,22 @@ const Admin = () => {
             }
         };
 
+
+
+        //use useEffect to get the Reasons, warehouse name and all shop details 
+        const fetchAllShopDetails = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/tht/shopDetails');
+                const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+                setAllShopDetails(data);
+
+            } catch (error) {
+                console.error('Error fetching shop names:', error);
+            }
+        };
+
+
+        //create this function to get the specific finance name according to the shop name
         const fetchAllFinance = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/tht/finance');
@@ -76,33 +76,70 @@ const Admin = () => {
                 console.error('Error fetching shop names:', error);
             }
         };
+
+
         fetchAllFinance();
         fetchShopNamesReasons();
+        fetchAllShopDetails();
     }, []);
 
-    console.log(allFinance)
 
+    //create function to get the checkbox value to get all the warehouses for specific shop name
+    const handleCheckboxChange = (event) => {
+        const warehouseName = event.target.value;
+        if (event.target.checked) {
+            setSelectedWarehouses((prevSelected) => [...prevSelected, warehouseName]);
+        } else {
+            setSelectedWarehouses((prevSelected) => prevSelected.filter((name) => name !== warehouseName));
+        }
+
+    };
+    const handleUserCheckboxChange = (event) => {
+        const userWarehouseName = event.target.value;
+        console.log(userWarehouseName)
+        if (event.target.checked) {
+            setSelectedUserWarehouses((prevSelected) => [...prevSelected, userWarehouseName]);
+        } else {
+            setSelectedUserWarehouses((prevSelected) => prevSelected.filter((name) => name !== userWarehouseName));
+        }
+        setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
+    };
+    console.log(editingUser)
+
+    //create onChange function to get input filed of shopName
     const handleShopNamesChange = (e) => {
         setShopName(e.target.value);
     };
+
+
+    //create onChange function to get input filed of warehouse venue name
     const handleWarehouseNamesChange = (e) => {
         setWarehouseName(e.target.value);
     };
 
+    //create onChange function to get input filed of finance for specific shop name
     const handleFinanceChange = (e) => {
         setSelectedFinance(e.target.value);
     };
 
-    const handleAddShopNames = () => {
-        const shopDetails={
-            shopeName:shopName,
-            finance:selectedFinance,
-            warehouses:selectedWarehouses
-        }
+
+    //create onChange function to get input filed of reason for refund request
+    const handleReasonsChange = (e) => {
+        setReason(e.target.value);
+    };
+
+
+    //create this function to add the information for all warehouse name and finance information for a specific shop name
+    const handleAddShopDetails = () => {
+        const shopDetails = {
+            shopeName: shopName,
+            finance: selectedFinance,
+            warehouses: selectedWarehouses
+        };
+
         if (shopName.trim() !== '') {
-           
-            fetch('http://localhost:5000/tht/shopNames', {
-                method: 'PUT',
+            fetch('http://localhost:5000/tht/shopDetails', {
+                method: 'POST',
                 headers: {
                     'content-type': 'application/json'
                 },
@@ -110,30 +147,26 @@ const Admin = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if (data?.changedRows) {
+                    console.log('Response data:', data);
+                    if (data?.insertId) {
+                        // Only store necessary data in the array
+                        setAllShopDetails([...allShopDetails, { ...shopDetails, id: data.insertId }]);
                         toast.success('New Shop details stored Successfully');
-
-                    }
-                    else {
+                        setShopName("");
+                    } else {
                         toast.error(data.message);
+                        console.error(data);
                     }
-
                 })
-            setShopName('');
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('An error occurred while making the request.');
+                });
         }
-
     };
 
-    // const handleCheckboxChange = (event) => {
-    //     const { value, checked } = event.target;
-    //     if (checked) {
-    //         setWarehouseNames((prevSelected) => [...prevSelected, value]);
-    //     } else {
-    //         setWarehouseNames((prevSelected) => prevSelected.filter((shop) => shop !== value));
-    //     }
-    // };
 
-
+    //create function to add all warehouse venue to show the list and add the warehouse name for specific shop name
     const handleAddWarehouseNames = () => {
         if (warehouseName.trim() !== '') {
             const newWarehouseNames = [...warehouseNames, warehouseName]
@@ -163,9 +196,7 @@ const Admin = () => {
     };
 
 
-    const handleReasonsChange = (e) => {
-        setReason(e.target.value);
-    };
+    //create function to add all refund request reason
 
     const handleAddReasons = () => {
         if (reason.trim() !== '') {
@@ -183,7 +214,6 @@ const Admin = () => {
                 .then(data => {
                     if (data?.changedRows) {
                         toast.success('New reasons stored Successfully');
-
                     }
                     else {
                         toast.error(data.message);
@@ -195,7 +225,9 @@ const Admin = () => {
 
     };
 
-    //start the part to get all the users from database
+
+
+    //start the part to get all the users information from database
 
     useEffect(() => {
         const fetchData = async () => {
@@ -213,6 +245,9 @@ const Admin = () => {
         fetchData();
     }, []);
 
+
+
+
     //create a function to delete a user from the frontend and database both side 
     const deleteUser = async (userId) => {
         const confirmed = window.confirm('Are you sure you want to delete this user?');
@@ -228,6 +263,9 @@ const Admin = () => {
             toast.error('Failed to delete user');
         }
     };
+
+
+    //crate these 2 function to open modal and close modal to edit user information
     const openEditModal = (user) => {
         setEditingUser(user);
     };
@@ -239,6 +277,7 @@ const Admin = () => {
 
     //create a function to update a user from the frontend and database both side 
     const updateUser = async (userId, editingUser) => {
+        console.log(editingUser)
         const confirmed = window.confirm('Are you sure you want to update this user information?');
         if (!confirmed) {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
@@ -258,7 +297,8 @@ const Admin = () => {
         setEditingUser(null);
     };
 
-    //create a function to update a user from the frontend and database both side 
+
+    //create a function to update a user to convert into admin from the frontend and database both side 
     const updateUserToAdmin = async (userId) => {
         // setUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
         const isAdmin = true;
@@ -290,6 +330,7 @@ const Admin = () => {
 
 
     return (
+        //this is the register section
         <div className='max-w-[1240px] mx-auto py-16 px-4 text-center'>
             <>
                 <h1>Registration field to register for new user</h1>
@@ -642,7 +683,7 @@ const Admin = () => {
 
                     <div className="mt-8">
 
-                        <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddShopNames}>
+                        <btn className="px-4 py-1 mt-5 bg-lime-200 text-gray-800 font-semibold rounded-lg cursor-pointer" onClick={handleAddShopDetails}>
                             {selectedLanguage === "en-US" && "Add Shop Name"}
                             {selectedLanguage === "fil-PH" && "Magdagdag ng Pangalan ng Tindahan"}
                             {selectedLanguage === "ms-MY" && "Tambah Nama Kedai"}
@@ -655,14 +696,31 @@ const Admin = () => {
 
 
                     <div>
-                        <h1>{shopName}</h1>
-                        <h1>{selectedFinance}</h1>
-                        <div>
-                            {selectedWarehouses.map((selectedWarehouse, index) => (
-                                <div key={index}>{selectedWarehouse}</div>
-                            ))}
-                        </div>
+                        {allShopDetails.map((shopDetails, index) => (
+                            <div key={index} className="border p-4 mb-4">
+                                <p>Shop Name: {shopDetails.shopeName}</p>
+                                <p>Finance: {shopDetails.finance}</p>
+                                <p>Warehouses:</p>
+                                <ul>
+                                    {Array.isArray(shopDetails.warehouses)
+                                        ? shopDetails.warehouses.map((warehouse, warehouseIndex) => (
+                                            <li key={warehouseIndex}>{warehouse}</li>
+                                        ))
+                                        : JSON.parse(shopDetails.warehouses).map((warehouse, warehouseIndex) => (
+                                            <li key={warehouseIndex}>{warehouse}</li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        ))}
                     </div>
+
+
+
+
+
+
+
 
 
 
@@ -674,62 +732,93 @@ const Admin = () => {
                     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                         <div className="bg-white  w-7/12 p-8">
                             <h2 className="text-lg font-bold mb-4">Edit User</h2>
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                value={editingUser.name}
-                                onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                readOnly
-                                value={editingUser.email}
-                                onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Phone"
-                                value={editingUser.phone}
-                                onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
 
-                            <input
-                                type="text"
-                                placeholder="Designation"
-                                value={editingUser.role}
-                                onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Language"
-                                value={editingUser.language}
-                                onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
-                                className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Country"
-                                value={editingUser.country}
-                                onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
-                                className="mb-8 px-4 py-2 border border-gray-300 rounded-md w-full"
-                            />
-                            <btn
-                                className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
-                                onClick={() => saveUser(editingUser.id, editingUser)}
-                            >
-                                Save
-                            </btn>
-                            <btn
-                                className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
-                                onClick={handleToCancel}
-                            >
-                                cancel
-                            </btn>
+                            <div className="flex gap-4">
+                         
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    value={editingUser.name}
+                                    onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <input
+                                    type="email"
+                                    placeholder="Email"
+                                    readOnly
+                                    value={editingUser.email}
+                                    onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Phone"
+                                    value={editingUser.phone}
+                                    onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
+                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+
+                                <input
+                                    type="text"
+                                    placeholder="Designation"
+                                    value={editingUser.role}
+                                    onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
+                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Language"
+                                    value={editingUser.language}
+                                    onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
+                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Country"
+                                    value={editingUser.country}
+                                    onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
+                                    className="mb-8 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                />
+                                <btn
+                                    className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
+                                    onClick={() => saveUser(editingUser.id, editingUser)}
+                                >
+                                    Save
+                                </btn>
+                                <btn
+                                    className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
+                                    onClick={handleToCancel}
+                                >
+                                    cancel
+                                </btn>
+
+
+                            </div>
+                            {
+                                (editingUser?.role).includes("~Warehouse~") &&
+                                <div className="text-start w-9/12 rounded-lg" style={{ maxHeight: '200px', overflowY: 'scroll', border: '1px solid #ccc' }}>
+                                {warehouseNames.map((warehouseName, index) => (
+                                    <div key={index}>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                className="mr-3"
+                                                value={warehouseName}
+                                                checked={selectedUserWarehouses.includes(warehouseName)}
+                                                onChange={handleUserCheckboxChange}
+                                            />
+                                            {warehouseName}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                            }
+
+                          
+
+                                   
+                            </div>
 
                         </div>
                     </div>

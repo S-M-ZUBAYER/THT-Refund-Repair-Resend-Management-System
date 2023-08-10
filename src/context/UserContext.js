@@ -3,6 +3,8 @@ import { toast } from 'react-hot-toast';
 
 export const AuthContext = createContext();
 
+//create this component function pass data from one component to another
+
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,6 +12,8 @@ const UserContext = ({ children }) => {
   const [allRefundRequest, setAllRefundRequest] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
 
+
+  //use useEffect to get teh data from login user to manage the private route
   useEffect(() => {
     const storedUser = localStorage.getItem('RFuser');
     if (storedUser) {
@@ -22,16 +26,19 @@ const UserContext = ({ children }) => {
       }
     }
 
-    // Check if the 'navigator' object and 'language' property are supported
+    //create functionalities to get the system language and set this value in language property
     if (navigator && navigator.language) {
       setSelectedLanguage(navigator.language);
     } else {
       // Fallback: return a default language code if not supported
       setSelectedLanguage('en-US'); // You can set your preferred default language code here
     }
-
     setLoading(false);
   }, []);
+
+
+
+  //crate a object to pass share all these from all of the component by using use context
 
   const authInfo = {
     user,
@@ -46,6 +53,8 @@ const UserContext = ({ children }) => {
     setSelectedLanguage
   };
 
+
+  // share all the value into all children 
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

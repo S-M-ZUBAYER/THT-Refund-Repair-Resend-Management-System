@@ -57,15 +57,6 @@ const RegisterSystem = () => {
   const navigate = useNavigate();
 
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-
-  };
-
   // create this function to upload image
   const handleFileUpload = useCallback(async (acceptedFiles) => {
     const apiKey = process.env.REACT_APP_IMG_BB_API_KEY;
