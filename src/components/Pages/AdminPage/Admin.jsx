@@ -104,7 +104,6 @@ const Admin = () => {
         }
         setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
     };
-    console.log(editingUser)
 
     //create onChange function to get input filed of shopName
     const handleShopNamesChange = (e) => {
@@ -277,13 +276,14 @@ const Admin = () => {
 
     //create a function to update a user from the frontend and database both side 
     const updateUser = async (userId, editingUser) => {
-        console.log(editingUser)
+        // setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
+        // console.log(editingUser)
         const confirmed = window.confirm('Are you sure you want to update this user information?');
         if (!confirmed) {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, editingUser);
+            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, { ...editingUser, warehouseShop: selectedUserWarehouses });
             toast.success("user information updated successfully");
             // Optionally, you can show a success message to the user using a toast or other UI notification.
         } catch (error) {
@@ -733,91 +733,124 @@ const Admin = () => {
                         <div className="bg-white  w-7/12 p-8">
                             <h2 className="text-lg font-bold mb-4">Edit User</h2>
 
-                            <div className="flex gap-4">
-                         
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Name"
-                                    value={editingUser.name}
-                                    onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    readOnly
-                                    value={editingUser.email}
-                                    onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Phone"
-                                    value={editingUser.phone}
-                                    onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
-                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
+                            <div className="grid grid-cols-3 gap-4">
 
-                                <input
-                                    type="text"
-                                    placeholder="Designation"
-                                    value={editingUser.role}
-                                    onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
-                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Language"
-                                    value={editingUser.language}
-                                    onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
-                                    className="mb-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Country"
-                                    value={editingUser.country}
-                                    onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
-                                    className="mb-8 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                />
-                                <btn
-                                    className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
-                                    onClick={() => saveUser(editingUser.id, editingUser)}
-                                >
-                                    Save
-                                </btn>
-                                <btn
-                                    className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
-                                    onClick={handleToCancel}
-                                >
-                                    cancel
-                                </btn>
-
-
-                            </div>
-                            {
-                                (editingUser?.role).includes("~Warehouse~") &&
-                                <div className="text-start w-9/12 rounded-lg" style={{ maxHeight: '200px', overflowY: 'scroll', border: '1px solid #ccc' }}>
-                                {warehouseNames.map((warehouseName, index) => (
-                                    <div key={index}>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                className="mr-3"
-                                                value={warehouseName}
-                                                checked={selectedUserWarehouses.includes(warehouseName)}
-                                                onChange={handleUserCheckboxChange}
-                                            />
-                                            {warehouseName}
-                                        </label>
+                                <div className="col-span-2">
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Name:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Name"
+                                            value={editingUser.name}
+                                            onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
                                     </div>
-                                ))}
-                            </div>
-                            }
 
-                          
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Email:</label>
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            readOnly
+                                            value={editingUser.email}
+                                            onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
 
-                                   
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Phone:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Phone"
+                                            value={editingUser.phone}
+                                            onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Role:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Designation"
+                                            value={editingUser.role}
+                                            onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Warehouse:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Warehouse"
+                                            value={editingUser.warehouseShop}
+                                            onChange={(e) => setEditingUser({ ...editingUser, warehouseShop: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <label className="mb-2" htmlFor="">Language:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Language"
+                                            value={editingUser.language}
+                                            onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
+                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <label className="mb-8" htmlFor="">Country:</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Country"
+                                            value={editingUser.country}
+                                            onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
+                                            className="mb-8 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+                                    <btn
+                                        className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
+                                        onClick={() => saveUser(editingUser.id, editingUser)}
+                                    >
+                                        Save
+                                    </btn>
+                                    <btn
+                                        className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
+                                        onClick={handleToCancel}
+                                    >
+                                        cancel
+                                    </btn>
+
+
+                                </div>
+                                {
+                                    (editingUser?.role).includes("~Warehouse~") &&
+                                    <div className="text-left pt-2 pl-2 w-9/12 rounded-lg" style={{ maxHeight: '200px', overflowY: 'scroll', border: '1px solid #ccc' }}>
+                                        {warehouseNames.map((warehouseName, index) => (
+                                            <div key={index}>
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-3 text-left"
+                                                        value={warehouseName}
+                                                        checked={selectedUserWarehouses.includes(warehouseName)}
+                                                        onChange={handleUserCheckboxChange}
+                                                    />
+                                                    {warehouseName}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                }
+
+
+
+
                             </div>
 
                         </div>

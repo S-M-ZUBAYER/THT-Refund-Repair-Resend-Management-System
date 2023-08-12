@@ -282,9 +282,11 @@ const PhilippinesNavbar = () => {
                   <FaUserCircle className="text-black text-2xl mb-2" />
                 )}
                 <div>
-                  <p>{user?.name}</p>
-                  <p>{user?.role}</p>
+                <p>{user?.name}</p>
+                  <p>{user?.country}</p>
                   <p>{user?.email}</p>
+                  <p>{user?.role}</p>
+                  <p>{user?.warehouseName}</p>
                 </div>
               </div>
             </div>

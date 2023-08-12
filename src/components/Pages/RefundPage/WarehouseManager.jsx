@@ -19,7 +19,7 @@ const WarehouseManager = ({ refundProducts }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchAllQuery, setSearchAllQuery] = useState('');
 
-  const { selectedLanguage } = useContext(AuthContext);
+  const { selectedLanguage,user } = useContext(AuthContext);
 
 
   const handleSearchAllChange = (event) => {
@@ -42,7 +42,8 @@ const WarehouseManager = ({ refundProducts }) => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseManagerRequest');
       const data = response.data;
-      setAllWarehouseManagerRequest(data);
+      setAllWarehouseManagerRequest(data?.filter(everyData=>everyData?.warehouseCountry===user?.country));
+      console.log(data?.filter(everyData=>everyData?.warehouseCountry===user?.country))
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);
@@ -263,7 +264,6 @@ const WarehouseManager = ({ refundProducts }) => {
       </table>
 
 
-      modal part start from here to update a user information
       {editingRequest && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-8 w-7/12 mx-auto">

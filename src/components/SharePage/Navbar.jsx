@@ -136,8 +136,10 @@ const Navbar = () => {
                 )}
                 <div>
                   <p>{user?.name}</p>
-                  <p>{user?.role}</p>
+                  <p>{user?.country}</p>
                   <p>{user?.email}</p>
+                  <p>{user?.role}</p>
+                  <p>{user?.warehouseName}</p>
                 </div>
               </div>
             </div>

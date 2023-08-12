@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
 import { Link } from 'react-router-dom';
 
-const Finance = ({ refundProducts }) => {
+const Finance = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const Finance = ({ refundProducts }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchSpecialQuery, setSearchSpecialQuery] = useState('');
     const [searchAllQuery, setSearchAllQuery] = useState('');
-    const { selectedLanguage } = useContext(AuthContext);
+    const { selectedLanguage, user } = useContext(AuthContext);
 
     const handleSearchAllChange = (event) => {
         setSearchAllQuery(event.target.value);
@@ -55,7 +55,8 @@ const Finance = ({ refundProducts }) => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/financeRequest');
             const data = response.data;
-            setAllFinanceRequest(data);
+            setAllFinanceRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+            console.log(data?.filter(everyData=>everyData?.finance===user?.name))
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
@@ -68,7 +69,8 @@ const Finance = ({ refundProducts }) => {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/tht/financeSpecialRequest');
             const data = response.data;
-            setAllFinanceSpecialRequest(data);
+            setAllFinanceSpecialRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+            console.log(data?.filter(everyData=>everyData?.finance===user?.name))
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
@@ -83,27 +85,8 @@ const Finance = ({ refundProducts }) => {
         fetchFinanceSpecialData();
     }, []);
 
-    const deleteRequest = async (id) => {
-        const confirmed = window.confirm('Are you sure you want to delete this information?');
-        if (!confirmed) {
-            return; // Cancel the deletion if the user clicks Cancel or closes the modal
-        }
-        try {
-            await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
-            toast.success('User deleted successfully');
-            setAllFinanceRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
-            setAllFinanceSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
-        } catch (error) {
-            console.error('Error deleting user:', error);
-            toast.error('Failed to delete user');
-        }
-    };
-
-    const openEditModal = (refundRequest) => {
-        setEditingRequest(refundRequest);
-        setIsModalOpen(true);
-    };
-
+  
+   
     const updateRequest = async (orderNumber, editingRequest) => {
         const confirmed = window.confirm('Are you sure you want to update these information?');
         if (!confirmed) {
@@ -122,41 +105,7 @@ const Finance = ({ refundProducts }) => {
 
 
 
-    const updateWarehouseStatus = async (orderNumber) => {
-        const confirmed = window.confirm('Are you sure you want to approve?');
-        if (!confirmed) {
-            return; // Cancel the deletion if the user clicks Cancel or closes the modal
-        }
-        try {
-            const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
-
-            if (response.status === 200) {
-                // Update the warehouse status locally in the state
-                setAllFinanceRequest((prevRefundRequest) =>
-                    prevRefundRequest.map((request) => {
-                        if (request.orderNumber === orderNumber) {
-                            return { ...request, warehouseStatus: true };
-                        }
-                        return request;
-                    })
-                );
-                setAllFinanceSpecialRequest((prevRefundRequest) =>
-                    prevRefundRequest.map((request) => {
-                        if (request.orderNumber === orderNumber) {
-                            return { ...request, warehouseStatus: true };
-                        }
-                        return request;
-                    })
-                );
-            } else {
-                toast.error('Failed to update warehouse status');
-            }
-        } catch (error) {
-            console.error('Error updating warehouse status:', error);
-            toast.error('Failed to update warehouse status');
-        }
-    };
-
+ 
 
     const saveRequest = (orderNumber, updatedRequest) => {
         updateRequest(orderNumber, updatedRequest);

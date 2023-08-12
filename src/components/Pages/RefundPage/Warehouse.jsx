@@ -10,16 +10,14 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/UserContext';
 
 const Warehouse = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editingRequest, setEditingRequest] = useState(null);
   const [allWarehouseRequest, setAllWarehouseRequest] = useState([]);
   const [allWarehouseSpecialRequest, setAllWarehouseSpecialRequest] = useState([]);
-  const [selectedImages, setSelectedImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchAllQuery, setSearchAllQuery] = useState('');
 
-  const { selectedLanguage } = useContext(AuthContext);
+  const { selectedLanguage,user } = useContext(AuthContext);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -49,7 +47,8 @@ const Warehouse = () => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseRequest');
       const data = response.data;
-      setAllWarehouseRequest(data);
+      setAllWarehouseRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
+      console.log(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)),user)
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);
@@ -62,7 +61,8 @@ const Warehouse = () => {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/tht/warehouseSpecialRequest');
       const data = response.data;
-      setAllWarehouseSpecialRequest(data);
+      setAllWarehouseSpecialRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
+      console.log(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)),user)
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);
@@ -75,26 +75,7 @@ const Warehouse = () => {
     fetchSpecialData();
   }, []);
 
-  const deleteRequest = async (id) => {
-    const confirmed = window.confirm('Are you sure you want to delete this information?');
-    if (!confirmed) {
-      return; // Cancel the deletion if the user clicks Cancel or closes the modal
-    }
-    try {
-      await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
-      toast.success('User deleted successfully');
-      setAllWarehouseRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
-      setAllWarehouseSpecialRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      toast.error('Failed to delete user');
-    }
-  };
-
-  const openEditModal = (refundRequest) => {
-    setEditingRequest(refundRequest);
-    setIsModalOpen(true);
-  };
+ 
 
   const updateRequest = async (orderNumber, editingRequest) => {
     const confirmed = window.confirm('Are you sure you want to update these information?');
@@ -112,32 +93,8 @@ const Warehouse = () => {
 
 
 
-  const handleImageChange = (e) => {
-    setSelectedImages(Array.from(e.target.files));
-  };
+  
 
-
-  // const handleImageChange = (e) => {
-  //   setSelectedImages(e.target.files);
-  // };
-
-  const handleImageUpload = async () => {
-    try {
-      const formData = new FormData();
-      selectedImages.forEach((image) => formData.append('images', image));
-
-      await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // Handle success, display a message or do any other required actions
-    } catch (error) {
-      // Handle error
-      console.error('Error uploading images:', error);
-    }
-  };
 
 
 
