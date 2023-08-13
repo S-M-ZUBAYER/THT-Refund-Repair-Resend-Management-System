@@ -182,12 +182,6 @@ const DetailsLayout = () => {
   };
 
 
-
-
-
-  console.log(allRefundRequest)
-
-
   const updateLeaderStatus = async (orderNumber) => {
     const confirmed = window.confirm('Are you sure you want to approve this refund request?');
     if (!confirmed) {
@@ -326,6 +320,7 @@ const DetailsLayout = () => {
   };
 
   const updateUser = async (orderNumber, editingRequest) => {
+    editingRequest.updateBy=user?.name;
     const confirmed = window.confirm('Are you sure you want to update this product information?');
     if (!confirmed) {
       return;
@@ -707,6 +702,23 @@ const DetailsLayout = () => {
 
             </span>{" "}
             {currentRequest?.financeBy}
+          </p>
+        }
+        {
+          <p>
+            <span className="font-semibold">
+              {selectedLanguage === "en-US" && "Update By:"}
+              {selectedLanguage === "zh-CN" && "财务审批人："}
+              {selectedLanguage === "th-TH" && "ผู้อนุมัติทางการเงิน："}
+              {selectedLanguage === "vi-VN" && "Người Quản lý tài chính đã duyệt bởi:"}
+              {selectedLanguage === "ms-MY" && "Diluluskan Oleh Kewangan:"}
+              {selectedLanguage === "id-ID" && "Disetujui Oleh Keuangan:"}
+              {selectedLanguage === "fil-PH" && "Aprubadong Pinansyal Mula:"}
+
+            </span>{" "}
+            {currentRequest?.updateBy ? currentRequest?.updateBy : "Still Not Updated"}
+
+            
           </p>
         }
 

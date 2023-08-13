@@ -70,7 +70,7 @@ const RegisterSystem = () => {
       setImage(response.data.data.display_url);
       toast.success('Image prepared for use successfully');
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.message);
     }
   }, []);

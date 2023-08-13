@@ -31,7 +31,6 @@ const ResendForm = () => {
   const [special, setSpecial] = useState(false);
 
   const handleOptionChange = () => {
-    console.log(special)
     setSpecial((prevState) => !prevState);
   };
 
@@ -90,7 +89,6 @@ const ResendForm = () => {
 
     };
 
-    console.log(formData);
     fetch('http://localhost:5000/tht/resendRequest/add', {
       method: 'POST',
       headers: {
@@ -100,7 +98,6 @@ const ResendForm = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data stored successfully:', data);
         toast.success("Data stored successfully");
         setAllRefundRequest([...allRefundRequest, formData]);
 

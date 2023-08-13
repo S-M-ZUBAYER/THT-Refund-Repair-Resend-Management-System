@@ -81,10 +81,8 @@ const Login = () => {
         }
 
         else {
-          console.log(data[0]?.warehouseShop)
           setUser({ email: data[0]?.email, name: data[0]?.name, country: data[0]?.country, role: role,warehouseName:data[0]?.warehouseShop, image: data[0]?.image, admin: data[0]?.admin });
           localStorage.setItem('RFuser', JSON.stringify({ email: data[0]?.email, name: data[0]?.name, country: data[0]?.country, role: role,warehouseName:data[0]?.warehouseShop, admin: data[0]?.admin }));
-          console.log({ email: data[0]?.email, name: data[0]?.name, country: data[0]?.country, role: role,warehouseName:data[0]?.warehouseShop, admin: data[0]?.admin })
           setLoading(false);
           navigate(from, { replace: true })
           form.reset();
@@ -99,7 +97,7 @@ const Login = () => {
 
       .catch(err => {
         toast.error("Invalid User Name Or Password")
-        console.log(err);
+        console.error(err);
         setLoading(false);
       })
   };

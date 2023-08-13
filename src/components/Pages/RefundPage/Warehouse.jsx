@@ -48,7 +48,6 @@ const Warehouse = () => {
       const response = await axios.get('http://localhost:5000/tht/warehouseRequest');
       const data = response.data;
       setAllWarehouseRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
-      console.log(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)),user)
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);
@@ -62,7 +61,6 @@ const Warehouse = () => {
       const response = await axios.get('http://localhost:5000/tht/warehouseSpecialRequest');
       const data = response.data;
       setAllWarehouseSpecialRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
-      console.log(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)),user)
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);

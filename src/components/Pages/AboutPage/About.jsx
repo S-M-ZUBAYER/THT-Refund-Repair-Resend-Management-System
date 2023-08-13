@@ -21,12 +21,11 @@ const About = () => {
             message: message,
         }, 'BdhgJg9oyaR8HBBNx')
             .then((result) => {
-                console.log(result.text);
                 alert("Send The sms Success fully")
                 // TODO: Add success message or redirect to thank-you page
             })
             .catch((error) => {
-                console.log(error.text);
+                console.error(error.text);
                 // TODO: Add error message
             });
     };

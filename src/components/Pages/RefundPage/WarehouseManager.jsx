@@ -43,7 +43,6 @@ const WarehouseManager = ({ refundProducts }) => {
       const response = await axios.get('http://localhost:5000/tht/warehouseManagerRequest');
       const data = response.data;
       setAllWarehouseManagerRequest(data?.filter(everyData=>everyData?.warehouseCountry===user?.country));
-      console.log(data?.filter(everyData=>everyData?.warehouseCountry===user?.country))
       setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);

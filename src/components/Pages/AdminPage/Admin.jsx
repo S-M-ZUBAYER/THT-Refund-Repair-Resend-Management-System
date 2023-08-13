@@ -25,7 +25,7 @@ const Admin = () => {
     const [allShopDetails, setAllShopDetails] = useState([]);
     const [selectedFinance, setSelectedFinance] = useState('');
     const [selectedWarehouses, setSelectedWarehouses] = useState([]);
-    const [selectedUserWarehouses, setSelectedUserWarehouses] = useState([]);
+
 
     //import teh necessary value from user context to use in this component
     const { user, selectedLanguage } = useContext(AuthContext);
@@ -94,16 +94,17 @@ const Admin = () => {
         }
 
     };
-    const handleUserCheckboxChange = (event) => {
-        const userWarehouseName = event.target.value;
-        console.log(userWarehouseName)
-        if (event.target.checked) {
-            setSelectedUserWarehouses((prevSelected) => [...prevSelected, userWarehouseName]);
-        } else {
-            setSelectedUserWarehouses((prevSelected) => prevSelected.filter((name) => name !== userWarehouseName));
-        }
-        setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
-    };
+
+
+    // const handleUserSelectChange = (event) => {
+    //     const userWarehouseName = event.target.value;
+    //     if (event.target.checked) {
+    //         setSelectedUserWarehouses((prevSelected) => [...prevSelected, userWarehouseName]);
+    //     } else {
+    //         setSelectedUserWarehouses((prevSelected) => prevSelected.filter((name) => name !== userWarehouseName));
+    //     }
+    //     setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
+    // };
 
     //create onChange function to get input filed of shopName
     const handleShopNamesChange = (e) => {
@@ -146,7 +147,6 @@ const Admin = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log('Response data:', data);
                     if (data?.insertId) {
                         // Only store necessary data in the array
                         setAllShopDetails([...allShopDetails, { ...shopDetails, id: data.insertId }]);
@@ -298,13 +298,12 @@ const Admin = () => {
     //create a function to update a user from the frontend and database both side 
     const updateUser = async (userId, editingUser) => {
         // setEditingUser({ ...editingUser, warehouseShop: selectedUserWarehouses })
-        // console.log(editingUser)
         const confirmed = window.confirm('Are you sure you want to update this user information?');
         if (!confirmed) {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, { ...editingUser, warehouseShop: selectedUserWarehouses });
+            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, { ...editingUser });
             toast.success("user information updated successfully");
             // Optionally, you can show a success message to the user using a toast or other UI notification.
         } catch (error) {
@@ -346,6 +345,7 @@ const Admin = () => {
             // Optionally, you can show an error message to the user using a toast or other UI notification.
         }
     };
+
 
 
 
@@ -780,12 +780,7 @@ const Admin = () => {
                                 </div>
                                 <div className="flex justify-end">
 
-                                    <btn className="text-blue-500 flex justify-center cursor-pointer mr-3" onClick={() => openEditShopModal(shopDetails)}>
-                                        <FiEdit></FiEdit>
-                                    </btn>
-
-
-                                    <btn className="text-red-500 text-center cursor-pointer flex justify-center" onClick={() => deleteShopDetails(shopDetails.id)}>
+                                    <btn className="text-red-500 text-center cursor-pointer text-xl flex justify-center" onClick={() => deleteShopDetails(shopDetails.id)}>
                                         <RiDeleteBin7Line></RiDeleteBin7Line>
                                     </btn>
 
@@ -812,128 +807,169 @@ const Admin = () => {
                         <div className="bg-white  w-7/12 p-8">
                             <h2 className="text-lg font-bold mb-4">Edit User</h2>
 
-                            <div className="grid grid-cols-3 gap-4">
-
-                                <div className="col-span-2">
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Name:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Name"
-                                            value={editingUser.name}
-                                            onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Email:</label>
-                                        <input
-                                            type="email"
-                                            placeholder="Email"
-                                            readOnly
-                                            value={editingUser.email}
-                                            onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Phone:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Phone"
-                                            value={editingUser.phone}
-                                            onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Role:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Designation"
-                                            value={editingUser.role}
-                                            onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Warehouse:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Warehouse"
-                                            value={editingUser.warehouseShop}
-                                            onChange={(e) => setEditingUser({ ...editingUser, warehouseShop: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-2" htmlFor="">Language:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Language"
-                                            value={editingUser.language}
-                                            onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
-                                            className="mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <label className="mb-8" htmlFor="">Country:</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Country"
-                                            value={editingUser.country}
-                                            onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
-                                            className="mb-8 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                        />
-                                    </div>
-                                    <btn
-                                        className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
-                                        onClick={() => saveUser(editingUser.id, editingUser)}
-                                    >
-                                        Save
-                                    </btn>
-                                    <btn
-                                        className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
-                                        onClick={handleToCancel}
-                                    >
-                                        cancel
-                                    </btn>
 
 
+                            <div className="col-span-2">
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Name:"}
+                                        {selectedLanguage === "zh-CN" && "姓名："}
+                                        {selectedLanguage === "th-TH" && "ชื่อ:"}
+                                        {selectedLanguage === "vi-VN" && "Tên:"}
+                                        {selectedLanguage === "ms-MY" && "Nama:"}
+                                        {selectedLanguage === "id-ID" && "Nama:"}
+                                        {selectedLanguage === "fil-PH" && "Pangalan:"}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Name"
+                                        value={editingUser.name}
+                                        onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
                                 </div>
+
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Email:"}
+                                        {selectedLanguage === "zh-CN" && "电子邮件："}
+                                        {selectedLanguage === "th-TH" && "อีเมล:"}
+                                        {selectedLanguage === "vi-VN" && "Email:"}
+                                        {selectedLanguage === "ms-MY" && "E-mel:"}
+                                        {selectedLanguage === "id-ID" && "Surel:"}
+                                        {selectedLanguage === "fil-PH" && "Email:"}
+                                    </label>
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        readOnly
+                                        value={editingUser.email}
+                                        onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Phone:"}
+                                        {selectedLanguage === "zh-CN" && "电话："}
+                                        {selectedLanguage === "th-TH" && "โทรศัพท์:"}
+                                        {selectedLanguage === "vi-VN" && "Điện thoại:"}
+                                        {selectedLanguage === "ms-MY" && "Telefon:"}
+                                        {selectedLanguage === "id-ID" && "Telepon:"}
+                                        {selectedLanguage === "fil-PH" && "Telepono:"}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Phone"
+                                        value={editingUser.phone}
+                                        onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })}
+                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Role:"}
+                                        {selectedLanguage === "zh-CN" && "角色："}
+                                        {selectedLanguage === "th-TH" && "บทบาท:"}
+                                        {selectedLanguage === "vi-VN" && "Vai trò:"}
+                                        {selectedLanguage === "ms-MY" && "Peranan:"}
+                                        {selectedLanguage === "id-ID" && "Peran:"}
+                                        {selectedLanguage === "fil-PH" && "Papel:"}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Designation"
+                                        value={editingUser.role}
+                                        onChange={(e) => setEditingUser({ ...editingUser, designation: e.target.value })}
+                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                </div>
+
                                 {
                                     (editingUser?.role).includes("~Warehouse~") &&
-                                    <div className="text-left pt-2 pl-2 w-9/12 rounded-lg" style={{ maxHeight: '200px', overflowY: 'scroll', border: '1px solid #ccc' }}>
-                                        {warehouseNames.map((warehouseName, index) => (
-                                            <div key={index}>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        className="mr-3 text-left"
-                                                        value={warehouseName}
-                                                        checked={selectedUserWarehouses.includes(warehouseName)}
-                                                        onChange={handleUserCheckboxChange}
-                                                    />
+                                    <div className="grid grid-cols-7 ">
+                                        <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Warehouse:"}
+                                            {selectedLanguage === "zh-CN" && "仓库:"}
+                                            {selectedLanguage === "th-TH" && "คลังสินค้า:"}
+                                            {selectedLanguage === "vi-VN" && "Kho hàng:"}
+                                            {selectedLanguage === "ms-MY" && "Gudang:"}
+                                            {selectedLanguage === "id-ID" && "Gudang:"}
+                                            {selectedLanguage === "fil-PH" && "Bodega:"}
+                                        </label>
+                                        <select
+                                            value={editingUser.warehouseShop}
+                                            onChange={(e) => setEditingUser({ ...editingUser, warehouseShop: e.target.value })}
+                                            className="col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                        >
+                                            <option value="">Select a Warehouse</option>
+                                            {warehouseNames.map((warehouseName, index) => (
+                                                <option key={index} value={warehouseName}>
                                                     {warehouseName}
-                                                </label>
-                                            </div>
-                                        ))}
+                                                </option>
+                                            ))}
+                                        </select>
+
                                     </div>
                                 }
 
 
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Language:"}
+                                        {selectedLanguage === "zh-CN" && "语言:"}
+                                        {selectedLanguage === "th-TH" && "ภาษา:"}
+                                        {selectedLanguage === "vi-VN" && "Ngôn ngữ:"}
+                                        {selectedLanguage === "ms-MY" && "Bahasa:"}
+                                        {selectedLanguage === "id-ID" && "Bahasa:"}
+                                        {selectedLanguage === "fil-PH" && "Wika:"}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Language"
+                                        value={editingUser.language}
+                                        onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
+                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-7 ">
+                                    <label className="mb-8 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Country:"}
+                                        {selectedLanguage === "zh-CN" && "国家:"}
+                                        {selectedLanguage === "th-TH" && "ประเทศ:"}
+                                        {selectedLanguage === "vi-VN" && "Quốc gia:"}
+                                        {selectedLanguage === "ms-MY" && "Negara:"}
+                                        {selectedLanguage === "id-ID" && "Negara:"}
+                                        {selectedLanguage === "fil-PH" && "Bansa:"}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Country"
+                                        value={editingUser.country}
+                                        onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
+                                        className=" col-span-5 mb-8 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                </div>
+                                <btn
+                                    className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
+                                    onClick={() => saveUser(editingUser.id, editingUser)}
+                                >
+                                    Save
+                                </btn>
+                                <btn
+                                    className="bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-md"
+                                    onClick={handleToCancel}
+                                >
+                                    cancel
+                                </btn>
 
 
                             </div>
 
+
+
+
+
                         </div>
+
                     </div>
+
                 )}
             </div>
 
@@ -989,6 +1025,8 @@ const Admin = () => {
                             <p className='py-4'>Ini adalah semua daftar permintaan pengembalian dana pada saat ini. Di sini Anda dapat memeriksa dan memperbarui informasi permintaan pengembalian dana.</p>
                         </>
                     }
+
+
 
                 </div>
                 <RefundRequestListAdmin></RefundRequestListAdmin>

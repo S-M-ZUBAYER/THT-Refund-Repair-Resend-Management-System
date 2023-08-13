@@ -56,7 +56,6 @@ const Finance = () => {
             const response = await axios.get('http://localhost:5000/tht/financeRequest');
             const data = response.data;
             setAllFinanceRequest(data?.filter(everyData=>everyData?.finance===user?.name));
-            console.log(data?.filter(everyData=>everyData?.finance===user?.name))
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
@@ -70,7 +69,6 @@ const Finance = () => {
             const response = await axios.get('http://localhost:5000/tht/financeSpecialRequest');
             const data = response.data;
             setAllFinanceSpecialRequest(data?.filter(everyData=>everyData?.finance===user?.name));
-            console.log(data?.filter(everyData=>everyData?.finance===user?.name))
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);

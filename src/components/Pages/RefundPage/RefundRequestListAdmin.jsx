@@ -13,6 +13,7 @@ const RefundRequestListAdmin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editingRequest, setEditingRequest] = useState(null);
+  const [searchAllQuery, setSearchAllQuery] = useState('');
 
   const handleOptionChange = (special) => {
     setEditingRequest({ ...editingRequest, special: !special })
@@ -104,8 +105,45 @@ const RefundRequestListAdmin = () => {
   };
 
 
+  
+    // searchbar to search all refund request in admin page
+    const handleSearchAllChange = (event) => {
+      setSearchAllQuery(event.target.value);
+  };
+  const filteredAllRefundRequests = allRefundRequest.filter((request) =>
+  request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+  request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+  request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
+  request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
+);
+
   return (
     <div className="text-gray-800 w-full">
+      
+      <div className="flex justify-center">
+                        <div className="flex flex-col md:flex-row md:items-center mb-4">
+                            <input
+                                type="text"
+                                placeholder="Name, Tracking Number, Phone, or Order Number"
+                                className="border sm:w-[350px] md:w-[420px] border-gray-300 rounded-lg py-1 px-4 mb-2 md:mr-1 md:mb-0 bg-white"
+                                value={searchAllQuery}
+                                onChange={handleSearchAllChange}
+                            />
+                            <btn
+
+                                className="bg-[#004368] hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-md"
+                                onClick={() => setSearchAllQuery('')}
+                            >
+                                {selectedLanguage === "en-US" && "Clear"}
+                                {selectedLanguage === "zh-CN" && "清除"}
+                                {selectedLanguage === "fil-PH" && "Linisin"}
+                                {selectedLanguage === "ms-MY" && "Bersihkan"}
+                                {selectedLanguage === "th-TH" && "ล้างข้อมูล"}
+                                {selectedLanguage === "vi-VN" && "Xóa trắng"}
+                                {selectedLanguage === "id-ID" && "Hapus"}
+                            </btn>
+                        </div>
+                    </div>
       <table className="w-full mb-10">
         <thead className="bg-gradient-to-r from-green-300 to-yellow-300">
           <tr className="py-2">
@@ -182,7 +220,7 @@ const RefundRequestListAdmin = () => {
               <DisplaySpinner></DisplaySpinner>
             </div>
             :
-            allRefundRequest.map((request, index) => (
+            filteredAllRefundRequests.map((request, index) => (
               <tr key={request.orderNumber} className="my-5">
                 <td className="text-start pl-2 py-2 font-semibold" >{index + 1}</td>
                 <td className="text-start pl-2 py-2 font-semibold" >{request?.orderNumber}</td>
