@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RefundRequestForm from './RefundRequestForm';
 import RefundRequestList from './RefundRequestList';
 import Hero from '../../SharePage/Hero';
@@ -9,11 +9,40 @@ import LeaderStatus from './LeaderStatus';
 import WarehouseManager from './WarehouseManager';
 import Finance from './Finance';
 import StatusBar from './StatusBar';
+import axios from 'axios';
 
 const Refund = () => {
-    const { user, selectedLanguage } = useContext(AuthContext)
+    const [allRequest, setAllRequest] = useState([]);
+    const [allSpecialRequest, setAllSpecialRequest] = useState([]);
+    const { user, selectedLanguage } = useContext(AuthContext);
 
 
+    const fetchData = async () => {
+        try {
+           
+            const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
+            const data = response.data;
+            setAllRequest(data);
+        } catch (error) {
+            console.error('Error occurred during the request:', error);
+            
+        }
+    };
+
+    const fetchSpecialData = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
+            const data = response.data;
+            setAllSpecialRequest(data);
+        } catch (error) {
+            console.error('Error occurred during the request:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        fetchSpecialData();
+    }, []);
 
 
 
@@ -73,7 +102,12 @@ const Refund = () => {
                     }
 
                 </div>
-                <RefundRequestForm></RefundRequestForm>
+                <RefundRequestForm
+                allRequest={allRequest}
+                setAllRequest={setAllRequest}
+                setAllSpecialRequest={setAllSpecialRequest}
+            allSpecialRequest={allSpecialRequest}
+                ></RefundRequestForm>
 
 
 
@@ -388,7 +422,10 @@ const Refund = () => {
 
             </div>
 
-            <StatusBar></StatusBar>
+            <StatusBar
+            allRequest={allRequest}
+            allSpecialRequest={allSpecialRequest}
+            ></StatusBar>
 
         </div>
     );

@@ -9,16 +9,17 @@ import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/UserContext';
 
-const StatusBar = () => {
+const StatusBar = ({allRequest, allSpecialRequest}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editingRequest, setEditingRequest] = useState(null);
-    const [allWarehouseRequest, setAllWarehouseRequest] = useState([]);
-    const [allWarehouseSpecialRequest, setAllWarehouseSpecialRequest] = useState([]);
+    const [allWarehouseRequest, setAllWarehouseRequest] = useState(allRequest);
+    const [allWarehouseSpecialRequest, setAllWarehouseSpecialRequest] = useState(allSpecialRequest);
     const [selectedImages, setSelectedImages] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchAllQuery, setSearchAllQuery] = useState('');
-    const { selectedLanguage } = useContext(AuthContext)
+    const { selectedLanguage,user } = useContext(AuthContext)
+    console.log(allRequest,allSpecialRequest)
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -27,22 +28,16 @@ const StatusBar = () => {
         setSearchAllQuery(event.target.value);
     };
 
-    // const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
-    //     request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
+    
 
-    // const filteredAllRequests = allWarehouseRequest.filter((request) =>
-    //     request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
-    // );
-
-    const filteredAllRequests = allWarehouseRequest.filter((request) =>
+    const filteredAllRequests = allRequest.filter((request) =>
         request.customerUserName.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
         request.customerReturnTrackingNumber.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
         request.customerPhoneNo.toLowerCase().includes(searchAllQuery.toLowerCase()) ||
         request.customerOrderNumber.toLowerCase().includes(searchAllQuery.toLowerCase())
     );
 
-    const filteredSpecialRequests = allWarehouseSpecialRequest.filter((request) =>
+    const filteredSpecialRequests = allSpecialRequest.filter((request) =>
         request.customerUserName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         request.customerReturnTrackingNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
         request.customerPhoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -51,36 +46,36 @@ const StatusBar = () => {
 
 
 
-    const fetchData = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
-            const data = response.data;
-            setAllWarehouseRequest(data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error occurred during the request:', error);
-            setLoading(false);
-        }
-    };
+    // const fetchData = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
+    //         const data = response.data;
+    //         setAllWarehouseRequest(data);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.error('Error occurred during the request:', error);
+    //         setLoading(false);
+    //     }
+    // };
 
-    const fetchSpecialData = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
-            const data = response.data;
-            setAllWarehouseSpecialRequest(data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error occurred during the request:', error);
-            setLoading(false);
-        }
-    };
+    // const fetchSpecialData = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
+    //         const data = response.data;
+    //         setAllWarehouseSpecialRequest(data);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.error('Error occurred during the request:', error);
+    //         setLoading(false);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchData();
-        fetchSpecialData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData();
+    //     fetchSpecialData();
+    // }, []);
 
     const deleteRequest = async (id) => {
         try {
@@ -418,8 +413,10 @@ const StatusBar = () => {
                 </tbody>
             </table>
 
-
-            <div>
+{
+    user?.role==="~Warehouse-Manager~" ? 
+    "" :
+     <div>
                 <div className="mt-32 mb-5">
                     <hr className='border-2 border-gray-800 my-5'></hr>
                     {
@@ -677,6 +674,8 @@ const StatusBar = () => {
                     </tbody>
                 </table>
             </div>
+}
+           
 
 
 

@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
 import axios from 'axios';
 
-const RefundRequestForm = () => {
+const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpecialRequest}) => {
 
   //import the necessary data from User context
   const { allRefundRequest, setAllRefundRequest, user, selectedLanguage } = useContext(AuthContext);
@@ -218,6 +218,13 @@ const RefundRequestForm = () => {
       .then((data) => {
         toast.success("Data stored successfully");
         setAllRefundRequest([...allRefundRequest, formData]);
+        if(formData?.special){
+          setAllSpecialRequest([...allSpecialRequest,formData])
+        }
+        else{
+
+          setAllRequest([...allRequest, formData]);
+        }
 
 
 

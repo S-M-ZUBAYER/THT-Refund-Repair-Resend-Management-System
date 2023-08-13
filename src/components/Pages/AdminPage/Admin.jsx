@@ -165,6 +165,7 @@ const Admin = () => {
     };
 
 
+
     //create function to add all warehouse venue to show the list and add the warehouse name for specific shop name
     const handleAddWarehouseNames = () => {
         if (warehouseName.trim() !== '') {
@@ -258,8 +259,25 @@ const Admin = () => {
             toast.success('User deleted successfully');
             setUsers(users.filter((user) => user.id !== userId));
         } catch (error) {
-            console.error('Error deleting user:', error);
-            toast.error('Failed to delete user');
+            console.error('Error deleting User:', error);
+            toast.error('Failed to User');
+        }
+    };
+
+
+    //create a function to delete a user from the frontend and database both side 
+    const deleteShopDetails = async (Id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this shop Details?');
+        if (!confirmed) {
+            return; // Cancel the deletion if the user clicks Cancel or closes the modal
+        }
+        try {
+            await axios.delete(`http://localhost:5000/tht/shop/delete/${Id}`);
+            toast.success('Shop Details deleted successfully');
+            setAllShopDetails(allShopDetails.filter((shop) => shop.id !== Id));
+        } catch (error) {
+            console.error('Error deleting Shop Details:', error);
+            toast.error('Failed to delete Shop Details');
         }
     };
 
@@ -267,6 +285,9 @@ const Admin = () => {
     //crate these 2 function to open modal and close modal to edit user information
     const openEditModal = (user) => {
         setEditingUser(user);
+    };
+    const openEditShopModal = (user) => {
+        toast.error("Edit function  not added yet")
     };
 
     const handleToCancel = () => {
@@ -695,22 +716,80 @@ const Admin = () => {
                     </div>
 
 
-                    <div>
+                    <div className="mt-24">
+                        <h1 className="">
+                            {selectedLanguage === "en-US" && "Available Shop Details"}
+                            {selectedLanguage === "zh-CN" && "可用商店详情"}
+                            {selectedLanguage === "th-TH" && "รายละเอียดร้านค้าที่มีอยู่"}
+                            {selectedLanguage === "vi-VN" && "Chi tiết cửa hàng có sẵn"}
+                            {selectedLanguage === "ms-MY" && "Butiran Kedai Yang Tersedia"}
+                            {selectedLanguage === "id-ID" && "Rincian Toko yang Tersedia"}
+                            {selectedLanguage === "fil-PH" && "Mga Detalye ng Magagamit na Tindahan"}
+                        </h1>
+                        <p className='py-2 mb-8'>
+                            {selectedLanguage === "en-US" && "These are the all information about a shop for our company."}
+                            {selectedLanguage === "zh-CN" && "这些是有关我们公司的商店的所有信息。"}
+                            {selectedLanguage === "th-TH" && "นี่คือข้อมูลทั้งหมดเกี่ยวกับร้านค้าสำหรับบริษัทของเรา"}
+                            {selectedLanguage === "vi-VN" && "Đây là tất cả thông tin về cửa hàng cho công ty chúng tôi."}
+                            {selectedLanguage === "ms-MY" && "Ini adalah semua maklumat tentang kedai untuk syarikat kami."}
+                            {selectedLanguage === "id-ID" && "Ini adalah semua informasi tentang toko untuk perusahaan kami."}
+                            {selectedLanguage === "fil-PH" && "Ito ang lahat ng impormasyon tungkol sa isang tindahan para sa aming kumpanya."}
+                        </p>
+
+
                         {allShopDetails.map((shopDetails, index) => (
-                            <div key={index} className="border p-4 mb-4">
-                                <p>Shop Name: {shopDetails.shopeName}</p>
-                                <p>Finance: {shopDetails.finance}</p>
-                                <p>Warehouses:</p>
-                                <ul>
-                                    {Array.isArray(shopDetails.warehouses)
-                                        ? shopDetails.warehouses.map((warehouse, warehouseIndex) => (
-                                            <li key={warehouseIndex}>{warehouse}</li>
-                                        ))
-                                        : JSON.parse(shopDetails.warehouses).map((warehouse, warehouseIndex) => (
-                                            <li key={warehouseIndex}>{warehouse}</li>
-                                        ))
-                                    }
-                                </ul>
+                            <div key={index} className="border-2 rounded-lg p-2 mb-4 grid grid-cols-4">
+                                <div className="text-left">
+                                    <p><span className="font-semibold">{selectedLanguage === "en-US" && "Shop Name:"}
+                                        {selectedLanguage === "zh-CN" && "商店名称："}
+                                        {selectedLanguage === "th-TH" && "ชื่อร้านค้า:"}
+                                        {selectedLanguage === "vi-VN" && "Tên cửa hàng:"}
+                                        {selectedLanguage === "ms-MY" && "Nama Kedai:"}
+                                        {selectedLanguage === "id-ID" && "Nama Toko:"}
+                                        {selectedLanguage === "fil-PH" && "Pangalan ng Tindahan:"}
+                                    </span> {shopDetails.shopName}</p>
+                                    <p><span className="font-semibold">{selectedLanguage === "en-US" && "Finance Name:"}
+                                        {selectedLanguage === "zh-CN" && "财务名称："}
+                                        {selectedLanguage === "th-TH" && "ชื่อการเงิน:"}
+                                        {selectedLanguage === "vi-VN" && "Tên tài chính:"}
+                                        {selectedLanguage === "ms-MY" && "Nama Kewangan:"}
+                                        {selectedLanguage === "id-ID" && "Nama Keuangan:"}
+                                        {selectedLanguage === "fil-PH" && "Pangalan ng Pananalapi:"}
+                                    </span> {shopDetails.finance}</p>
+                                </div>
+                                <div className="col-span-2 text-left">
+                                    <p><span className="font-semibold bg-amber-100 px-2 py-1">{selectedLanguage === "en-US" && "Warehouses List"}
+                                        {selectedLanguage === "zh-CN" && "仓库列表"}
+                                        {selectedLanguage === "th-TH" && "รายชื่อคลังสินค้า"}
+                                        {selectedLanguage === "vi-VN" && "Danh sách kho"}
+                                        {selectedLanguage === "ms-MY" && "Senarai Gudang"}
+                                        {selectedLanguage === "id-ID" && "Daftar Gudang"}
+                                        {selectedLanguage === "fil-PH" && "Listahan ng Mga Warehouse"}
+                                    </span></p>
+                                    <ul className="ml-3">
+                                        {Array.isArray(shopDetails.warehouses)
+                                            ? shopDetails.warehouses.map((warehouse, warehouseIndex) => (
+                                                <p key={warehouseIndex}>{warehouseIndex + 1}.  {warehouse}</p>
+                                            ))
+                                            : JSON.parse(shopDetails.warehouses).map((warehouse, warehouseIndex) => (
+                                                <p key={warehouseIndex}>{warehouseIndex + 1}.  {warehouse}</p>
+                                            ))
+                                        }
+                                    </ul>
+
+                                </div>
+                                <div className="flex justify-end">
+
+                                    <btn className="text-blue-500 flex justify-center cursor-pointer mr-3" onClick={() => openEditShopModal(shopDetails)}>
+                                        <FiEdit></FiEdit>
+                                    </btn>
+
+
+                                    <btn className="text-red-500 text-center cursor-pointer flex justify-center" onClick={() => deleteShopDetails(shopDetails.id)}>
+                                        <RiDeleteBin7Line></RiDeleteBin7Line>
+                                    </btn>
+
+                                </div>
                             </div>
                         ))}
                     </div>

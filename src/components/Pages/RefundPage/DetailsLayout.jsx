@@ -139,12 +139,6 @@ const DetailsLayout = () => {
       setLoading(false)
       // Reset form fields
 
-
-
-
-
-
-
       setSelectedImages([]);
 
     } catch (error) {
@@ -187,32 +181,33 @@ const DetailsLayout = () => {
     setSelectedImage(imageUrl);
   };
 
- 
 
 
 
 
+  console.log(allRefundRequest)
 
 
   const updateLeaderStatus = async (orderNumber) => {
-    const confirmed = window.confirm('Are you sure you want to approved this refund request?');
+    const confirmed = window.confirm('Are you sure you want to approve this refund request?');
     if (!confirmed) {
-      return; // Cancel the deletion if the user clicks Cancel or closes the modal
+      return; // Cancel the operation if the user clicks Cancel or closes the modal
     }
+
+    const leaderName = { name: user?.name }
+
     try {
       const response = await axios.put(
-        `http://localhost:5000/tht/updateLeaderStatus/${orderNumber}`
+        `http://localhost:5000/tht/updateLeaderStatus/${orderNumber}`,
+        leaderName
       );
 
       if (response.status === 200) {
-        if (response.status === 200) {
-          routeChange();
-          toast.success('~Customer-Service-Leader~ status updated successfully');
-        } else {
-          toast.error('Failed to update ~Customer-Service-Leader~ status');
-        }
-
-      } 
+        routeChange();
+        toast.success('Service Leader status updated successfully');
+      } else {
+        toast.error('Failed to update Service Leader status');
+      }
     } catch (error) {
       console.error('Error updating service Leader status:', error);
       toast.error('Failed to update service Leader status');
@@ -220,15 +215,18 @@ const DetailsLayout = () => {
   };
 
 
+
   const handleToUpdateWarehouseManagerStatus = async (orderNumber) => {
     const confirmed = window.confirm('Are you sure you want to approve this refund product?');
     if (!confirmed) {
       return; // Cancel the deletion if the user clicks Cancel or closes the modal
     }
+    const WarehouseManagerName = { name: user?.name }
     if (status === "warehouseManager") {
       try {
         const response = await axios.put(
-          `http://localhost:5000/tht/updateWarehouseManagerStatus/${orderNumber}`
+          `http://localhost:5000/tht/updateWarehouseManagerStatus/${orderNumber}`,
+          WarehouseManagerName
         );
 
         if (response.status === 200) {
@@ -244,8 +242,10 @@ const DetailsLayout = () => {
     }
     else {
       try {
+        const financeName = { name: user?.name }
         const response = await axios.put(
-          `http://localhost:5000/tht/updateFinanceStatus/${orderNumber}`
+          `http://localhost:5000/tht/updateFinanceStatus/${orderNumber}`,
+          financeName
         );
 
         if (response.status === 200) {
@@ -271,12 +271,12 @@ const DetailsLayout = () => {
       // const formData = new FormData();
       // selectedImages.forEach((image) => formData.append('images', image));
 
-      const WarehouseStatus={
-        name:user?.name,
-        country:user?.country
+      const WarehouseStatus = {
+        name: user?.name,
+        country: user?.country
       }
 
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`,WarehouseStatus);
+      const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`, WarehouseStatus);
 
       if (response.status === 200) {
         routeChange();
@@ -644,11 +644,71 @@ const DetailsLayout = () => {
           {currentRequest?.remarks}
         </p>
 
+        {
+          currentRequest?.customerServiceLeaderStatus === "true" && <p>
+            <span className="font-semibold">
+              {selectedLanguage === "en-US" && "Approved Leader By:"}
+              {selectedLanguage === "zh-CN" && "批准领导者："}
+              {selectedLanguage === "th-TH" && "ผู้นำที่ได้รับการอนุมัติ："}
+              {selectedLanguage === "vi-VN" && "Người Duyệt theo đơn vị chủ quản:"}
+              {selectedLanguage === "ms-MY" && "Disahkan Oleh Pemimpin:"}
+              {selectedLanguage === "id-ID" && "Disetujui Oleh Pimpinan:"}
+              {selectedLanguage === "fil-PH" && "Aprubadong Lider Mula:"}
+
+            </span>{" "}
+            {currentRequest?.leaderBy}
+          </p>
+        }
+
+        {
+          currentRequest?.wareHouseStatus === "true" && <p>
+            <span className="font-semibold">
+              {selectedLanguage === "en-US" && "Approved Warehouse Man By:"}
+              {selectedLanguage === "zh-CN" && "仓库管理员审批人："}
+              {selectedLanguage === "th-TH" && "ผู้ดูแลคลังสินค้าที่ได้รับการอนุมัติ："}
+              {selectedLanguage === "vi-VN" && "Người Quản lý kho đã duyệt bởi:"}
+              {selectedLanguage === "ms-MY" && "Disahkan Oleh Pengurus Gudang:"}
+              {selectedLanguage === "id-ID" && "Disetujui Oleh Manajer Gudang:"}
+              {selectedLanguage === "fil-PH" && "Aprubadong Punong Warehouse Mula:"}
+
+            </span>{" "}
+            {currentRequest?.warehouseBy}
+          </p>
+        }
 
 
+        {
+          currentRequest?.warehouseManagerStatus === "true" && <p>
+            <span className="font-semibold">
+              {selectedLanguage === "en-US" && "Approved Warehouse Manager By:"}
+              {selectedLanguage === "zh-CN" && "仓库经理批准："}
+              {selectedLanguage === "th-TH" && "ผู้จัดการคลังสินค้าอนุมัติโดย："}
+              {selectedLanguage === "vi-VN" && "Người Quản lý kho đã duyệt bởi:"}
+              {selectedLanguage === "ms-MY" && "Diluluskan Oleh Pengurus Gudang:"}
+              {selectedLanguage === "id-ID" && "Disetujui Oleh Manajer Gudang:"}
+              {selectedLanguage === "fil-PH" && "Aprubadong Manager ng Warehouse Mula:"}
+
+            </span>{" "}
+            {currentRequest?.warehouseManagerBy}
+          </p>
+        }
 
 
+        {
+          currentRequest?.financeStatus === "true" && <p>
+            <span className="font-semibold">
+              {selectedLanguage === "en-US" && "Approved Finance By:"}
+              {selectedLanguage === "zh-CN" && "财务审批人："}
+              {selectedLanguage === "th-TH" && "ผู้อนุมัติทางการเงิน："}
+              {selectedLanguage === "vi-VN" && "Người Quản lý tài chính đã duyệt bởi:"}
+              {selectedLanguage === "ms-MY" && "Diluluskan Oleh Kewangan:"}
+              {selectedLanguage === "id-ID" && "Disetujui Oleh Keuangan:"}
+              {selectedLanguage === "fil-PH" && "Aprubadong Pinansyal Mula:"}
 
+            </span>{" "}
+            {currentRequest?.financeBy}
+          </p>
+        }
 
 
         {
