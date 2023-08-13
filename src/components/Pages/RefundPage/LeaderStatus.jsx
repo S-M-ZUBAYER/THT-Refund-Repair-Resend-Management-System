@@ -44,7 +44,7 @@ const LeaderStatus = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/LeaderStatusRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusRequest');
             const data = response.data;
             setAllLeaderRequest(data?.filter(everyData=>everyData?.applicantCountry===user?.country));
             setLoading(false);
@@ -58,7 +58,7 @@ const LeaderStatus = () => {
 
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/LeaderStatusSpecialRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusSpecialRequest');
             const data = response.data;
             setAllSpecialRequest(data?.filter(everyData=>everyData?.applicantCountry===user?.country))
             setLoading(false);

@@ -47,7 +47,7 @@ const RefundRequestListAdmin = () => {
   const { allRefundRequest, setAllRefundRequest, selectedLanguage, user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch('http://localhost:5000/tht/refundRequest')
+    fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest')
       .then((response) => response.json())
       .then((data) => {
         setAllRefundRequest(data);
@@ -63,7 +63,7 @@ const RefundRequestListAdmin = () => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
+      await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
       setAllRefundRequest(allRefundRequest.filter((request) => request?.id !== id));
     } catch (error) {
@@ -83,7 +83,7 @@ const RefundRequestListAdmin = () => {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       toast.success("User information updated successfully");
       // Optionally, you can show a success message to the user using a toast or other UI notification.
     } catch (error) {

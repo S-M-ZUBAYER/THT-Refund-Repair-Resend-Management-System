@@ -41,7 +41,7 @@ const DetailsLayout = () => {
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/tht/refundRequest')
+    fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest')
       .then((response) => response.json())
       .then((data) => {
         setAllRefundRequest(data);
@@ -57,7 +57,7 @@ const DetailsLayout = () => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
+      await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       routeChange();
       toast.success('User deleted successfully');
       //   setAllRefundRequest(allRefundRequest.filter((request) => request?.id !== id));
@@ -95,7 +95,7 @@ const DetailsLayout = () => {
 
 
     try {
-      await axios.put(`http://localhost:5000/tht/warehouseImages/${currentRequest?.orderNumber}`, formData, {
+      await axios.put(`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${currentRequest?.orderNumber}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -130,7 +130,7 @@ const DetailsLayout = () => {
 
 
     try {
-      await axios.put(`http://localhost:5000/tht/financeImages/${currentRequest?.orderNumber}`, formData, {
+      await axios.put(`https://grozziie.zjweiting.com:8035/tht/financeImages/${currentRequest?.orderNumber}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -152,7 +152,7 @@ const DetailsLayout = () => {
   const fetchWarehoueManagerData = async (lastValue) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/tht/refundRequest/${lastValue}`);
+      const response = await axios.get(`https://grozziie.zjweiting.com:8035/tht/refundRequest/${lastValue}`);
       const data = response.data;
       setCurrentRequest(data);
       if (data?.warehouseManagerStatus === "true") {
@@ -192,7 +192,7 @@ const DetailsLayout = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/tht/updateLeaderStatus/${orderNumber}`,
+        `https://grozziie.zjweiting.com:8035/tht/updateLeaderStatus/${orderNumber}`,
         leaderName
       );
 
@@ -219,7 +219,7 @@ const DetailsLayout = () => {
     if (status === "warehouseManager") {
       try {
         const response = await axios.put(
-          `http://localhost:5000/tht/updateWarehouseManagerStatus/${orderNumber}`,
+          `https://grozziie.zjweiting.com:8035/tht/updateWarehouseManagerStatus/${orderNumber}`,
           WarehouseManagerName
         );
 
@@ -238,7 +238,7 @@ const DetailsLayout = () => {
       try {
         const financeName = { name: user?.name }
         const response = await axios.put(
-          `http://localhost:5000/tht/updateFinanceStatus/${orderNumber}`,
+          `https://grozziie.zjweiting.com:8035/tht/updateFinanceStatus/${orderNumber}`,
           financeName
         );
 
@@ -270,7 +270,7 @@ const DetailsLayout = () => {
         country: user?.country
       }
 
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`, WarehouseStatus);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`, WarehouseStatus);
 
       if (response.status === 200) {
         routeChange();
@@ -326,7 +326,7 @@ const DetailsLayout = () => {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       routeChange();
       toast.success("Product information updated successfully");
       // Optionally, you can show a success message to the user using a toast or other UI notification.
@@ -756,9 +756,9 @@ const DetailsLayout = () => {
             {currentRequest.warehouseImg.split(',').map((filename) => (
               <img
                 key={filename}
-                src={`http://localhost:5000/tht/warehouseImages/${filename}`}
+                src={`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${filename}`}
                 alt={filename}
-                onClick={() => handleImageClick(`http://localhost:5000/tht/warehouseImages/${filename}`)}
+                onClick={() => handleImageClick(`https://grozziie.zjweiting.com:8035/tht/warehouseImages/${filename}`)}
                 className="w-24 h-24 object-cover cursor-pointer mx-4 my-2 rounded-lg"
               />
             ))}
@@ -789,9 +789,9 @@ const DetailsLayout = () => {
             {currentRequest.financeImg.split(',').map((filename) => (
               <img
                 key={filename}
-                src={`http://localhost:5000/tht/financeImages/${filename}`}
+                src={`https://grozziie.zjweiting.com:8035/tht/financeImages/${filename}`}
                 alt={filename}
-                onClick={() => handleImageClick(`http://localhost:5000/tht/financeImages/${filename}`)}
+                onClick={() => handleImageClick(`https://grozziie.zjweiting.com:8035/tht/financeImages/${filename}`)}
                 className="w-24 h-24 object-cover cursor-pointer mx-4 my-2 rounded-lg"
               />
             ))}
@@ -802,7 +802,7 @@ const DetailsLayout = () => {
       {(currentRequest?.financeImg)?.map((image, index) => (
           <img
             key={index}
-            src={`http://localhost:5000/tht/financeImages/${image}`}
+            src={`https://grozziie.zjweiting.com:8035/tht/financeImages/${image}`}
             alt={`Finance Image ${index + 1}`}
             onClick={() => handleImageClick(image)}
             className="image-thumbnail"

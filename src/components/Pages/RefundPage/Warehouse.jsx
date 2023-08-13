@@ -45,7 +45,7 @@ const Warehouse = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/tht/warehouseRequest');
+      const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/warehouseRequest');
       const data = response.data;
       setAllWarehouseRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
       setLoading(false);
@@ -58,7 +58,7 @@ const Warehouse = () => {
   const fetchSpecialData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/tht/warehouseSpecialRequest');
+      const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/warehouseSpecialRequest');
       const data = response.data;
       setAllWarehouseSpecialRequest(data?.filter(everyData=>user?.warehouseName.includes(everyData?.warehouseName)));
       setLoading(false);
@@ -81,7 +81,7 @@ const Warehouse = () => {
       return; // Cancel the deletion if the user clicks Cancel or closes the modal
     }
     try {
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       toast.success('User information updated successfully');
     } catch (error) {
       console.error('Error updating user:', error);

@@ -20,7 +20,7 @@ const Refund = () => {
     const fetchData = async () => {
         try {
            
-            const response = await axios.get('http://localhost:5000/tht/allNonSpecialRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/allNonSpecialRequest');
             const data = response.data;
             setAllRequest(data);
         } catch (error) {
@@ -31,7 +31,7 @@ const Refund = () => {
 
     const fetchSpecialData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/tht/allSpecialRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/allSpecialRequest');
             const data = response.data;
             setAllSpecialRequest(data);
         } catch (error) {

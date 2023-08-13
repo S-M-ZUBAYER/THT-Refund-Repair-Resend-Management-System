@@ -57,7 +57,7 @@ const Login = () => {
     setLoading(true);
     const form = event.target;
     // handle form submission logic here
-    fetch('http://localhost:5000/tht/login', {
+    fetch('https://grozziie.zjweiting.com:8035/tht/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -120,7 +120,7 @@ const Login = () => {
     };
 
     // Make the PATCH request to change the password
-    axios.patch('http://localhost:5000/tht/changePassword', requestBody)
+    axios.patch('https://grozziie.zjweiting.com:8035/tht/changePassword', requestBody)
       .then((response) => {
         if ((response?.data)?.message === "Wrong email/old password combination!") {
           toast.error("Wrong email/password combination!");

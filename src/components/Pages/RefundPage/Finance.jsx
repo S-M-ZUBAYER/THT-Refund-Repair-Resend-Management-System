@@ -53,7 +53,7 @@ const Finance = () => {
     const fetchFinanceAllData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/financeRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeRequest');
             const data = response.data;
             setAllFinanceRequest(data?.filter(everyData=>everyData?.finance===user?.name));
             setLoading(false);
@@ -66,7 +66,7 @@ const Finance = () => {
     const fetchFinanceSpecialData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/tht/financeSpecialRequest');
+            const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeSpecialRequest');
             const data = response.data;
             setAllFinanceSpecialRequest(data?.filter(everyData=>everyData?.finance===user?.name));
             setLoading(false);
@@ -91,7 +91,7 @@ const Finance = () => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
+            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
             toast.success('User information updated successfully');
         } catch (error) {
             console.error('Error updating user:', error);

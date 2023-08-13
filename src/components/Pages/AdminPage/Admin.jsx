@@ -41,7 +41,7 @@ const Admin = () => {
         //create this function to  get the Reasons, warehouse venue
         const fetchShopNamesReasons = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tht/shopNamesReasons');
+                const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopNamesReasons');
                 const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
                 setReasons((data.reasons).split(","));
                 setWarehouseNames((data.warehouseNames).split(","));
@@ -55,7 +55,7 @@ const Admin = () => {
         //use useEffect to get the Reasons, warehouse name and all shop details 
         const fetchAllShopDetails = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tht/shopDetails');
+                const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
                 const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
                 setAllShopDetails(data);
 
@@ -68,7 +68,7 @@ const Admin = () => {
         //create this function to get the specific finance name according to the shop name
         const fetchAllFinance = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tht/finance');
+                const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/finance');
                 const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
                 setAllFinance(data);
 
@@ -138,7 +138,7 @@ const Admin = () => {
         };
 
         if (shopName.trim() !== '') {
-            fetch('http://localhost:5000/tht/shopDetails', {
+            fetch('https://grozziie.zjweiting.com:8035/tht/shopDetails', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -172,7 +172,7 @@ const Admin = () => {
             const newWarehouseNames = [...warehouseNames, warehouseName]
             setWarehouseNames(newWarehouseNames);
             //load current user data from database
-            fetch('http://localhost:5000/tht/warehouseNames', {
+            fetch('https://grozziie.zjweiting.com:8035/tht/warehouseNames', {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
@@ -203,7 +203,7 @@ const Admin = () => {
             const newReasons = [...reasons, reason]
             setReasons(newReasons);
             //load current user data from database
-            fetch('http://localhost:5000/tht/reasons', {
+            fetch('https://grozziie.zjweiting.com:8035/tht/reasons', {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
@@ -232,7 +232,7 @@ const Admin = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tht/allRFusers');
+                const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/allRFusers');
                 const data = response.data;
                 setUsers(data);
                 setLoading(false);
@@ -255,7 +255,7 @@ const Admin = () => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            await axios.delete(`http://localhost:5000/tht/RFusers/delete/${userId}`);
+            await axios.delete(`https://grozziie.zjweiting.com:8035/tht/RFusers/delete/${userId}`);
             toast.success('User deleted successfully');
             setUsers(users.filter((user) => user.id !== userId));
         } catch (error) {
@@ -272,7 +272,7 @@ const Admin = () => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            await axios.delete(`http://localhost:5000/tht/shop/delete/${Id}`);
+            await axios.delete(`https://grozziie.zjweiting.com:8035/tht/shop/delete/${Id}`);
             toast.success('Shop Details deleted successfully');
             setAllShopDetails(allShopDetails.filter((shop) => shop.id !== Id));
         } catch (error) {
@@ -303,7 +303,7 @@ const Admin = () => {
             return; // Cancel the deletion if the user clicks Cancel or closes the modal
         }
         try {
-            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/${userId}`, { ...editingUser });
+            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/RFusers/update/${userId}`, { ...editingUser });
             toast.success("user information updated successfully");
             // Optionally, you can show a success message to the user using a toast or other UI notification.
         } catch (error) {
@@ -328,7 +328,7 @@ const Admin = () => {
         }
 
         try {
-            const response = await axios.put(`http://localhost:5000/tht/RFusers/update/admin/${userId}`, isAdmin);
+            const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/RFusers/update/admin/${userId}`, isAdmin);
 
             setUsers(users?.map((user) => {
                 if (user?.id === userId) {

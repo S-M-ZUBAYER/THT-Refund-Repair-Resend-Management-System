@@ -40,7 +40,7 @@ const WarehouseManager = ({ refundProducts }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/tht/warehouseManagerRequest');
+      const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/warehouseManagerRequest');
       const data = response.data;
       setAllWarehouseManagerRequest(data?.filter(everyData=>everyData?.warehouseCountry===user?.country));
       setLoading(false);
@@ -62,7 +62,7 @@ const WarehouseManager = ({ refundProducts }) => {
       return; // Cancel the deletion if the user clicks Cancel or closes the modal
     }
     try {
-      await axios.delete(`http://localhost:5000/tht/refundRequest/delete/${id}`);
+      await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
       toast.success('User deleted successfully');
       setAllWarehouseManagerRequest((prevRequests) => prevRequests.filter((request) => request?.id !== id));
     } catch (error) {
@@ -82,7 +82,7 @@ const WarehouseManager = ({ refundProducts }) => {
       return; // Cancel the deletion if the user clicks Cancel or closes the modal
     }
     try {
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/update/${orderNumber}`, editingRequest);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/update/${orderNumber}`, editingRequest);
       toast.success('User information updated successfully');
     } catch (error) {
       console.error('Error updating user:', error);
@@ -102,7 +102,7 @@ const WarehouseManager = ({ refundProducts }) => {
 
   const updateWarehouseStatus = async (orderNumber) => {
     try {
-      const response = await axios.put(`http://localhost:5000/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
+      const response = await axios.put(`https://grozziie.zjweiting.com:8035/tht/refundRequest/updateWarehouseStatus/${orderNumber}`);
 
       if (response.status === 200) {
         // Update the warehouse status locally in the state

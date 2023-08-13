@@ -57,7 +57,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
   useEffect(() => {
     const fetchShopNamesReasons = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/tht/shopNamesReasons');
+        const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopNamesReasons');
         const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
         setReasons((data.reasons).split(","));
       } catch (error) {
@@ -67,7 +67,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
     const fetchAllShopDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/tht/shopDetails');
+        const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
         const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
         setAllShopDetails(data);
 
@@ -207,7 +207,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
     };
 
     //Here start to post request to post all the refund form data to store in database
-    fetch('http://localhost:5000/tht/refundRequest/add', {
+    fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

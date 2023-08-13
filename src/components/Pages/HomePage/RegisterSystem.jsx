@@ -96,7 +96,7 @@ const RegisterSystem = () => {
     };
     const form = event.target;
 
-    fetch('http://localhost:5000/tht/check-user', {
+    fetch('https://grozziie.zjweiting.com:8035/tht/check-user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const RegisterSystem = () => {
             return;
           }
 
-          fetch('http://localhost:5000/tht/RFusers/add', {
+          fetch('https://grozziie.zjweiting.com:8035/tht/RFusers/add', {
             method: 'POST',
             headers: {
               'content-type': 'application/json',
