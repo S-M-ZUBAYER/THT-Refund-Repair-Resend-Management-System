@@ -42,8 +42,24 @@ const WarehouseManager = ({ refundProducts }) => {
       setLoading(true);
       const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/warehouseManagerRequest');
       const data = response.data;
-      setAllWarehouseManagerRequest(data?.filter(everyData=>everyData?.warehouseCountry===user?.country));
+      const response1 = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+      const data1 = response1.data;
+  
+      const filteredWarehouseManagerData = data.filter(everyData => {
+          const managerList = data1.filter(everyData1 => {
+              return everyData1.shopName === everyData.shopName && everyData1.warehouseManager === user.name;
+          }); 
+          return managerList.length > 0;
+      });    
+      const modifiedWarehouseManagerData = filteredWarehouseManagerData.map(everyData => {
+          return everyData;
+      });
+      
+      setAllWarehouseManagerRequest(modifiedWarehouseManagerData);
       setLoading(false);
+      // setAllWarehouseManagerRequest(data?.filter(everyData=>everyData?.warehouseManager===user?.name));
+
+      // setLoading(false);
     } catch (error) {
       console.error('Error occurred during the request:', error);
       setLoading(false);

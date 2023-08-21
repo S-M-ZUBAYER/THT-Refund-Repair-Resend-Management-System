@@ -55,8 +55,23 @@ const Finance = () => {
             setLoading(true);
             const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeRequest');
             const data = response.data;
-            setAllFinanceRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+            const response1 = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+            const data1 = response1.data;
+        
+            const filteredFinanceData = data.filter(everyData => {
+                const financeList = data1.filter(everyData1 => {
+                    return everyData1.shopName === everyData.shopName && everyData1.finance === user.name;
+                }); 
+                return financeList.length > 0;
+            });    
+            const modifiedFinanceData = filteredFinanceData.map(everyData => {
+                return everyData;
+            });
+            
+            setAllFinanceRequest(modifiedFinanceData);
             setLoading(false);
+            // setAllFinanceRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+            // setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
             setLoading(false);
@@ -68,8 +83,25 @@ const Finance = () => {
             setLoading(true);
             const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/financeSpecialRequest');
             const data = response.data;
-            setAllFinanceSpecialRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+
+            const response1 = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+            const data1 = response1.data;
+        
+            const filteredFinanceSpecialData = data.filter(everyData => {
+                const financeSpecialList = data1.filter(everyData1 => {
+                    return everyData1.shopName === everyData.shopName && everyData1.finance === user.name;
+                }); 
+                return financeSpecialList.length > 0;
+            });    
+            const modifiedSpecialFinanceData = filteredFinanceSpecialData.map(everyData => {
+                return everyData;
+            });
+            
+            setAllFinanceSpecialRequest(modifiedSpecialFinanceData);
             setLoading(false);
+
+            // setAllFinanceSpecialRequest(data?.filter(everyData=>everyData?.finance===user?.name));
+            // setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
             setLoading(false);

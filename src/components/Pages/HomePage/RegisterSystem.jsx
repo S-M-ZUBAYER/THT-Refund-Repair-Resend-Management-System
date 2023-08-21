@@ -647,6 +647,8 @@ const RegisterSystem = () => {
               <option >Bengali</option>
               <option >Indonesian</option>
               <option >Thai</option>
+              <option >Philippines</option>
+              <option >Vietnamese</option>
               <option >English</option>
               <option >Malay</option>
             </select>
@@ -672,6 +674,8 @@ const RegisterSystem = () => {
               <option>Bangladesh</option>
               <option>Indonesia</option>
               <option>Thailand</option>
+              <option>Philippines</option>
+              <option>Vietnamese</option>
               <option>Singapore</option>
               <option>Malaysia</option>
             </select>

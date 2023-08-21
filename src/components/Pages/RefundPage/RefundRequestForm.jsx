@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpecialRequest}) => {
+const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, allSpecialRequest }) => {
 
   //import the necessary data from User context
   const { allRefundRequest, setAllRefundRequest, user, selectedLanguage } = useContext(AuthContext);
@@ -15,6 +17,8 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
   const [shopName, setShopName] = useState('');
   const [warehouses, setWarehouses] = useState([]);
   const [warehouseName, setWarehouseName] = useState('');
+  const [customerServiceLeader, setCustomerServiceLeader] = useState('');
+  const [warehouseManager, setWarehouseManager] = useState('');
   const [finance, setFinance] = useState('');
   const [customerUserName, setCustomerUserName] = useState('');
   const [customerPhoneNo, setCustomerPhoneNo] = useState('');
@@ -38,16 +42,23 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
   const [allShopDetails, setAllShopDetails] = useState([]);
 
 
+ 
+
 
   //Create function to get the specific warehouse list and finance according to shopName for these specific shop name and warehouse list 
   const filteredWarehouses = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.warehouses;
 
+  const filteredCSLeader = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.CustomerServiceLeader;
+  const filteredWarehouseManager = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.warehouseManager;
   const filteredFinance = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.finance;
 
   const handleToWarehouse = () => {
     if (filteredWarehouses) {
-      setWarehouses(JSON.parse(filteredWarehouses))
-      setFinance(filteredFinance)
+      setWarehouses(JSON.parse(filteredWarehouses));
+      setCustomerServiceLeader(filteredCSLeader);
+      setWarehouseManager(filteredWarehouseManager)
+      setFinance(filteredFinance);
+
     }
   }
 
@@ -104,6 +115,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
   //crete function to generate order number according to the local date, time, country code and random number
   const handleToGenerateOrderNumber = () => {
+    
     if (!user || !user.country) {
       return null;
     }
@@ -122,10 +134,10 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
     } else {
       return null;
     }
-
     const randomNumber = generateRandomNumber();
     const timeNumber = new Date().toLocaleTimeString().split(' ')[0].split(':');
     const dateNumber = new Date().toLocaleDateString().split('/');
+  
     const orderNumber = `${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dateNumber[1]}${dateNumber[0]}${dateNumber[2]}${countryCode}${randomNumber}`;
 
     setOrderNumber(orderNumber);
@@ -167,7 +179,9 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
       orderNumber,
       orderTime: orderTime,
       shopName,
+      customerServiceLeader,
       warehouseName,
+      warehouseManager,
       finance,
       customerUserName,
       customerPhoneNo,
@@ -187,11 +201,11 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
       warehouseImg: "",
       financeImg: "",
       applicantName: user?.name,
-      applicantCountry:user?.country,
+      applicantCountry: user?.country,
       applicationDate: applicationDate,
       leaderBy: "",
       warehouseBy: "",
-      warehouseCountry:"",
+      warehouseCountry: "",
       warehouseManagerBy: "",
       financeBy: "",
       updateBy: "",
@@ -207,7 +221,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
     };
 
     //Here start to post request to post all the refund form data to store in database
-    fetch('https://grozziie.zjweiting.com:8035/tht/refundRequest/add', {
+    fetch('http://localhost:5000/tht/refundRequest/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -218,10 +232,10 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
       .then((data) => {
         toast.success("Data stored successfully");
         setAllRefundRequest([...allRefundRequest, formData]);
-        if(formData?.special){
-          setAllSpecialRequest([...allSpecialRequest,formData])
+        if (formData?.special) {
+          setAllSpecialRequest([...allSpecialRequest, formData])
         }
-        else{
+        else {
 
           setAllRequest([...allRequest, formData]);
         }
@@ -426,6 +440,54 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
           <label className="text-left" htmlFor="finance">{
             selectedLanguage === "zh-CN" && "客户用户名："
           }{
+              selectedLanguage === "en-US" && "Customer Service Leader Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="leader"
+            className="border rounded-md p-2 w-8/12"
+            value={customerServiceLeader}
+            onChange={(e) => setCustomerServiceLeader(e.target.value)}
+          />
+        </div>
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="finance">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
+              selectedLanguage === "en-US" && "Warehouse Manager Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="manager"
+            className="border rounded-md p-2 w-8/12"
+            value={warehouseManager}
+            onChange={(e) => setWarehouseManager(e.target.value)}
+          />
+        </div>
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="finance">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
               selectedLanguage === "en-US" && "Finance Name:"
             }{
               selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
@@ -500,7 +562,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request Customer product order number input field */}
+        {/* Refund Request Customer product order number input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerOrderNumber">{
@@ -528,9 +590,9 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request order data of this product input field */}
+        {/* Refund Request order data of this product input field */}
 
-        <div className="mb-4 flex justify-between items-center">
+        <div className="mb-4 flex justify-between items-center ">
           <label className="text-left" htmlFor="orderDate">{
             selectedLanguage === "zh-CN" && "订单日期："
           }{
@@ -553,10 +615,17 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
             value={orderDate}
             onChange={(e) => setOrderDate(e.target.value)}
           />
+
+          {/* <DatePicker
+            id="orderDate"
+            className="border rounded-md p-2 w-full"
+            selected={orderDate}
+            onChange={(date) => setOrderDate(date)}
+          /> */}
         </div>
 
 
-{/* Refund Request Order amount input field */}
+        {/* Refund Request Order amount input field */}
 
 
         <div className="mb-4 flex justify-between items-center">
@@ -586,7 +655,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request product return trancking number input field */}
+        {/* Refund Request product return trancking number input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerReturnTrackingNumber">{
@@ -615,7 +684,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request reasons input field */}
+        {/* Refund Request reasons input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="refundReason">{
@@ -704,7 +773,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request Refund amount input field */}
+        {/* Refund Request Refund amount input field */}
 
 
         <div className="mb-4 flex justify-between items-center">
@@ -733,7 +802,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request customer receiving amount input field */}
+        {/* Refund Request customer receiving amount input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerReceivingAmount">{
@@ -761,7 +830,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request customer receiving account input field */}
+        {/* Refund Request customer receiving account input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerReceivingAccount">{
@@ -790,7 +859,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request customer bank Name input field */}
+        {/* Refund Request customer bank Name input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerBankName">{
@@ -819,7 +888,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request customer bank account name input field */}
+        {/* Refund Request customer bank account name input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerBankAccountName">{
@@ -849,7 +918,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request Customer bank swift number input field */}
+        {/* Refund Request Customer bank swift number input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="customerBankSwift">{
@@ -879,7 +948,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request remark input field */}
+        {/* Refund Request remark input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="remarks">
@@ -903,7 +972,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request applicant input field */}
+        {/* Refund Request applicant input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="applicantName">Applicant Name:</label>
@@ -917,7 +986,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
         </div>
 
 
-{/* Refund Request application date input field */}
+        {/* Refund Request application date input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="applicantName">Application Date:</label>
@@ -932,7 +1001,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request application time input field */}
+        {/* Refund Request application time input field */}
 
         <div className="mb-4 flex justify-between items-center">
           <label className="text-left" htmlFor="applicantName">Application Time:</label>
@@ -947,7 +1016,7 @@ const RefundRequestForm = ({setAllRequest,allRequest,setAllSpecialRequest,allSpe
 
 
 
-{/* Refund Request radion button input field to make toggle to select and unselect special and non-special request*/}
+        {/* Refund Request radion button input field to make toggle to select and unselect special and non-special request*/}
 
         <div className="flex items-center justify-end space-x-2 my-3 hover:cursor-pointer">
           <input

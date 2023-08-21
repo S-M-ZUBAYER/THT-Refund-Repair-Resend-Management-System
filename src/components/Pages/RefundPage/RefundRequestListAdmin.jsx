@@ -64,7 +64,7 @@ const RefundRequestListAdmin = () => {
     }
     try {
       await axios.delete(`https://grozziie.zjweiting.com:8035/tht/refundRequest/delete/${id}`);
-      toast.success('User deleted successfully');
+      toast.success('Refund Request information deleted successfully');
       setAllRefundRequest(allRefundRequest.filter((request) => request?.id !== id));
     } catch (error) {
       console.error('Error deleting user:', error);

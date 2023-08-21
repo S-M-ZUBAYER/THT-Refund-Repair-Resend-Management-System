@@ -10,14 +10,14 @@ import { AuthContext } from '../../../context/UserContext';
 import { Link } from 'react-router-dom';
 
 const LeaderStatus = () => {
-    
+
     const [loading, setLoading] = useState(false);
     const [allLeaderRequest, setAllLeaderRequest] = useState([]);
     const [allSpecialRequest, setAllSpecialRequest] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchAllQuery, setSearchAllQuery] = useState('');
 
-    const { selectedLanguage,user } = useContext(AuthContext)
+    const { selectedLanguage, user } = useContext(AuthContext)
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -46,7 +46,68 @@ const LeaderStatus = () => {
             setLoading(true);
             const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusRequest');
             const data = response.data;
-            setAllLeaderRequest(data?.filter(everyData=>everyData?.applicantCountry===user?.country));
+
+            const response1 = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+            const data1 = response1.data;
+          
+
+            const filteredLeaderData = data.filter(everyData => {
+                const leaderList = data1.filter(everyData1 => {
+                    return everyData1.shopName === everyData.shopName && everyData1.CustomerServiceLeader === user.name;
+                }); 
+                return leaderList.length > 0;
+            });    
+            const modifiedLeaderData = filteredLeaderData.map(everyData => {
+                return everyData;
+            });
+            
+            setAllLeaderRequest(modifiedLeaderData);
+            
+
+        
+            // const getShop = data1.map(everyData => everyData.shopName)
+            // const getShopService = data.map(everyData => everyData.shopName)
+            // const getShopLeaderName = data1.map(everyData => everyData.CustomerServiceLeader);
+            // console.log(getShopLeaderName, "leader name")
+            // // const getLeager = data1.map(everyData=>everyData.shopName.map(everyData=>))
+            // console.log(getShopService, "1111")
+            // for (var i = 0; i < getShop.length; i++) {
+            //     //console.log(getShop[i],i,"getshop")
+            //     for (var j = 0; j < getShopService.length; j++) {
+            //         //console.log(getShopService[j],j,"getShopService")
+            //         if (getShop[i] === getShopService[j]) {
+            //             console.log("zubersuccessed", data1, getShop[i])
+            //             const getShopLeaderName_Zuber = (data1?.filter(everyData => everyData?.shopName === getShop[i]));
+            //             const getLeaderName = getShopLeaderName_Zuber.map(everyData => everyData.CustomerServiceLeader);
+            //             console.log(getLeaderName, "check")
+            //             for (var n = 0; n < getLeaderName.length; n++) {
+            //                 if (getLeaderName[n] === user?.name) {
+            //                     setAllLeaderRequest(data?.filter(everyData => everyData?.shopName === getShop[i]))
+            //                 }
+            //             }
+
+            //             //setAllLeaderRequest()
+            //         }
+            //     }
+
+            // }
+            // console.log(allLeaderRequest, "leadealldskfoiadsujhfri");
+
+            // setAllLeaderRequest()
+            // console.log(data1.map(everyData => everyData.shopName))
+            // console.log(data?.filter(everyData => everyData?.shopName), "lskjfjdsfsdpodif")
+
+            // if (data?.filter(everyData => everyData?.shopName) === data1?.filter(everyData => everyData?.shopName)) {
+            //     console.log(data?.filter(everyData => everyData?.shopName), "ooooooo")
+            //     if (data1?.filter(everyData => everyData?.CustomerServiceLeader) === user?.name) {
+            //         setAllLeaderRequest(data?.filter(everyData => everyData?.shopName) === data1?.filter(everyData => everyData?.shopName));
+            //     }
+
+            // }
+
+
+
+
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
@@ -60,7 +121,22 @@ const LeaderStatus = () => {
             setLoading(true);
             const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/LeaderStatusSpecialRequest');
             const data = response.data;
-            setAllSpecialRequest(data?.filter(everyData=>everyData?.applicantCountry===user?.country))
+            
+            const response1 = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+            const data1 = response1.data;
+          
+
+            const filteredLeaderData = data.filter(everyData => {
+                const leaderList = data1.filter(everyData1 => {
+                    return everyData1.shopName === everyData.shopName && everyData1.CustomerServiceLeader === user.name;
+                }); 
+                return leaderList.length > 0;
+            });    
+            const modifiedLeaderData = filteredLeaderData.map(everyData => {
+                return everyData;
+            });
+            
+            setAllSpecialRequest(modifiedLeaderData);
             setLoading(false);
         } catch (error) {
             console.error('Error occurred during the request:', error);
@@ -147,7 +223,7 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Ngày Đặt Hàng"}
                             {selectedLanguage === "id-ID" && "Tanggal Pemesanan"}
                             {selectedLanguage === "zh-CN" && "订单日期"}</th>
-                       
+
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
                             {selectedLanguage === "zh-CN" && "详情"}
@@ -175,7 +251,7 @@ const LeaderStatus = () => {
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                              
+
 
 
                                 <td className="text-start py-2 cursor-pointer">
@@ -311,7 +387,7 @@ const LeaderStatus = () => {
                             {selectedLanguage === "vi-VN" && "Ngày đặt hàng"}
                             {selectedLanguage === "id-ID" && "Tanggal Pesanan"}
                             {selectedLanguage === "zh-CN" && "订单日期"}</th>
-                        
+
                         <th className="text-start py-2">
                             {selectedLanguage === "en-US" && "Details"}
                             {selectedLanguage === "zh-CN" && "详情"}
@@ -339,8 +415,8 @@ const LeaderStatus = () => {
                                 <td className="text-start pl-2 py-2 font-semibold">{request?.customerOrderNumber}</td>
                                 <td className="text-start py-2">{request?.customerReturnTrackingNumber}</td>
                                 <td className="text-start hidden md:block py-2">{request?.orderDate}</td>
-                                    <td className="text-start py-2 cursor-pointer">
-                                <Link to={`/refund/details/${request?.orderNumber}`}>
+                                <td className="text-start py-2 cursor-pointer">
+                                    <Link to={`/refund/details/${request?.orderNumber}`}>
                                         <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
                                             {selectedLanguage === "zh-CN" && "详情"}
                                             {selectedLanguage === "fil-PH" && "Detalye"}
@@ -348,15 +424,15 @@ const LeaderStatus = () => {
                                             {selectedLanguage === "th-TH" && "รายละเอียด"}
                                             {selectedLanguage === "vi-VN" && "Chi tiết"}
                                             {selectedLanguage === "id-ID" && "Rincian"}</btn>
-                                </Link>
-                                    </td>
+                                    </Link>
+                                </td>
                             </tr>
                         ))
                     )}
                 </tbody>
             </table>
 
-            
+
         </div>
     );
 };

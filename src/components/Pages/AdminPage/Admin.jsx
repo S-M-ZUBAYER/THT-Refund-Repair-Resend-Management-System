@@ -21,19 +21,19 @@ const Admin = () => {
     const [warehouseNames, setWarehouseNames] = useState([]);
     const [reasons, setReasons] = useState('');
     const [reason, setReason] = useState([]);
+    const [allCustomerServiceLeader, setAllCustomerServiceLeader] = useState([]);
+    const [allWarehouseManager, setALlWarehouseManger] = useState([]);
     const [allFinance, setAllFinance] = useState([]);
     const [allShopDetails, setAllShopDetails] = useState([]);
+    const [selectedLeader, setSelectedLeader] = useState('');
+    const [selectedManager, setSelectedManager] = useState('');
     const [selectedFinance, setSelectedFinance] = useState('');
     const [selectedWarehouses, setSelectedWarehouses] = useState([]);
 
 
     //import teh necessary value from user context to use in this component
     const { user, selectedLanguage } = useContext(AuthContext);
-
-
-
-
-
+   
 
     //use useEffect to get the Reasons, warehouse name,  shopDetails and finance 
     useEffect(() => {
@@ -58,6 +58,7 @@ const Admin = () => {
                 const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
                 const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
                 setAllShopDetails(data);
+                
 
             } catch (error) {
                 console.error('Error fetching shop names:', error);
@@ -68,9 +69,31 @@ const Admin = () => {
         //create this function to get the specific finance name according to the shop name
         const fetchAllFinance = async () => {
             try {
-                const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/finance');
+                const response = await axios.get('http://localhost:5000/tht/finance');
                 const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
                 setAllFinance(data);
+
+            } catch (error) {
+                console.error('Error fetching shop names:', error);
+            }
+        };
+        //create this function to get the specific finance name according to the shop name
+        const fetchAllCustomerServiceLeader = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/tht/customerServiceLeader');
+                const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+                setAllCustomerServiceLeader(data);
+
+            } catch (error) {
+                console.error('Error fetching shop names:', error);
+            }
+        };
+        //create this function to get the specific finance name according to the shop name
+        const fetchAllWarehouseManager = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/tht//warehouseManger');
+                const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+                setALlWarehouseManger(data);
 
             } catch (error) {
                 console.error('Error fetching shop names:', error);
@@ -81,6 +104,8 @@ const Admin = () => {
         fetchAllFinance();
         fetchShopNamesReasons();
         fetchAllShopDetails();
+        fetchAllCustomerServiceLeader();
+        fetchAllWarehouseManager();
     }, []);
 
 
@@ -121,6 +146,12 @@ const Admin = () => {
     const handleFinanceChange = (e) => {
         setSelectedFinance(e.target.value);
     };
+    const handleLeaderChange = (e) => {
+        setSelectedLeader(e.target.value);
+    };
+    const handleManagerChange = (e) => {
+        setSelectedManager(e.target.value);
+    };
 
 
     //create onChange function to get input filed of reason for refund request
@@ -131,14 +162,40 @@ const Admin = () => {
 
     //create this function to add the information for all warehouse name and finance information for a specific shop name
     const handleAddShopDetails = () => {
+        if (!shopName || selectedWarehouses?.length === 0 || !selectedFinance) {
+            toast.error(
+                selectedLanguage === "en-US"
+                    ? "Please input all information properly"
+                    : selectedLanguage === "zh-CN"
+                        ? "请输入正确的所有信息"
+                        : selectedLanguage === "th-TH"
+                            ? "โปรดป้อนข้อมูลทั้งหมดให้ถูกต้อง"
+                            : selectedLanguage === "fil-PH"
+                                ? "Mangyaring maglagay ng lahat ng impormasyon nang maayos"
+                                : selectedLanguage === "vi-VN"
+                                    ? "Vui lòng nhập đầy đủ thông tin một cách đúng đắn"
+                                    : selectedLanguage === "ms-MY"
+                                        ? "Sila masukkan semua maklumat dengan betul"
+                                        : selectedLanguage === "id-ID"
+                                            ? "Harap masukkan semua informasi dengan benar"
+                                            : "Please input all information properly"
+            );
+
+            return;
+        }
+
         const shopDetails = {
-            shopeName: shopName,
+            shopName: shopName,
+            CustomerServiceLeader:selectedLeader,
+            warehouses: selectedWarehouses,
+            warehouseManager:selectedManager,
             finance: selectedFinance,
-            warehouses: selectedWarehouses
         };
+        console.log(shopName,selectedFinance,selectedLeader,selectedManager,selectedWarehouses)
+        console.log(shopDetails)
 
         if (shopName.trim() !== '') {
-            fetch('https://grozziie.zjweiting.com:8035/tht/shopDetails', {
+            fetch('http://localhost:5000/tht/shopDetails', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -168,6 +225,28 @@ const Admin = () => {
 
     //create function to add all warehouse venue to show the list and add the warehouse name for specific shop name
     const handleAddWarehouseNames = () => {
+        if (!warehouseName) {
+            toast.error(
+                selectedLanguage === "en-US"
+                    ? "Please input all information properly"
+                    : selectedLanguage === "zh-CN"
+                        ? "请输入正确的所有信息"
+                        : selectedLanguage === "th-TH"
+                            ? "โปรดป้อนข้อมูลทั้งหมดให้ถูกต้อง"
+                            : selectedLanguage === "fil-PH"
+                                ? "Mangyaring maglagay ng lahat ng impormasyon nang maayos"
+                                : selectedLanguage === "vi-VN"
+                                    ? "Vui lòng nhập đầy đủ thông tin một cách đúng đắn"
+                                    : selectedLanguage === "ms-MY"
+                                        ? "Sila masukkan semua maklumat dengan betul"
+                                        : selectedLanguage === "id-ID"
+                                            ? "Harap masukkan semua informasi dengan benar"
+                                            : "Please input all information properly"
+            );
+
+            return;
+        }
+
         if (warehouseName.trim() !== '') {
             const newWarehouseNames = [...warehouseNames, warehouseName]
             setWarehouseNames(newWarehouseNames);
@@ -199,6 +278,27 @@ const Admin = () => {
     //create function to add all refund request reason
 
     const handleAddReasons = () => {
+        if (!reason) {
+            toast.error(
+                selectedLanguage === "en-US"
+                    ? "Please input all information properly"
+                    : selectedLanguage === "zh-CN"
+                        ? "请输入正确的所有信息"
+                        : selectedLanguage === "th-TH"
+                            ? "โปรดป้อนข้อมูลทั้งหมดให้ถูกต้อง"
+                            : selectedLanguage === "fil-PH"
+                                ? "Mangyaring maglagay ng lahat ng impormasyon nang maayos"
+                                : selectedLanguage === "vi-VN"
+                                    ? "Vui lòng nhập đầy đủ thông tin một cách đúng đắn"
+                                    : selectedLanguage === "ms-MY"
+                                        ? "Sila masukkan semua maklumat dengan betul"
+                                        : selectedLanguage === "id-ID"
+                                            ? "Harap masukkan semua informasi dengan benar"
+                                            : "Please input all information properly"
+            );
+
+            return;
+        }
         if (reason.trim() !== '') {
             const newReasons = [...reasons, reason]
             setReasons(newReasons);
@@ -256,7 +356,7 @@ const Admin = () => {
         }
         try {
             await axios.delete(`https://grozziie.zjweiting.com:8035/tht/RFusers/delete/${userId}`);
-            toast.success('User deleted successfully');
+            toast.error('User deleted successfully');
             setUsers(users.filter((user) => user.id !== userId));
         } catch (error) {
             console.error('Error deleting User:', error);
@@ -450,6 +550,15 @@ const Admin = () => {
                                 {selectedLanguage === "ms-MY" && "Peranan"}
                                 {selectedLanguage === "id-ID" && "Peran"}
                             </th>
+                            <th className="text-start">
+                                {selectedLanguage === "en-US" && "Warehouse"}
+                                {selectedLanguage === "zh-CN" && "仓库"}
+                                {selectedLanguage === "th-TH" && "คลังสินค้า"}
+                                {selectedLanguage === "fil-PH" && "Bodega"}
+                                {selectedLanguage === "vi-VN" && "Kho hàng"}
+                                {selectedLanguage === "ms-MY" && "Gudang"}
+                                {selectedLanguage === "id-ID" && "Gudang"}
+                            </th>
 
                             <th className="text-start">
                                 {selectedLanguage === "en-US" && "Admin"}
@@ -495,6 +604,7 @@ const Admin = () => {
                                     <td className="text-center pl-2 py-2 font-semibold" >{user?.name}</td>
                                     <td className="text-center py-2 ">{user?.email}</td>
                                     <td className="text-center w-3/12">{user?.role}</td>
+                                    <td className="text-center">{user?.warehouseShop}</td>
                                     <td>
                                         {
                                             user?.admin === "true" ?
@@ -618,13 +728,13 @@ const Admin = () => {
                         </div>
 
                         <div className=" w-full text-center">
-                            <h1 className="text-2xl font-bold text-yellow-900 my-5">  {selectedLanguage === "en-US" && "Add Reasons:"}
-                                {selectedLanguage === "fil-PH" && "Magdagdag ng Mga Dahilan:"}
-                                {selectedLanguage === "ms-MY" && "Tambah Sebab:"}
-                                {selectedLanguage === "th-TH" && "เพิ่มเหตุผล:"}
-                                {selectedLanguage === "vi-VN" && "Thêm Lý Do:"}
-                                {selectedLanguage === "id-ID" && "Tambah Alasan:"}
-                                {selectedLanguage === "zh-CN" && "添加原因："}</h1>
+                            <h1 className="text-2xl font-bold text-yellow-900 my-5">  {selectedLanguage === "en-US" && "Add Return Reasons:"}
+                                {selectedLanguage === "fil-PH" && "Magdagdag ng Mga Dahilan sa Pagbabalik:"}
+                                {selectedLanguage === "ms-MY" && "Tambah Sebab Kembali:"}
+                                {selectedLanguage === "th-TH" && "เพิ่มเหตุผลการคืนสินค้า:"}
+                                {selectedLanguage === "vi-VN" && "Thêm Lý do Trả hàng:"}
+                                {selectedLanguage === "id-ID" && "Tambahkan Alasan Pengembalian:"}
+                                {selectedLanguage === "zh-CN" && "添加退货原因："}</h1>
                             <input type="text" value={reason} onChange={(e) => handleReasonsChange(e)} placeholder="Enter New Reasons To Add" className="border-2 rounded-lg py-1 pl-2 text-center bg-white text-gray-800 w-full" />
                             <div className="mt-8">
 
@@ -664,6 +774,32 @@ const Admin = () => {
 
                             <input type="text" value={shopName} onChange={(e) => handleShopNamesChange(e)} placeholder="Enter New ShopName Name" className="border-2 w-full rounded-lg py-1 pl-2 text-center bg-white text-gray-800" />
                             <select
+                                value={selectedLeader}
+                                onChange={handleLeaderChange}
+                                className="border-2 w-full rounded-lg py-1 pl-2 mt-5 text-center bg-white text-gray-800"
+                            >
+                                <option value="">Select Customer Leader</option>
+                                {allCustomerServiceLeader?.map((leader, index) => (
+                                    <option key={index} value={leader?.name}>
+                                        {leader?.name}
+                                    </option>
+                                ))}
+                            </select> 
+
+                            <select
+                                value={selectedManager}
+                                onChange={handleManagerChange}
+                                className="border-2 w-full rounded-lg py-1 pl-2 mt-5 text-center bg-white text-gray-800"
+                            >
+                                <option value="">Select Warehouse Manager</option>
+                                {allWarehouseManager?.map((manager, index) => (
+                                    <option key={index} value={manager?.name}>
+                                        {manager?.name}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
                                 value={selectedFinance}
                                 onChange={handleFinanceChange}
                                 className="border-2 w-full rounded-lg py-1 pl-2 mt-5 text-center bg-white text-gray-800"
@@ -674,11 +810,21 @@ const Admin = () => {
                                         {finance?.name}
                                     </option>
                                 ))}
-                            </select>
+                            </select> 
+
+                         
+
                         </div>
                         <div>
                             <div>
-                                <div className="border-2 py-5 text-left pl-8">
+                                <h2 className="text-xl mb-3">{selectedLanguage === "en-US" && "Warehouses List"}
+                                        {selectedLanguage === "zh-CN" && "仓库列表"}
+                                        {selectedLanguage === "th-TH" && "รายชื่อคลังสินค้า"}
+                                        {selectedLanguage === "vi-VN" && "Danh sách kho"}
+                                        {selectedLanguage === "ms-MY" && "Senarai Gudang"}
+                                        {selectedLanguage === "id-ID" && "Daftar Gudang"}
+                                        {selectedLanguage === "fil-PH" && "Listahan ng Mga Warehouse"}</h2>
+                                <div className="border-2 py-2 text-left pl-8">
                                     {warehouseNames.map((warehouseName, index) => (
                                         <div key={index}>
                                             <label>
@@ -738,9 +884,9 @@ const Admin = () => {
 
 
                         {allShopDetails.map((shopDetails, index) => (
-                            <div key={index} className="border-2 rounded-lg p-2 mb-4 grid grid-cols-4">
+                            <div key={index} className="border-2 rounded-lg p-2 mb-4 grid grid-cols-3">
                                 <div className="text-left">
-                                    <p><span className="font-semibold">{selectedLanguage === "en-US" && "Shop Name:"}
+                                    <p className="mb-2"><span className="font-semibold">{selectedLanguage === "en-US" && "Shop Name:"}
                                         {selectedLanguage === "zh-CN" && "商店名称："}
                                         {selectedLanguage === "th-TH" && "ชื่อร้านค้า:"}
                                         {selectedLanguage === "vi-VN" && "Tên cửa hàng:"}
@@ -748,7 +894,23 @@ const Admin = () => {
                                         {selectedLanguage === "id-ID" && "Nama Toko:"}
                                         {selectedLanguage === "fil-PH" && "Pangalan ng Tindahan:"}
                                     </span> {shopDetails.shopName}</p>
-                                    <p><span className="font-semibold">{selectedLanguage === "en-US" && "Finance Name:"}
+                                    <p className="mb-2"><span className="font-semibold">{selectedLanguage === "en-US" && "Customer Service Leader Name:"}
+                                        {selectedLanguage === "zh-CN" && "客户服务领导姓名:"}
+                                        {selectedLanguage === "th-TH" && "ชื่อผู้นำฝ่ายบริการลูกค้า:"}
+                                        {selectedLanguage === "vi-VN" && "Tên Nhà Lãnh Đạo Dịch Vụ Khách Hàng:"}
+                                        {selectedLanguage === "ms-MY" && "Nama Pemimpin Perkhidmatan Pelanggan:"}
+                                        {selectedLanguage === "id-ID" && "Nama Pemimpin Layanan Pelanggan:"}
+                                        {selectedLanguage === "fil-PH" && "Pangalan ng Lider ng Serbisyo sa Customer:"}
+                                    </span> {shopDetails.CustomerServiceLeader}</p>
+                                    <p className="mb-2"><span className="font-semibold">{selectedLanguage === "en-US" && "Warehouse Manager Name:"}
+                                        {selectedLanguage === "zh-CN" && "仓库经理名称："}
+                                        {selectedLanguage === "th-TH" && "ชื่อผู้จัดการคลังสินค้า:"}
+                                        {selectedLanguage === "vi-VN" && "Tên Quản Lý Kho:"}
+                                        {selectedLanguage === "ms-MY" && "Nama Pengurus Gudang:"}
+                                        {selectedLanguage === "id-ID" && "Nama Manajer Gudang:"}
+                                        {selectedLanguage === "fil-PH" && "Pangalan ng Tagapamahala ng Warehouse:"}
+                                    </span> {shopDetails.warehouseManager}</p>
+                                    <p className="mb-2"><span className="font-semibold">{selectedLanguage === "en-US" && "Finance Name:"}
                                         {selectedLanguage === "zh-CN" && "财务名称："}
                                         {selectedLanguage === "th-TH" && "ชื่อการเงิน:"}
                                         {selectedLanguage === "vi-VN" && "Tên tài chính:"}
@@ -757,7 +919,7 @@ const Admin = () => {
                                         {selectedLanguage === "fil-PH" && "Pangalan ng Pananalapi:"}
                                     </span> {shopDetails.finance}</p>
                                 </div>
-                                <div className="col-span-2 text-left">
+                                <div className=" text-left">
                                     <p><span className="font-semibold bg-amber-100 px-2 py-1">{selectedLanguage === "en-US" && "Warehouses List"}
                                         {selectedLanguage === "zh-CN" && "仓库列表"}
                                         {selectedLanguage === "th-TH" && "รายชื่อคลังสินค้า"}
@@ -788,16 +950,6 @@ const Admin = () => {
                             </div>
                         ))}
                     </div>
-
-
-
-
-
-
-
-
-
-
 
                 </div>
 
@@ -911,8 +1063,9 @@ const Admin = () => {
                                 }
 
 
-                                <div className="grid grid-cols-7 ">
-                                    <label className="mb-2 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Language:"}
+                                <div className="grid grid-cols-7">
+                                    <label className="mb-2 col-span-2" htmlFor="">
+                                        {selectedLanguage === "en-US" && "Language:"}
                                         {selectedLanguage === "zh-CN" && "语言:"}
                                         {selectedLanguage === "th-TH" && "ภาษา:"}
                                         {selectedLanguage === "vi-VN" && "Ngôn ngữ:"}
@@ -920,17 +1073,25 @@ const Admin = () => {
                                         {selectedLanguage === "id-ID" && "Bahasa:"}
                                         {selectedLanguage === "fil-PH" && "Wika:"}
                                     </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Language"
+                                    <select
                                         value={editingUser.language}
                                         onChange={(e) => setEditingUser({ ...editingUser, language: e.target.value })}
-                                        className=" col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                    />
+                                        className="col-span-5 mb-2 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    >
+                                        <option >Select</option>
+                                        <option >Chinese</option>
+                                        <option >Bengali</option>
+                                        <option >Indonesian</option>
+                                        <option >Thai</option>
+                                        <option >English</option>
+                                        <option >Malay</option>
+                                    </select>
                                 </div>
 
-                                <div className="grid grid-cols-7 ">
-                                    <label className="mb-8 col-span-2" htmlFor="">{selectedLanguage === "en-US" && "Country:"}
+
+                                <div className="grid grid-cols-7">
+                                    <label className="mb-8 col-span-2" htmlFor="">
+                                        {selectedLanguage === "en-US" && "Country:"}
                                         {selectedLanguage === "zh-CN" && "国家:"}
                                         {selectedLanguage === "th-TH" && "ประเทศ:"}
                                         {selectedLanguage === "vi-VN" && "Quốc gia:"}
@@ -938,14 +1099,21 @@ const Admin = () => {
                                         {selectedLanguage === "id-ID" && "Negara:"}
                                         {selectedLanguage === "fil-PH" && "Bansa:"}
                                     </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Country"
+                                    <select
                                         value={editingUser.country}
                                         onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
-                                        className=" col-span-5 mb-8 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-                                    />
+                                        className="col-span-5 mb-8 ml-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                                    >
+                                        <option>Select</option>
+                                        <option>China</option>
+                                        <option>Bangladesh</option>
+                                        <option>Indonesia</option>
+                                        <option>Thailand</option>
+                                        <option>Singapore</option>
+                                        <option>Malaysia</option>
+                                    </select>
                                 </div>
+
                                 <btn
                                     className="bg-green-500 cursor-pointer text-white px-4 py-2 mr-3 rounded-md"
                                     onClick={() => saveUser(editingUser.id, editingUser)}

@@ -231,7 +231,7 @@ const RefundProductList = ({ refundProducts }) => {
                 <td className="text-start">{request?.customerReturnTrackingNumber}</td>
                 <td className="text-start hidden md:block">{request?.orderDate}</td>
 
-                {user?.role === "~Customer-Service~" && user?.email===request?.applicantEmail && request?.customerServiceLeaderStatus === "false" ? (
+                {user?.role === "~Customer-Service~" && user?.email === request?.applicantEmail && request?.customerServiceLeaderStatus === "false" ? (
                   <>
                     <td>
                       <btn className="text-blue-500 flex justify-center hover:cursor-pointer" onClick={() => openEditModal(request)}>
@@ -376,6 +376,7 @@ const RefundProductList = ({ refundProducts }) => {
                   className="mb-2 px-4 py-2 border border-gray-300 bg-white rounded-md w-9/12"
                 />
               </div>
+              
 
 
               <div className="mb-1 flex justify-between items-center">

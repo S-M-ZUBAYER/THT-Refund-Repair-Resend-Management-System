@@ -104,12 +104,6 @@ const DetailsLayout = () => {
       setLoading(false)
       // Reset form fields
 
-
-
-
-
-
-
       setSelectedImages([]);
 
     } catch (error) {
@@ -374,9 +368,10 @@ const DetailsLayout = () => {
 
         </div>
 
-        <hr className='border-2 border-gray-800 my-5'></hr> </div>
+        {/* <hr className='border-2 border-gray-800 my-5'></hr>  */}
+        </div>
 
-      <div className="grid grid-cols-2 gap-10 text-left mx-10">
+      <div className="grid grid-cols-2 gap-10 text-left mx-10 border-4 border-gray-900 p-8">
 
         <p>
           <span className="font-semibold">
@@ -464,6 +459,31 @@ const DetailsLayout = () => {
           {currentRequest?.warehouseName}
         </p>
 
+        <p>
+          <span className="font-semibold">
+            {selectedLanguage === "en-US" && "Customer Leader Name:"}
+            {selectedLanguage === "zh-CN" && "财务名称："}
+            {selectedLanguage === "th-TH" && "ชื่อทางการเงิน:"}
+            {selectedLanguage === "vi-VN" && "Tên tài chính:"}
+            {selectedLanguage === "ms-MY" && "Nama Kewangan:"}
+            {selectedLanguage === "id-ID" && "Nama Keuangan:"}
+            {selectedLanguage === "fil-PH" && "Pangalan ng Pananalapi:"}
+          </span>{" "}
+          {currentRequest?.customerServiceLeader}
+        </p>
+        <p>
+          <span className="font-semibold">
+            {selectedLanguage === "en-US" && "Warehouse Manager Name:"}
+            {selectedLanguage === "zh-CN" && "财务名称："}
+            {selectedLanguage === "th-TH" && "ชื่อทางการเงิน:"}
+            {selectedLanguage === "vi-VN" && "Tên tài chính:"}
+            {selectedLanguage === "ms-MY" && "Nama Kewangan:"}
+            {selectedLanguage === "id-ID" && "Nama Keuangan:"}
+            {selectedLanguage === "fil-PH" && "Pangalan ng Pananalapi:"}
+          </span>{" "}
+          {currentRequest?.warehouseManager}
+        </p>
+       
         <p>
           <span className="font-semibold">
             {selectedLanguage === "en-US" && "Finance Name:"}
@@ -820,7 +840,7 @@ const DetailsLayout = () => {
             <img
               src={selectedImage}
               alt="Selected Image"
-              className="mx-auto max-w-10/12 max-h-10/12"
+              className="mx-auto my-auto w-10/12 h-10/12"
             />
             <button
               onClick={handleCloseImage}
