@@ -418,7 +418,8 @@ const StatusBar = ({ allRequest, allSpecialRequest }) => {
                                 {
                                     user?.role === "~Customer-Service~" &&
                                     <>
-                                        {user?.name === request?.applicantName ?
+                                        {
+                                        // user?.name === request?.applicantName ?
                                             <Link to={`/refund/details/${request?.orderNumber}`}>
                                                 <td className="text-start py-2 cursor-pointer">
                                                     <btn className="bg-lime-200 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
@@ -429,16 +430,17 @@ const StatusBar = ({ allRequest, allSpecialRequest }) => {
                                                         {selectedLanguage === "vi-VN" && "Chi tiết"}
                                                         {selectedLanguage === "id-ID" && "Rincian"}</btn>
                                                 </td>
-                                            </Link> :
-                                            <td onClick={handleToNoEntry} className="text-start py-2 cursor-pointer">
-                                                <btn className="bg-lime-50 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
-                                                    {selectedLanguage === "zh-CN" && "详情"}
-                                                    {selectedLanguage === "fil-PH" && "Detalye"}
-                                                    {selectedLanguage === "ms-MY" && "Butiran"}
-                                                    {selectedLanguage === "th-TH" && "รายละเอียด"}
-                                                    {selectedLanguage === "vi-VN" && "Chi tiết"}
-                                                    {selectedLanguage === "id-ID" && "Rincian"}</btn>
-                                            </td>
+                                            </Link>
+                                            //  :
+                                            // <td onClick={handleToNoEntry} className="text-start py-2 cursor-pointer">
+                                            //     <btn className="bg-lime-50 rounded-tl-lg rounded-br-lg px-5 py-1">{selectedLanguage === "en-US" && "Details"}
+                                            //         {selectedLanguage === "zh-CN" && "详情"}
+                                            //         {selectedLanguage === "fil-PH" && "Detalye"}
+                                            //         {selectedLanguage === "ms-MY" && "Butiran"}
+                                            //         {selectedLanguage === "th-TH" && "รายละเอียด"}
+                                            //         {selectedLanguage === "vi-VN" && "Chi tiết"}
+                                            //         {selectedLanguage === "id-ID" && "Rincian"}</btn>
+                                            // </td>
                                         }
                                     </>
 

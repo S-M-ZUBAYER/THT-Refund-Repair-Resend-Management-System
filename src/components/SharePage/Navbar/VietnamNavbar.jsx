@@ -220,6 +220,7 @@ const VietnamNavba = () => {
         <li><Link to='resend' className="hover:cursor-pointer">Gửi lại</Link> </li>
         <li><Link to='supply' className="hover:cursor-pointer">Cung cấp</Link> </li>
         <li><Link to='repair' className="hover:cursor-pointer">Sửa chữa</Link> </li>
+        <li><Link to='order' className="hover:cursor-pointer">Đặt hàng</Link> </li>
         {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">Quản trị viên</Link> </li> : ""
         }
@@ -311,6 +312,7 @@ const VietnamNavba = () => {
           <li><Link to='resend' className='border-b hover:cursor-pointer'>Gửi lại</Link></li>
           <li><Link to='repair' className='border-b hover:cursor-pointer'>Sửa chữa</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>Cung cấp</Link></li>
+          <li><Link to='order' className='border-b hover:cursor-pointer'>Đặt hàng</Link></li>
           {
             user?.admin === "true" ? <li><Link to='admin' className="border-b hover:cursor-pointer">Quản trị viên</Link> </li> : ""
           }

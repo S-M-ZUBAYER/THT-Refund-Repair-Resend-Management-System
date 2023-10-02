@@ -13,6 +13,10 @@ import PrivateRoute from "../PrivateRoutes/PrivateRoute";
 import Admin from "../../Pages/AdminPage/Admin";
 import DetailsLayout from "../../Pages/RefundPage/DetailsLayout";
 import FunctionalMain from "../../Layout/FuntionalMain";
+import Order from "../../Pages/OrderPage/Order";
+import OrderRoute from "../../Pages/OrderPage/OrderBtn";
+import OrderInfo from "../../Pages/OrderPage/OrderDetails";
+
 
 
 
@@ -63,6 +67,14 @@ export const routes = createBrowserRouter([
             {
                 path: "/repair",
                 element: <PrivateRoute><Repair></Repair></PrivateRoute>
+            },
+            {
+                path: "/order",
+                element:<OrderRoute></OrderRoute>
+            },
+            {
+                path: "order/details/:orderNumber",
+                element: <PrivateRoute><OrderInfo></OrderInfo></PrivateRoute>,
             },
             {
                 path: "/admin",

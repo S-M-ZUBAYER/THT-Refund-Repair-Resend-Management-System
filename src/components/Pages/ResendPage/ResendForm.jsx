@@ -1,95 +1,722 @@
-import React, { useContext, useState } from 'react';
+// import React, { useContext, useEffect, useState } from 'react';
+// import { toast } from 'react-hot-toast';
+// import { AuthContext } from '../../../context/UserContext';
+// import axios from 'axios';
+
+// const ResendForm = () => {
+//   const { allRefundRequest, setAllRefundRequest, user } = useContext(AuthContext);
+
+
+//   const [orderNumber, setOrderNumber] = useState('');
+//   const [orderTime, setOrderTime] = useState(new Date().toLocaleTimeString());
+//   const [shopName, setShopName] = useState('');
+//   const [customerUserName, setCustomerUserName] = useState('');
+//   const [customerOrderNumber, setCustomerOrderNumber] = useState('');
+//   const [orderDate, setOrderDate] = useState('');
+//   const [itemQuantity, setItemQuantity] = useState('');
+//   const [customerReturnTrackingNumber, setCustomerReturnTrackingNumber] = useState('');
+//   const [resendReason, setResendReason] = useState('');
+//   const [resendItem, setResendItem] = useState('');
+//   const [otherReason, setOtherReason] = useState('');
+//   const [otherItem, setOtherItem] = useState('');
+//   const [resendAmount, setRefundAmount] = useState('');
+//   const [recipientName, setRecipientName] = useState('');
+//   const [phoneNumber, setPhoneNumber] = useState('');
+//   const [address, setAddress] = useState('');
+//   const [remarks, setRemarks] = useState('');
+//   const [applicantName, setApplicantName] = useState(user?.customerUserName);
+//   const [applicationDate, setApplicationDate] = useState(new Date().toLocaleDateString());
+//   const [countryCode, setCountryCode] = useState("");
+//   const [timeNumber, setTimeNumber] = useState("");
+//   const [dataNumber, setDateNumber] = useState("");
+//   const [special, setSpecial] = useState(false);
+//   const [allShopDetails, setAllShopDetails] = useState([]);
+//   const [allProductsItems, setAllProductsItems] = useState([]);
+//   const [selectedProductModel, setSelectedProductModel] = useState("");
+
+// const {selectedLanguage}=useContext(AuthContext);
+
+
+
+
+// const handleChange = (e) => {
+//   setSelectedProductModel(e.target.value);
+// };
+//   const handleOptionChange = () => {
+//     setSpecial((prevState) => !prevState);
+//   };
+
+
+//   //crete function to generate order number according to the local date, time, country code and random number
+//   const handleToGenerateOrderNumber = () => {
+
+//     if (!user || !user.country) {
+//       return null;
+//     }
+
+//     let countryCode = '';
+//     if (user.country === 'Bangladesh') {
+//       countryCode = '101';
+//     } else if (user.country === 'China') {
+//       countryCode = '102';
+//     } else if (user.country === 'Indonesia') {
+//       countryCode = '103';
+//     } else if (user.country === 'Thailand') {
+//       countryCode = '104';
+//     } else if (user.country === 'Singapore' || user.country === 'Malaysia') {
+//       countryCode = '105';
+//     } else {
+//       return null;
+//     }
+//     const randomNumber = generateRandomNumber();
+//     const timeNumber = new Date().toLocaleTimeString().split(' ')[0].split(':');
+//     const dateNumber = new Date().toLocaleDateString().split('/');
+
+//     const orderNumber = `${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dateNumber[1]}${dateNumber[0]}${dateNumber[2]}${countryCode}${randomNumber}`;
+
+//     setOrderNumber(orderNumber);
+//   };
+
+
+//   // const handleToWarehouse = () => {
+//   //   if (filteredWarehouses) {
+//   //     setWarehouses(JSON.parse(filteredWarehouses));
+//   //     setCustomerServiceLeader(filteredCSLeader);
+//   //     setWarehouseManager(filteredWarehouseManager)
+//   //     setFinance(filteredFinance);
+
+//   //   }
+//   // }
+
+
+//   const handleToSetDateTime = () => {
+//     setApplicationDate(new Date().toLocaleDateString());
+//     setOrderTime(new Date().toLocaleTimeString());
+
+
+//   }
+
+//   function generateRandomNumber() {
+//     const min = 1000; // Minimum four-digit number (inclusive)
+//     const max = 9999; // Maximum four-digit number (inclusive)
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+//   }
+
+//     //use useEffect and create functions to get the list of Refund reasons and shopDetails information
+//     useEffect(() => {
+//       const fetchAllShopDetails = async () => {
+//         try {
+//           const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+//           const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+//           setAllShopDetails(data);
+
+//         } catch (error) {
+//           console.error('Error fetching shop names:', error);
+//         }
+//       };
+//       const fetchAllProductsItems = async () => {
+//         try {
+//           const response = await axios.get('https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products');
+//           const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+//          console.log(response.data)
+//           setAllProductsItems(data);
+
+//         } catch (error) {
+//           console.error('Error fetching shop names:', error);
+//         }
+//       };
+
+//       fetchAllProductsItems();
+//       fetchAllShopDetails();
+//     }, []);
+
+// console.log(allProductsItems,"products items")
+
+//   const handleFormSubmit = (e) => {
+//     e.preventDefault();
+
+//     // Form data object
+//     const formData = {
+//       orderNumber,
+//       orderTime: orderTime,
+//       shopName,
+//       customerUserName,
+//       customerOrderNumber,
+//       orderDate,
+//       itemQuantity,
+//       customerReturnTrackingNumber,
+//       resendReason,
+//       otherReason,
+//       resendAmount,
+//       phoneNumber,
+//       address,
+//       remarks,
+//       warehouseImg: "",
+//       financeImg: "",
+//       applicantName: user?.name,
+//       applicationDate: applicationDate,
+//       customerServiceStatus: "true",
+//       customerServiceLeaderStatus: "false",
+//       warehouseReceivedStatus: "false",
+//       warehouseResendStatus: "false",
+//       special
+
+//     };
+
+//     fetch('https://grozziie.zjweiting.com:8035/tht/resendRequest/add', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(formData),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         toast.success("Data stored successfully");
+//         setAllRefundRequest([...allRefundRequest, formData]);
+
+
+//         // setOrderTime("");
+//         setOrderNumber("");
+//         setShopName("");
+//         setCustomerUserName("");
+//         setCustomerOrderNumber("");
+//         setOrderDate("");
+//         setItemQuantity("");
+//         setCustomerReturnTrackingNumber("");
+//         setResendReason("");
+//         setResendItem("");
+//         setOtherReason("");
+//         setOtherItem("");
+//         setRefundAmount("");
+//         setRecipientName("");
+//         setPhoneNumber("");
+//         setAddress("");
+//         setRemarks("");
+//         setApplicantName("");
+//         setSpecial(false);
+//         // setApplicationDate("");
+
+
+
+//       })
+//       .catch((error) => {
+//         toast.error("Error occurred during the request")
+//         console.error('Error occurred during the request:', error);
+//       });
+//   };
+
+//   return (
+//     <form onSubmit={handleFormSubmit} onClick={handleToSetDateTime} className="w-full px-5 py-5 border-2">
+//       <h2 className="text-xl font-semibold mb-8 py-2 bg-lime-200">Resend Form</h2>
+
+//       <div className="grid grid-cols-1">
+
+//         <div onClick={handleToGenerateOrderNumber} className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="orderNumber">Order Number:</label>
+//           <input
+//             type="text"
+//             id="orderNumber"
+//             className="border rounded-md p-2 w-8/12"
+//             value={orderNumber}
+//             onChange={(e) => setOrderNumber(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="applicantName">Work Order Time:</label>
+//           <input
+//             type="text"
+//             id="applicationTime"
+//             className="border rounded-md p-2 w-8/12"
+//             value={orderTime}
+//             onChange={(e) => setOrderTime(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-left" htmlFor="shopName">{
+//             selectedLanguage === "zh-CN" && "店铺名称："
+//           }{
+//               selectedLanguage === "en-US" && "Shop Name:"
+//             }{
+//               selectedLanguage === "fil-PH" && "Pangalan ng Tindahan:"
+//             }{
+//               selectedLanguage === "ms-MY" && "Nama Kedai:"
+//             }{
+//               selectedLanguage === "th-TH" && "ชื่อร้านค้า:"
+//             }{
+//               selectedLanguage === "vi-VN" && "Tên Cửa hàng:"
+//             }{
+//               selectedLanguage === "id-ID" && "Nama Toko:"
+//             }</label>
+//           <select
+//             id="shopName"
+//             className="border rounded-md p-2 w-8/12"
+//             value={shopName}
+//             // onClick={() => handleToWarehouse(shopName)}
+//             onChange={(e) => setShopName(e.target.value)}
+//           >
+//             <option value="">{
+//               selectedLanguage === "zh-CN" && "选择店铺名称"
+//             }{
+//                 selectedLanguage === "en-US" && "Select Shop Name"
+//               }{
+//                 selectedLanguage === "fil-PH" && "Pumili ng Pangalan ng Tindahan"
+//               }{
+//                 selectedLanguage === "ms-MY" && "Pilih Nama Kedai"
+//               }{
+//                 selectedLanguage === "th-TH" && "เลือกชื่อร้านค้า"
+//               }{
+//                 selectedLanguage === "vi-VN" && "Chọn Tên Cửa hàng"
+//               }{
+//                 selectedLanguage === "id-ID" && "Pilih Nama Toko"
+//               }</option>
+//             {
+//               allShopDetails.map((shop, index) => {
+//                 return <option key={index} value={`${shop?.shopName}`}>{shop?.shopName}</option>
+//               })
+//             }
+//           </select>
+//         </div>
+
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="customerOrderNumber">Customer User Name:</label>
+//           <input
+//             type="text"
+//             id="customerUserName"
+//             className="border rounded-md p-2 w-8/12"
+//             value={customerUserName}
+//             onChange={(e) => setCustomerUserName(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="customerOrderNumber">Customer Order Number:</label>
+//           <input
+//             type="text"
+//             id="customerOrderNumber"
+//             className="border rounded-md p-2 w-8/12"
+//             value={customerOrderNumber}
+//             onChange={(e) => setCustomerOrderNumber(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="orderDate">Order Date:</label>
+//           <input
+//             type="date"
+//             id="orderDate"
+//             className="border rounded-md p-2 w-8/12"
+//             value={orderDate}
+//             onChange={(e) => setOrderDate(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Item:</label>
+//           <select
+//         id="productModel"
+//         className="border rounded-md p-2 w-8/12"
+//         value={selectedProductModel}
+//         onChange={handleChange}
+//       >
+//         <option value="">Select Product Model</option>
+//         {allProductsItems.map((product) => (
+//           <option key={product.id} value={product.productModel}>
+//             {product.productModel}
+//           </option>
+//         ))}
+//       </select>
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="orderAmount">Resend Item Quantity:</label>
+//           <input
+//             type="text"
+//             id="orderAmount"
+//             className="border rounded-md p-2 w-8/12"
+//             value={itemQuantity}
+//             onChange={(e) => setItemQuantity(e.target.value)}
+//           />
+//         </div>
+
+
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="refundAmount">Recipient Name:</label>
+//           <input
+//             type="text"
+//             id="refundAmount"
+//             className="border rounded-md p-2 w-8/12"
+//             value={recipientName}
+//             onChange={(e) => setRecipientName(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="customerReceivingAmount">Recipient Phone Number:</label>
+//           <input
+//             type="text"
+//             id="customerReceivingAmount"
+//             className="border rounded-md p-2 w-8/12"
+//             value={phoneNumber}
+//             onChange={(e) => setPhoneNumber(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="remarks">Recipient Address:</label>
+//           <textarea
+//             id="remarks"
+//             className="border rounded-md p-2 w-8/12"
+//             value={address}
+//             onChange={(e) => setAddress(e.target.value)}
+//           ></textarea>
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Reason:</label>
+//           <select
+//             id="refundReason"
+//             className="border rounded-md p-2 w-8/12"
+//             value={resendReason}
+//             onChange={(e) => setResendReason(e.target.value)}
+//           >
+//             <option value="">Select a Reason</option>
+//             <option value="Reason 1">Missing Item</option>
+//             <option value="Reason 2">Exchange</option>
+//             <option value="Reason 3">Gift</option>
+//             <option value="Others">Other Reason</option>
+//           </select>
+//           {resendReason === 'Others' && (
+//             <div className="mt-2 flex justify-between items-center">
+//               <label className="text-start"  htmlFor="otherReason">Other Reason:</label>
+//               <textarea
+//                 type="text"
+//                 id="otherReason"
+//                 className="border rounded-md p-2 w-8/12"
+//                 value={otherReason}
+//                 onChange={(e) => setOtherReason(e.target.value)}
+//               />
+//             </div>
+//           )}
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="customerReturnTrackingNumber">Shipping Tracking Number:</label>
+//           <input
+//             type="text"
+//             id="customerReturnTrackingNumber"
+//             className="border rounded-md p-2 w-8/12"
+//             value={customerReturnTrackingNumber}
+//             onChange={(e) => setCustomerReturnTrackingNumber(e.target.value)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="remarks">Remarks:</label>
+//           <textarea
+//             id="remarks"
+//             className="border rounded-md p-2 w-8/12"
+//             value={remarks}
+//             onChange={(e) => setRemarks(e.target.value)}
+//           ></textarea>
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="applicantName">Applicant Name:</label>
+//           <input
+//             type="text"
+//             id="applicantName"
+//             className="border rounded-md p-2 w-8/12"
+//             value={user?.name}
+//             onChange={(e) => setApplicantName(user?.name)}
+//           />
+//         </div>
+
+//         <div className="mb-4 flex justify-between items-center">
+//           <label className="text-start"  htmlFor="applicantName">Application Date:</label>
+//           <input
+//             type="text"
+//             id="applicationTime"
+//             className="border rounded-md p-2 w-8/12"
+//             value={applicationDate}
+//             onChange={(e) => setApplicationDate(e.target.value)}
+//           />
+//         </div>
+
+
+
+//         {/* <div className="flex items-center justify-end space-x-2 my-3 hover:cursor-pointer">
+//           <input
+//             type="radio"
+//             id="specialOption"
+//             checked={special}
+//             onClick={handleOptionChange}
+//             className={`appearance-none hover:cursor-pointer h-4 w-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${special ? 'bg-black' : ''
+//               }`}
+//           />
+//           <label
+//             htmlFor="specialOption"
+//             className={`px-2 py-1 rounded-md hover:cursor-pointer `}
+//           >
+//             Special
+//           </label>
+//         </div> */}
+
+//         <button type="submit" className="bg-gradient-to-r from-blue-500 to-green-500 text-white font-semibold py-2 px-4 rounded">
+//           Submit
+//         </button>
+//       </div>
+//     </form>
+//   );
+// };
+
+// export default ResendForm;
+
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/UserContext';
+import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const ResendForm = () => {
-  const { allRefundRequest, setAllRefundRequest, user } = useContext(AuthContext);
+const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, allSpecialRequest }) => {
+
+  //import the necessary data from User context
+  const { allRefundRequest, setAllRefundRequest, user, selectedLanguage } = useContext(AuthContext);
 
 
+  //declare the variable with useState to management the state properly
   const [orderNumber, setOrderNumber] = useState('');
   const [orderTime, setOrderTime] = useState(new Date().toLocaleTimeString());
   const [shopName, setShopName] = useState('');
+  const [warehouses, setWarehouses] = useState([]);
+  const [warehouseName, setWarehouseName] = useState('');
+  const [customerServiceLeader, setCustomerServiceLeader] = useState('');
+  const [warehouseManager, setWarehouseManager] = useState('');
+  const [finance, setFinance] = useState('');
   const [customerUserName, setCustomerUserName] = useState('');
+  const [customerPhoneNo, setCustomerPhoneNo] = useState('');
   const [customerOrderNumber, setCustomerOrderNumber] = useState('');
   const [orderDate, setOrderDate] = useState('');
-  const [itemQuantity, setItemQuantity] = useState('');
+  const [orderAmount, setOrderAmount] = useState('');
   const [customerReturnTrackingNumber, setCustomerReturnTrackingNumber] = useState('');
-  const [resendReason, setResendReason] = useState('');
-  const [resendItem, setResendItem] = useState('');
+  const [refundReason, setRefundReason] = useState('');
   const [otherReason, setOtherReason] = useState('');
-  const [otherItem, setOtherItem] = useState('');
-  const [resendAmount, setRefundAmount] = useState('');
-  const [recipientName, setRecipientName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
+  const [refundAmount, setRefundAmount] = useState('');
+  const [customerReceivingAmount, setCustomerReceivingAmount] = useState('');
+  const [customerReceivingAccount, setCustomerReceivingAccount] = useState('');
+  const [customerBankName, setCustomerBankName] = useState('');
+  const [customerBankAccountName, setCustomerBankAccountName] = useState('');
+  const [customerBankSwift, setCustomerBankSwift] = useState('');
   const [remarks, setRemarks] = useState('');
   const [applicantName, setApplicantName] = useState(user?.customerUserName);
   const [applicationDate, setApplicationDate] = useState(new Date().toLocaleDateString());
-  const [countryCode, setCountryCode] = useState("");
-  const [timeNumber, setTimeNumber] = useState("");
-  const [dataNumber, setDateNumber] = useState("");
+  const [reasons, setReasons] = useState([]);
   const [special, setSpecial] = useState(false);
+  const [allShopDetails, setAllShopDetails] = useState([]);
+  const [allProductsItems, setAllProductsItems] = useState([]);
+  const [selectedProductModel, setSelectedProductModel] = useState("");
 
+
+
+
+
+
+  //Create function to get the specific warehouse list and finance according to shopName for these specific shop name and warehouse list 
+  const filteredWarehouses = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.warehouses;
+
+  const filteredCSLeader = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.CustomerServiceLeader;
+  const filteredWarehouseManager = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.warehouseManager;
+  const filteredFinance = allShopDetails.filter(shop => shop?.shopName === shopName)[0]?.finance;
+
+  const handleToWarehouse = () => {
+    if (filteredWarehouses) {
+      setWarehouses(JSON.parse(filteredWarehouses));
+      setCustomerServiceLeader(filteredCSLeader);
+      setWarehouseManager(filteredWarehouseManager)
+      setFinance(filteredFinance);
+
+    }
+  }
+
+
+
+  //use useEffect and create functions to get the list of Refund reasons and shopDetails information
+  useEffect(() => {
+    // const fetchShopNamesReasons = async () => {
+    //   try {
+    //     const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopNamesReasons');
+    //     const data = response.data[0]; // Assuming the response data is an array with one object containing shop names and reasons
+    //     setReasons((data.reasons).split(","));
+    //   } catch (error) {
+    //     console.error('Error fetching shop names:', error);
+    //   }
+    // };
+    const fetchAllShopDetails = async () => {
+      try {
+        const response = await axios.get('https://grozziie.zjweiting.com:8035/tht/shopDetails');
+        const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+        setAllShopDetails(data);
+
+      } catch (error) {
+        console.error('Error fetching shop names:', error);
+      }
+    };
+
+    const fetchAllProductsItems = async () => {
+      try {
+        const response = await axios.get('https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products');
+        const data = response.data; // Assuming the response data is an array with one object containing shop names and reasons
+        console.log(response.data)
+        setAllProductsItems(data);
+
+      } catch (error) {
+        console.error('Error fetching shop names:', error);
+      }
+    };
+
+    fetchAllShopDetails();
+    fetchAllProductsItems();
+  }, []);
+
+
+
+  //create this onChange function to make toggle for special and non-special refund request
   const handleOptionChange = () => {
     setSpecial((prevState) => !prevState);
   };
 
+  const handleChange = (e) => {
+    setSelectedProductModel(e.target.value);
+  };
 
-  const handleToGenerateOrderNumber = () => {
-    setCountryCode(user?.country === "Bangladesh" && "101" || user?.country === "China" && "102" || user?.country === "Indonesia" && "103" || user?.country === "Thailand" && "104" || user?.country === "Singapore" && "105" || user?.country === "Malaysia" && "105");
-    const randomNumber = generateRandomNumber();
-    setTimeNumber((((new Date().toLocaleTimeString()).split(" ")[0]).split(":")));
-    setDateNumber((new Date().toLocaleDateString()).split("/"))
-    setOrderNumber(`${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dataNumber[0]}${dataNumber[1]}${dataNumber[2]}${countryCode}${randomNumber} `);
-  }
-
-
+  //crete these function to get the local time and date to generate order number and input in refund request from
   const handleToSetDateTime = () => {
     setApplicationDate(new Date().toLocaleDateString());
     setOrderTime(new Date().toLocaleTimeString());
-
-
   }
 
-  function generateRandomNumber() {
-    const min = 1000; // Minimum four-digit number (inclusive)
-    const max = 9999; // Maximum four-digit number (inclusive)
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 
+  //create this function to generate random number to add the last 4 random number in generate order number
+  const generateRandomNumber = () => {
+    return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  };
+
+
+
+  //crete function to generate order number according to the local date, time, country code and random number
+  const handleToGenerateOrderNumber = () => {
+
+    if (!user || !user.country) {
+      return null;
+    }
+
+    let countryCode = '';
+    if (user.country === 'Bangladesh') {
+      countryCode = '101';
+    } else if (user.country === 'China') {
+      countryCode = '102';
+    } else if (user.country === 'Indonesia') {
+      countryCode = '103';
+    } else if (user.country === 'Thailand') {
+      countryCode = '104';
+    } else if (user.country === 'Singapore' || user.country === 'Malaysia') {
+      countryCode = '105';
+    } else {
+      return null;
+    }
+    const randomNumber = generateRandomNumber();
+    const timeNumber = new Date().toLocaleTimeString().split(' ')[0].split(':');
+    const dateNumber = new Date().toLocaleDateString().split('/');
+
+    const orderNumber = `${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dateNumber[1]}${dateNumber[0]}${dateNumber[2]}${countryCode}${randomNumber}`;
+
+    setOrderNumber(orderNumber);
+  };
+
+
+
+
+
+  //create function to collect all data from the refund from and conditionally send all the data to backend to store in database./
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // Form data object
+    if (orderNumber === "" || shopName === "" || warehouseName === "" || finance === "" || customerUserName === "" || customerPhoneNo === "" || customerOrderNumber === "" || orderDate === "" || orderAmount === "" || customerReturnTrackingNumber === "" || refundReason === "" || refundAmount === "" || customerReceivingAccount === "" || customerBankName === "" || customerReceivingAmount === "" || refundReason === "" || customerBankAccountName === "" || customerBankSwift === "") {
+      toast.error(
+        selectedLanguage === "en-US"
+          ? "Please input all information properly"
+          : selectedLanguage === "zh-CN"
+            ? "请输入正确的所有信息"
+            : selectedLanguage === "th-TH"
+              ? "โปรดป้อนข้อมูลทั้งหมดให้ถูกต้อง"
+              : selectedLanguage === "fil-PH"
+                ? "Mangyaring maglagay ng lahat ng impormasyon nang maayos"
+                : selectedLanguage === "vi-VN"
+                  ? "Vui lòng nhập đầy đủ thông tin một cách đúng đắn"
+                  : selectedLanguage === "ms-MY"
+                    ? "Sila masukkan semua maklumat dengan betul"
+                    : selectedLanguage === "id-ID"
+                      ? "Harap masukkan semua informasi dengan benar"
+                      : "Please input all information properly"
+      );
+
+      return
+    }
+
+    //Create Form data object to send in the backend to store in database
     const formData = {
       orderNumber,
       orderTime: orderTime,
       shopName,
+      customerServiceLeader,
+      warehouseName,
+      warehouseManager,
+      finance,
       customerUserName,
+      customerPhoneNo,
       customerOrderNumber,
       orderDate,
-      itemQuantity,
+      orderAmount,
       customerReturnTrackingNumber,
-      resendReason,
+      refundReason,
       otherReason,
-      resendAmount,
-      phoneNumber,
-      address,
+      refundAmount,
+      customerReceivingAmount,
+      customerReceivingAccount,
+      customerBankName,
+      customerBankAccountName,
+      customerBankSwift,
       remarks,
       warehouseImg: "",
       financeImg: "",
       applicantName: user?.name,
+      applicantCountry: user?.country,
       applicationDate: applicationDate,
+      leaderBy: "",
+      warehouseBy: "",
+      warehouseCountry: "",
+      warehouseManagerBy: "",
+      financeBy: "",
+      updateBy: "",
       customerServiceStatus: "true",
       customerServiceLeaderStatus: "false",
-      warehouseReceivedStatus: "false",
-      warehouseResendStatus: "false",
+      warehouseStatus: "false",
+      warehouseManagerStatus: "false",
+      financeStatus: "false",
+      supplierStatus: "false",
+      applicantEmail: user?.email,
       special
 
     };
 
-    fetch('https://grozziie.zjweiting.com:8035/tht/resendRequest/add', {
+    //Here start to post request to post all the refund form data to store in database
+    fetch('http://localhost:5000/tht/refundRequest/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,24 +727,36 @@ const ResendForm = () => {
       .then((data) => {
         toast.success("Data stored successfully");
         setAllRefundRequest([...allRefundRequest, formData]);
+        if (formData?.special) {
+          setAllSpecialRequest([...allSpecialRequest, formData])
+        }
+        else {
+
+          setAllRequest([...allRequest, formData]);
+        }
 
 
-        // setOrderTime("");
+
+        // set all data empty to clear the from properly
+
         setOrderNumber("");
         setShopName("");
+        setWarehouseName("");
+        setFinance("");
         setCustomerUserName("");
+        setCustomerPhoneNo("");
         setCustomerOrderNumber("");
         setOrderDate("");
-        setItemQuantity("");
+        setOrderAmount("");
         setCustomerReturnTrackingNumber("");
-        setResendReason("");
-        setResendItem("");
+        setRefundReason("");
         setOtherReason("");
-        setOtherItem("");
         setRefundAmount("");
-        setRecipientName("");
-        setPhoneNumber("");
-        setAddress("");
+        setCustomerReceivingAmount("");
+        setCustomerReceivingAccount("");
+        setCustomerBankName("");
+        setCustomerBankAccountName("");
+        setCustomerBankSwift("");
         setRemarks("");
         setApplicantName("");
         setSpecial(false);
@@ -133,13 +772,56 @@ const ResendForm = () => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} onClick={handleToSetDateTime} className="w-full px-5 py-5 border-2">
-      <h2 className="text-xl font-semibold mb-8 py-2 bg-lime-200">Resend Form</h2>
 
+    //create a from interface to input all data properly to get and store all the refund request data properly
+
+    <form onSubmit={handleFormSubmit} onClick={handleToSetDateTime} className="w-full px-5 py-5 border-2">
+
+      {/* From Heading */}
+
+      <h2 className="text-xl font-semibold mb-8 py-2 bg-cyan-200">{
+        selectedLanguage === "zh-CN" && "退款申请表格"
+      }
+        {
+          selectedLanguage === "en-US" && "Refund Request Form"
+        }
+        {
+          selectedLanguage === "fil-PH" && "Form ng Request for Refund"
+        }
+        {
+          selectedLanguage === "ms-MY" && "Borang Permohonan Refund"
+        }
+        {
+          selectedLanguage === "th-TH" && "แบบฟอร์มคำขอคืนเงิน"
+        }
+        {
+          selectedLanguage === "vi-VN" && "Biểu mẫu Yêu cầu Hoàn tiền"
+        }
+        {
+          selectedLanguage === "id-ID" && "Formulir Permohonan Pengembalian Dana"
+        }
+      </h2>
+
+
+      {/* Refund Request order number input field where automatically generate order number  */}
       <div className="grid grid-cols-1">
 
         <div onClick={handleToGenerateOrderNumber} className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="orderNumber">Order Number:</label>
+          <label className="text-left" htmlFor="orderNumber">{
+            selectedLanguage === "zh-CN" && "订单号码："
+          }{
+              selectedLanguage === "en-US" && "Order Number:"
+            }{
+              selectedLanguage === "fil-PH" && "Numero ng Order:"
+            }{
+              selectedLanguage === "ms-MY" && "Nombor Pesanan:"
+            }{
+              selectedLanguage === "th-TH" && "หมายเลขใบสั่งซื้อ:"
+            }{
+              selectedLanguage === "vi-VN" && "Mã số đơn hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nomor Pesanan:"
+            }</label>
           <input
             type="text"
             id="orderNumber"
@@ -149,47 +831,250 @@ const ResendForm = () => {
           />
         </div>
 
-        <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="applicantName">Work Order Time:</label>
-          <input
-            type="text"
-            id="applicationTime"
-            className="border rounded-md p-2 w-8/12"
-            value={orderTime}
-            onChange={(e) => setOrderTime(e.target.value)}
-          />
-        </div>
+        {/* Refund Request Shope name input filed */}
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="shopName">Shop Name:</label>
+          <label className="text-left" htmlFor="shopName">{
+            selectedLanguage === "zh-CN" && "店铺名称："
+          }{
+              selectedLanguage === "en-US" && "Shop Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Tindahan:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Kedai:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อร้านค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Cửa hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Toko:"
+            }</label>
           <select
             id="shopName"
             className="border rounded-md p-2 w-8/12"
             value={shopName}
+            onClick={() => handleToWarehouse(shopName)}
             onChange={(e) => setShopName(e.target.value)}
           >
-            <option value="">Select Shop Name</option>
-            <option value="Shop 1">Shop 1</option>
-            <option value="Shop 2">Shop 2</option>
-            <option value="Shop 3">Shop 3</option>
-            {/* Add more options as needed */}
+            <option value="">{
+              selectedLanguage === "zh-CN" && "选择店铺名称"
+            }{
+                selectedLanguage === "en-US" && "Select Shop Name"
+              }{
+                selectedLanguage === "fil-PH" && "Pumili ng Pangalan ng Tindahan"
+              }{
+                selectedLanguage === "ms-MY" && "Pilih Nama Kedai"
+              }{
+                selectedLanguage === "th-TH" && "เลือกชื่อร้านค้า"
+              }{
+                selectedLanguage === "vi-VN" && "Chọn Tên Cửa hàng"
+              }{
+                selectedLanguage === "id-ID" && "Pilih Nama Toko"
+              }</option>
+            {
+              allShopDetails.map((shop, index) => {
+                return <option key={index} value={`${shop?.shopName}`}>{shop?.shopName}</option>
+              })
+            }
           </select>
         </div>
 
 
+        {/* Refund Request warehouse name input field for specific shop name */}
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="customerOrderNumber">Customer User Name:</label>
+          <label className="text-left" htmlFor="warehouse">{
+            selectedLanguage === "zh-CN" && "店铺名称："
+          }
+            {
+              selectedLanguage === "en-US" && "Warehouse Name:"
+            }
+            {
+              selectedLanguage === "fil-PH" && "Pangalan ng Warehouse:"
+            }
+            {
+              selectedLanguage === "ms-MY" && "Nama Gudang:"
+            }
+            {
+              selectedLanguage === "th-TH" && "ชื่อคลังสินค้า:"
+            }
+            {
+              selectedLanguage === "vi-VN" && "Tên Kho hàng:"
+            }
+            {
+              selectedLanguage === "id-ID" && "Nama Gudang:"
+            }
+          </label>
+          <select
+            id="warehouse"
+            className="border rounded-md p-2 w-8/12"
+            value={warehouseName}
+            onChange={(e) => setWarehouseName(e.target.value)}
+          >
+            <option value=""> {selectedLanguage === "zh-CN" && "选择仓库名称"}
+              {selectedLanguage === "en-US" && "Select Warehouse Name"}
+              {selectedLanguage === "fil-PH" && "Pumili ng Pangalan ng Warehouse"}
+              {selectedLanguage === "ms-MY" && "Pilih Nama Gudang"}
+              {selectedLanguage === "th-TH" && "เลือกชื่อคลังสินค้า"}
+              {selectedLanguage === "vi-VN" && "Chọn Tên Kho hàng"}
+              {selectedLanguage === "id-ID" && "Pilih Nama Gudang"}</option>
+
+            {
+              warehouses.map((warehouse, index) => {
+                return <option key={index} value={`${warehouse}`}>{warehouse}</option>
+              })
+            }
+
+          </select>
+        </div>
+
+
+
+        {/* Refund Request finance name input field for specific shop Name*/}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="finance">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
+              selectedLanguage === "en-US" && "Customer Service Leader Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
           <input
             type="text"
-            id="customerUserName"
+            id="leader"
+            className="border rounded-md p-2 w-8/12"
+            value={customerServiceLeader}
+            onChange={(e) => setCustomerServiceLeader(e.target.value)}
+          />
+        </div>
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="finance">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
+              selectedLanguage === "en-US" && "Warehouse Manager Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="manager"
+            className="border rounded-md p-2 w-8/12"
+            value={warehouseManager}
+            onChange={(e) => setWarehouseManager(e.target.value)}
+          />
+        </div>
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="finance">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
+              selectedLanguage === "en-US" && "Finance Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="finance"
+            className="border rounded-md p-2 w-8/12"
+            value={finance}
+            onChange={(e) => setFinance(e.target.value)}
+          />
+        </div>
+
+
+
+        {/* Refund Request customer user name input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerUsername">{
+            selectedLanguage === "zh-CN" && "客户用户名："
+          }{
+              selectedLanguage === "en-US" && "Customer User Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Customer ng User:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Pengguna Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อผู้ใช้ลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên Người dùng Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Pengguna Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerUsername"
             className="border rounded-md p-2 w-8/12"
             value={customerUserName}
             onChange={(e) => setCustomerUserName(e.target.value)}
           />
         </div>
 
+
+
+        {/* Refund Request Customer Phone number input field */}
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="customerOrderNumber">Customer Order Number:</label>
+          <label className="text-left" htmlFor="customerPhoneNo">
+            {selectedLanguage === "zh-CN" && "客户手机号码"}
+            {selectedLanguage === "en-US" && "Customer Phone No"}
+            {selectedLanguage === "fil-PH" && "Numero ng Telepono ng Customer"}
+            {selectedLanguage === "ms-MY" && "Nombor Telefon Pelanggan"}
+            {selectedLanguage === "th-TH" && "หมายเลขโทรศัพท์ลูกค้า"}
+            {selectedLanguage === "vi-VN" && "Số Điện thoại Khách hàng"}
+            {selectedLanguage === "id-ID" && "Nomor Telepon Pelanggan"}
+          </label>
+          <input
+            type="text"
+            id="customerPhoneNo"
+            className="border rounded-md p-2 w-8/12"
+            value={customerPhoneNo}
+            onChange={(e) => setCustomerPhoneNo(e.target.value)}
+          />
+        </div>
+
+
+        {/* Refund Request Customer product order number input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerOrderNumber">{
+            selectedLanguage === "zh-CN" && "客户订单编号："
+          }{
+              selectedLanguage === "en-US" && "Customer Order Number:"
+            }{
+              selectedLanguage === "fil-PH" && "Numero ng Order ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Nombor Pesanan Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "หมายเลขคำสั่งซื้อของลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Số Đơn đặt hàng của Khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nomor Pesanan Pelanggan:"
+            }</label>
           <input
             type="text"
             id="customerOrderNumber"
@@ -199,8 +1084,25 @@ const ResendForm = () => {
           />
         </div>
 
-        <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="orderDate">Order Date:</label>
+
+        {/* Refund Request order data of this product input field */}
+
+        <div className="mb-4 flex justify-between items-center ">
+          <label className="text-left" htmlFor="orderDate">{
+            selectedLanguage === "zh-CN" && "订单日期："
+          }{
+              selectedLanguage === "en-US" && "Order Date:"
+            }{
+              selectedLanguage === "fil-PH" && "Petsa ng Order:"
+            }{
+              selectedLanguage === "ms-MY" && "Tarikh Pesanan:"
+            }{
+              selectedLanguage === "th-TH" && "วันที่สั่งซื้อ:"
+            }{
+              selectedLanguage === "vi-VN" && "Ngày Đặt hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Tanggal Pemesanan:"
+            }</label>
           <input
             type="date"
             id="orderDate"
@@ -208,98 +1110,191 @@ const ResendForm = () => {
             value={orderDate}
             onChange={(e) => setOrderDate(e.target.value)}
           />
+
+          {/* <DatePicker
+            id="orderDate"
+            className="border rounded-md p-2 w-full"
+            selected={orderDate}
+            onChange={(date) => setOrderDate(date)}
+          /> */}
         </div>
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Item:</label>
+          <label className="text-start" htmlFor="refundReason">
+            {selectedLanguage === "zh-CN" && "重新发送/再次发货商品："}
+            {selectedLanguage === "en-US" && "Resend/Shipped Again Item:"}
+            {selectedLanguage === "fil-PH" && "I-uulit/Sinusundan Muling Produkto:"}
+            {selectedLanguage === "ms-MY" && "Barang Dihantar Semula/Dihantar Semula:"}
+            {selectedLanguage === "th-TH" && "ส่งสินค้าซ้ำ/ส่งสินค้าอีกครั้ง:"}
+            {selectedLanguage === "vi-VN" && "Gửi lại/Gửi lại sản phẩm:"}
+            {selectedLanguage === "id-ID" && "Kirim Ulang/Kirim Ulang Barang:"}
+          </label>
+
           <select
-            id="refundReason"
+            id="productModel"
             className="border rounded-md p-2 w-8/12"
-            value={resendItem}
-            onChange={(e) => setResendItem(e.target.value)}
+            value={selectedProductModel}
+            onChange={handleChange}
           >
-            <option value="">Select Resend Item</option>
-            <option value="Reason 1">Item 1</option>
-            <option value="Reason 2">Item 1</option>
-            <option value="Reason 3">Item 1</option>
-            <option value="Others">Other Item</option>
+            <option value="">
+              {selectedLanguage === "zh-CN" && "选择产品型号"}
+              {selectedLanguage === "en-US" && "Select Product Model"}
+              {selectedLanguage === "fil-PH" && "Piliin ang Uri ng Produkto"}
+              {selectedLanguage === "ms-MY" && "Pilih Model Produk"}
+              {selectedLanguage === "th-TH" && "เลือกรุ่นสินค้า"}
+              {selectedLanguage === "vi-VN" && "Chọn Mẫu Sản Phẩm"}
+              {selectedLanguage === "id-ID" && "Pilih Model Produk"}
+            </option>
+
+            {allProductsItems.map((product) => (
+              <option key={product.id} value={product.productModel}>
+                {product.productModel}
+              </option>
+            ))}
           </select>
-          {resendItem === 'Others' && (
-            <div className="mt-2 flex justify-between items-center">
-              <label className="text-start"  htmlFor="otherReason">Other Item:</label>
-              <textarea
-                type="text"
-                id="otherReason"
-                className="border rounded-md p-2 w-8/12"
-                value={otherItem}
-                onChange={(e) => setOtherItem(e.target.value)}
-              />
-            </div>
-          )}
         </div>
+        {/* Refund Request Order amount input field */}
+
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="orderAmount">Resend Item Quantity:</label>
+          <label className="text-left" htmlFor="orderAmount">{
+  selectedLanguage === "zh-CN" && "再发货物品数量"
+}
+{
+  selectedLanguage === "en-US" && "Resend item quantity"
+}
+{
+  selectedLanguage === "fil-PH" && "Bilang ng Resend Item"
+}
+{
+  selectedLanguage === "ms-MY" && "Kuantiti Item Penghantaran Semula"
+}
+{
+  selectedLanguage === "th-TH" && "จำนวนสินค้าที่ส่งมอบใหม่"
+}
+{
+  selectedLanguage === "vi-VN" && "Số lượng sản phẩm gửi lại"
+}
+{
+  selectedLanguage === "id-ID" && "Jumlah Item Dikirim Ulang"
+}
+</label>
           <input
             type="text"
             id="orderAmount"
             className="border rounded-md p-2 w-8/12"
-            value={itemQuantity}
-            onChange={(e) => setItemQuantity(e.target.value)}
+            value={orderAmount}
+            onChange={(e) => setOrderAmount(e.target.value)}
           />
         </div>
 
 
 
+        {/* Refund Request product return trancking number input field */}
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="refundAmount">Recipient Name:</label>
+          <label className="text-left" htmlFor="customerReturnTrackingNumber">{
+            selectedLanguage === "zh-CN" && "运输追踪号码："
+          }{
+              selectedLanguage === "en-US" && "Shipping Tracking Number:"
+            }{
+              selectedLanguage === "fil-PH" && "Numero ng Pagmamanman sa Pagpapadala:"
+            }{
+              selectedLanguage === "ms-MY" && "Nombor Jejak Penghantaran:"
+            }{
+              selectedLanguage === "th-TH" && "หมายเลขติดตามการส่งสินค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Số theo dõi Vận chuyển:"
+            }{
+              selectedLanguage === "id-ID" && "Nomor Pelacakan Pengiriman:"
+            }</label>
           <input
             type="text"
-            id="refundAmount"
+            id="customerReturnTrackingNumber"
             className="border rounded-md p-2 w-8/12"
-            value={recipientName}
-            onChange={(e) => setRecipientName(e.target.value)}
+            value={customerReturnTrackingNumber}
+            onChange={(e) => setCustomerReturnTrackingNumber(e.target.value)}
           />
         </div>
 
-        <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="customerReceivingAmount">Recipient Phone Number:</label>
-          <input
-            type="text"
-            id="customerReceivingAmount"
-            className="border rounded-md p-2 w-8/12"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </div>
+
+
+        {/* Refund Request reasons input field */}
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="remarks">Recipient Address:</label>
-          <textarea
-            id="remarks"
-            className="border rounded-md p-2 w-8/12"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          ></textarea>
-        </div>
-
-        <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="refundReason">Resend/Shipped Again Reason:</label>
+          <label className="text-left" htmlFor="refundReason">
+            {selectedLanguage === "zh-CN" && "退款原因："}
+            {selectedLanguage === "en-US" && "Refund Reason:"}
+            {selectedLanguage === "fil-PH" && "Dahilan ng Pabalik:"}
+            {selectedLanguage === "ms-MY" && "Sebab Bayaran Balik:"}
+            {selectedLanguage === "th-TH" && "เหตุผลการคืนเงิน:"}
+            {selectedLanguage === "vi-VN" && "Lý do hoàn tiền:"}
+            {selectedLanguage === "id-ID" && "Alasan Pengembalian Dana:"}
+          </label>
           <select
             id="refundReason"
             className="border rounded-md p-2 w-8/12"
-            value={resendReason}
-            onChange={(e) => setResendReason(e.target.value)}
+            value={refundReason}
+            onChange={(e) => setRefundReason(e.target.value)}
           >
-            <option value="">Select a Reason</option>
-            <option value="Reason 1">Missing Item</option>
-            <option value="Reason 2">Exchange</option>
-            <option value="Reason 3">Gift</option>
-            <option value="Others">Other Reason</option>
+            <option value="">
+              {selectedLanguage === "zh-CN" && "选择一个原因"}
+              {selectedLanguage === "en-US" && "Select a reason"}
+              {selectedLanguage === "fil-PH" && "Pumili ng isang dahilan"}
+              {selectedLanguage === "ms-MY" && "Pilih satu sebab"}
+              {selectedLanguage === "th-TH" && "เลือกเหตุผล"}
+              {selectedLanguage === "vi-VN" && "Chọn một lý do"}
+              {selectedLanguage === "id-ID" && "Pilih alasan"}
+            </option>
+            <option value="Reason 1">
+              {selectedLanguage === "zh-CN" && "丢失物品"}
+              {selectedLanguage === "en-US" && "Missing Item"}
+              {selectedLanguage === "fil-PH" && "Nawawalang Item"}
+              {selectedLanguage === "ms-MY" && "Barang Hilang"}
+              {selectedLanguage === "th-TH" && "สิ่งของหาย"}
+              {selectedLanguage === "vi-VN" && "Mặt hàng bị mất"}
+              {selectedLanguage === "id-ID" && "Barang Hilang"}
+            </option>
+            <option value="Reason 2">
+              {selectedLanguage === "zh-CN" && "换货"}
+              {selectedLanguage === "en-US" && "Exchange"}
+              {selectedLanguage === "fil-PH" && "Exchange"}
+              {selectedLanguage === "ms-MY" && "Pertukaran"}
+              {selectedLanguage === "th-TH" && "แลก"}
+              {selectedLanguage === "vi-VN" && "Trao đổi"}
+              {selectedLanguage === "id-ID" && "Tukar Barang"}
+            </option>
+            <option value="Reason 3">
+              {selectedLanguage === "zh-CN" && "礼物"}
+              {selectedLanguage === "en-US" && "Gift"}
+              {selectedLanguage === "fil-PH" && "Regalo"}
+              {selectedLanguage === "ms-MY" && "Hadiah"}
+              {selectedLanguage === "th-TH" && "ของขวัญ"}
+              {selectedLanguage === "vi-VN" && "Quà tặng"}
+              {selectedLanguage === "id-ID" && "Hadiah"}
+            </option>
+
+            <option value="Others">
+              {selectedLanguage === "zh-CN" && "其他"}
+              {selectedLanguage === "en-US" && "Others"}
+              {selectedLanguage === "fil-PH" && "Iba pa"}
+              {selectedLanguage === "ms-MY" && "Lain-lain"}
+              {selectedLanguage === "th-TH" && "อื่น ๆ"}
+              {selectedLanguage === "vi-VN" && "Khác"}
+              {selectedLanguage === "id-ID" && "Lainnya"}
+            </option>
           </select>
-          {resendReason === 'Others' && (
+          {refundReason === 'Others' && (
             <div className="mt-2 flex justify-between items-center">
-              <label className="text-start"  htmlFor="otherReason">Other Reason:</label>
+              <label className="text-left" htmlFor="otherReason">
+                {selectedLanguage === "zh-CN" && "其他原因："}
+                {selectedLanguage === "en-US" && "Other Reason:"}
+                {selectedLanguage === "fil-PH" && "Iba pang Rason:"}
+                {selectedLanguage === "ms-MY" && "Sebab Lain-lain:"}
+                {selectedLanguage === "th-TH" && "เหตุผลอื่น ๆ:"}
+                {selectedLanguage === "vi-VN" && "Lý do khác:"}
+                {selectedLanguage === "id-ID" && "Alasan Lainnya:"}
+              </label>
               <textarea
                 type="text"
                 id="otherReason"
@@ -311,19 +1306,196 @@ const ResendForm = () => {
           )}
         </div>
 
+
+
+        {/* Refund Request Refund amount input field */}
+
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="customerReturnTrackingNumber">Shipping Tracking Number:</label>
+          <label className="text-left" htmlFor="refundAmount">{
+            selectedLanguage === "zh-CN" && "退款金额："
+          }{
+              selectedLanguage === "en-US" && "Refund Amount:"
+            }{
+              selectedLanguage === "fil-PH" && "Halaga ng Pabalik:"
+            }{
+              selectedLanguage === "ms-MY" && "Jumlah Bayaran Balik:"
+            }{
+              selectedLanguage === "th-TH" && "จำนวนเงินที่ต้องคืน:"
+            }{
+              selectedLanguage === "vi-VN" && "Số tiền hoàn tiền:"
+            }{
+              selectedLanguage === "id-ID" && "Jumlah Pengembalian Dana:"
+            }</label>
           <input
             type="text"
-            id="customerReturnTrackingNumber"
+            id="refundAmount"
             className="border rounded-md p-2 w-8/12"
-            value={customerReturnTrackingNumber}
-            onChange={(e) => setCustomerReturnTrackingNumber(e.target.value)}
+            value={refundAmount}
+            onChange={(e) => setRefundAmount(e.target.value)}
           />
         </div>
 
+
+        {/* Refund Request customer receiving amount input field */}
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="remarks">Remarks:</label>
+          <label className="text-left" htmlFor="customerReceivingAmount">{
+            selectedLanguage === "zh-CN" && "客户收款金额："
+          }{
+              selectedLanguage === "en-US" && "Customer Receiving Amount:"
+            }{
+              selectedLanguage === "fil-PH" && "Halaga ng Natanggap ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Jumlah Penerimaan Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "จำนวนเงินที่ลูกค้าได้รับ:"
+            }{
+              selectedLanguage === "vi-VN" && "Số tiền nhận của khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Jumlah Penerimaan Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerReceivingAmount"
+            className="border rounded-md p-2 w-8/12"
+            value={customerReceivingAmount}
+            onChange={(e) => setCustomerReceivingAmount(e.target.value)}
+          />
+        </div>
+
+
+        {/* Refund Request customer receiving account input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerReceivingAccount">{
+            selectedLanguage === "zh-CN" && "客户收款账户："
+          }{
+              selectedLanguage === "en-US" && "Customer Receiving Account:"
+            }{
+              selectedLanguage === "fil-PH" && "Account na Natanggap ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Akaun Penerimaan Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "บัญชีที่ลูกค้าได้รับเงิน:"
+            }{
+              selectedLanguage === "vi-VN" && "Tài khoản nhận của khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Akun Penerimaan Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerReceivingAccount"
+            className="border rounded-md p-2 w-8/12"
+            value={customerReceivingAccount}
+            onChange={(e) => setCustomerReceivingAccount(e.target.value)}
+          />
+        </div>
+
+
+
+        {/* Refund Request customer bank Name input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerBankName">{
+            selectedLanguage === "zh-CN" && "客户银行名称："
+          }{
+              selectedLanguage === "en-US" && "Customer Bank Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Bangko ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Bank Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อธนาคารของลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên ngân hàng của khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Bank Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerBankName"
+            className="border rounded-md p-2 w-8/12"
+            value={customerBankName}
+            onChange={(e) => setCustomerBankName(e.target.value)}
+          />
+        </div>
+
+
+
+        {/* Refund Request customer bank account name input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerBankAccountName">{
+            selectedLanguage === "zh-CN" && "客户银行账户名："
+          }{
+              selectedLanguage === "en-US" && "Customer Bank Account Name:"
+            }{
+              selectedLanguage === "fil-PH" && "Pangalan ng Account ng Bangko ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Nama Akaun Bank Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "ชื่อบัญชีธนาคารของลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Tên tài khoản ngân hàng của khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Nama Akun Bank Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerBankAccountName"
+            className="border rounded-md p-2 w-8/12"
+            value={customerBankAccountName}
+            onChange={(e) => setCustomerBankAccountName(e.target.value)}
+          />
+        </div>
+
+
+
+
+        {/* Refund Request Customer bank swift number input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="customerBankSwift">{
+            selectedLanguage === "zh-CN" && "客户银行 Swift 号码："
+          }{
+              selectedLanguage === "en-US" && "Customer Bank Swift:"
+            }{
+              selectedLanguage === "fil-PH" && "Mabilis na Bank ng Customer:"
+            }{
+              selectedLanguage === "ms-MY" && "Swift Bank Pelanggan:"
+            }{
+              selectedLanguage === "th-TH" && "รหัส Swift ของธนาคารของลูกค้า:"
+            }{
+              selectedLanguage === "vi-VN" && "Mã Swift của ngân hàng khách hàng:"
+            }{
+              selectedLanguage === "id-ID" && "Swift Bank Pelanggan:"
+            }</label>
+          <input
+            type="text"
+            id="customerBankSwift"
+            className="border rounded-md p-2 w-8/12"
+            value={customerBankSwift}
+            onChange={(e) => setCustomerBankSwift(e.target.value)}
+          />
+        </div>
+
+
+
+
+        {/* Refund Request remark input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="remarks">
+            {selectedLanguage === "zh-CN" && "备注："}
+            {selectedLanguage === "en-US" && "Remarks:"}
+            {selectedLanguage === "fil-PH" && "Mga Tala:"}
+            {selectedLanguage === "ms-MY" && "Ulasan:"}
+            {selectedLanguage === "th-TH" && "หมายเหตุ:"}
+            {selectedLanguage === "vi-VN" && "Ghi Chú:"}
+            {selectedLanguage === "id-ID" && "Catatan:"}
+          </label>
+
           <textarea
             id="remarks"
             className="border rounded-md p-2 w-8/12"
@@ -332,8 +1504,22 @@ const ResendForm = () => {
           ></textarea>
         </div>
 
+
+
+
+        {/* Refund Request applicant input field */}
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="applicantName">Applicant Name:</label>
+          <label className="text-left" htmlFor="applicantName">
+            {selectedLanguage === "zh-CN" && "申请人姓名:"}
+            {selectedLanguage === "en-US" && "Applicant Name:"}
+            {selectedLanguage === "fil-PH" && "Pangalan ng Applicant:"}
+            {selectedLanguage === "ms-MY" && "Nama Pemohon:"}
+            {selectedLanguage === "th-TH" && "ชื่อผู้สมัคร:"}
+            {selectedLanguage === "vi-VN" && "Tên Người Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Nama Pemohon:"}
+          </label>
+
           <input
             type="text"
             id="applicantName"
@@ -343,8 +1529,20 @@ const ResendForm = () => {
           />
         </div>
 
+
+        {/* Refund Request application date input field */}
+
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-start"  htmlFor="applicantName">Application Date:</label>
+          <label className="text-left" htmlFor="applicationDate">
+            {selectedLanguage === "zh-CN" && "申请日期:"}
+            {selectedLanguage === "en-US" && "Application Date:"}
+            {selectedLanguage === "fil-PH" && "Petsa ng Aplikasyon:"}
+            {selectedLanguage === "ms-MY" && "Tarikh Permohonan:"}
+            {selectedLanguage === "th-TH" && "วันที่สมัคร:"}
+            {selectedLanguage === "vi-VN" && "Ngày Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Tanggal Aplikasi:"}
+          </label>
+
           <input
             type="text"
             id="applicationTime"
@@ -356,29 +1554,96 @@ const ResendForm = () => {
 
 
 
-        {/* <div className="flex items-center justify-end space-x-2 my-3 hover:cursor-pointer">
+        {/* Refund Request application time input field */}
+
+        <div className="mb-4 flex justify-between items-center">
+          <label className="text-left" htmlFor="applicationTime">
+            {selectedLanguage === "zh-CN" && "申请时间:"}
+            {selectedLanguage === "en-US" && "Application Time:"}
+            {selectedLanguage === "fil-PH" && "Oras ng Aplikasyon:"}
+            {selectedLanguage === "ms-MY" && "Masa Permohonan:"}
+            {selectedLanguage === "th-TH" && "เวลาสมัคร:"}
+            {selectedLanguage === "vi-VN" && "Thời Gian Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Waktu Aplikasi:"}
+          </label>
+
+          <input
+            type="text"
+            id="applicationTime"
+            className="border rounded-md p-2 w-8/12"
+            value={orderTime}
+            onChange={(e) => setApplicationDate(e.target.value)}
+          />
+        </div>
+
+
+
+        {/* Refund Request radion button input field to make toggle to select and unselect special and non-special request*/}
+
+        <div className="flex items-center justify-end space-x-2 my-3 hover:cursor-pointer">
           <input
             type="radio"
             id="specialOption"
             checked={special}
             onClick={handleOptionChange}
-            className={`appearance-none hover:cursor-pointer h-4 w-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${special ? 'bg-black' : ''
-              }`}
+            className={`appearance-none hover:cursor-pointer h-4 w-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${special ? 'bg-black' : ''}`}
           />
           <label
             htmlFor="specialOption"
-            className={`px-2 py-1 rounded-md hover:cursor-pointer `}
+            className={`px-2 py-1 rounded-md hover:cursor-pointer ${selectedLanguage === "zh-CN" && "text-black"
+              } ${selectedLanguage === "en-US" && "text-black"
+              } ${selectedLanguage === "fil-PH" && "text-black"
+              } ${selectedLanguage === "ms-MY" && "text-black"
+              } ${selectedLanguage === "th-TH" && "text-black"
+              } ${selectedLanguage === "vi-VN" && "text-black"
+              } ${selectedLanguage === "id-ID" && "text-black"
+              }`}
           >
-            Special
+            {
+              selectedLanguage === "zh-CN" && "特殊"
+            }
+            {
+              selectedLanguage === "en-US" && "Special"
+            }
+            {
+              selectedLanguage === "fil-PH" && "Espesyal"
+            }
+            {
+              selectedLanguage === "ms-MY" && "Khas"
+            }
+            {
+              selectedLanguage === "th-TH" && "พิเศษ"
+            }
+            {
+              selectedLanguage === "vi-VN" && "Đặc biệt"
+            }
+            {
+              selectedLanguage === "id-ID" && "Spesial"
+            }
           </label>
-        </div> */}
+        </div>
 
-        <button type="submit" className="bg-gradient-to-r from-blue-500 to-green-500 text-white font-semibold py-2 px-4 rounded">
-          Submit
+
+        <button type="submit" className="bg-gradient-to-r from-green-500 to-yellow-500 text-white font-semibold py-2 px-4 rounded">
+          {
+            selectedLanguage === "zh-CN" && "提交"
+          }{
+            selectedLanguage === "en-US" && "Submit"
+          }{
+            selectedLanguage === "fil-PH" && "Ipasa"
+          }{
+            selectedLanguage === "ms-MY" && "Hantar"
+          }{
+            selectedLanguage === "th-TH" && "ส่งคำขอ"
+          }{
+            selectedLanguage === "vi-VN" && "Gửi"
+          }{
+            selectedLanguage === "id-ID" && "Kirim"
+          }
         </button>
       </div>
     </form>
   );
 };
 
-export default ResendForm;
+export default RefundRequestForm;

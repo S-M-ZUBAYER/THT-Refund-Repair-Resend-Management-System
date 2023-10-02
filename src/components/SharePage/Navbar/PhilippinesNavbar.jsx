@@ -222,6 +222,7 @@ const PhilippinesNavbar = () => {
         <li><Link to='resend' className="hover:cursor-pointer"> Ipadala ulit</Link> </li>
         <li><Link to='supply' className="hover:cursor-pointer">Supply</Link> </li>
         <li><Link to='repair' className="hover:cursor-pointer">Ayusin</Link> </li>
+        <li><Link to='order' className="hover:cursor-pointer">Utos</Link> </li>
         {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">Admin</Link> </li> : ""
         }
@@ -313,6 +314,7 @@ const PhilippinesNavbar = () => {
           <li><Link to='resend' className='border-b hover:cursor-pointer'> Ipadala ulit</Link></li>
           <li><Link to='repair' className='border-b hover:cursor-pointer'>Ayusin</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>Supply</Link></li>
+          <li><Link to='order' className='border-b hover:cursor-pointer'>Utos</Link></li>
           {
             user?.admin === "true" ? <li><Link to='admin' className="border-b hover:cursor-pointer">Admin</Link> </li> : ""
           }

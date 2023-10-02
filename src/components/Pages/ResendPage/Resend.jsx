@@ -12,17 +12,34 @@ import ResendForm from './ResendForm';
 
 const Resend = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user,selectedLanguage } = useContext(AuthContext)
 
 
     return (
 
         <div className='max-w-[1240px] mx-auto py-16 px-4 text-center'>
             {user?.role === "~Customer-Service~" && <>
-                <div>
-                    <h1>Please Complete the Resend/Shipped Again Form</h1>
-                    <p className='py-4'>Please fill all of the information carefully and submit to start the next step to get the approval from ~Customer-Service-Leader~. </p>
-                </div>
+            <div>
+  <h1>
+    {selectedLanguage === "zh-CN" && "请填写重新发送/再次发货表格"}
+    {selectedLanguage === "en-US" && "Please Complete the Resend/Shipped Again Form"}
+    {selectedLanguage === "fil-PH" && "Paki-kumpletuhin ang Porma ng Pagpapadala Ipinadala Ipinadala Ipinadala Muli"}
+    {selectedLanguage === "ms-MY" && "Sila Lengkapkan Borang Penghantaran Semula/Dihantar Semula"}
+    {selectedLanguage === "th-TH" && "โปรดกรอกแบบฟอร์มการส่งคืน/การส่งสินค้าอีกครั้ง"}
+    {selectedLanguage === "vi-VN" && "Vui lòng điền đầy đủ thông tin vào biểu mẫu Gửi lại/Gửi lại"}
+    {selectedLanguage === "id-ID" && "Silakan Isi Formulir Pengiriman Ulang/Kirim Ulang dengan Teliti"}
+  </h1>
+  <p className='py-4'>
+    {selectedLanguage === "zh-CN" && "请仔细填写所有信息并提交，以开始获得来自~客户服务主管~的批准。"}
+    {selectedLanguage === "en-US" && "Please fill all of the information carefully and submit to start the next step to get the approval from ~Customer-Service-Leader~."}
+    {selectedLanguage === "fil-PH" && "Mangyaring punan ang lahat ng impormasyon nang maingat at i-submit upang simulan ang susunod na hakbang upang makuha ang pahintulot mula sa ~Customer-Service-Leader~."}
+    {selectedLanguage === "ms-MY" && "Sila isikan semua maklumat dengan teliti dan hantar untuk memulakan langkah seterusnya untuk mendapatkan kelulusan daripada ~Pemimpin Perkhidmatan Pelanggan~."}
+    {selectedLanguage === "th-TH" && "โปรดกรอกข้อมูลทั้งหมดโดยรอบและส่งเพื่อเริ่มขั้นตอนถัดไปในการขออนุมัติจาก ~ ผู้นำบริการลูกค้า ~"}
+    {selectedLanguage === "vi-VN" && "Vui lòng điền đầy đủ tất cả thông tin và gửi để bắt đầu bước tiếp theo để nhận được sự phê duyệt từ ~Chỉ huy Dịch vụ Khách hàng~."}
+    {selectedLanguage === "id-ID" && "Harap isi semua informasi dengan cermat dan kirim untuk memulai langkah berikutnya untuk mendapatkan persetujuan dari ~Pemimpin Layanan Pelanggan~."}
+  </p>
+</div>
+
                 <ResendForm></ResendForm>
 
 
@@ -75,7 +92,7 @@ const Resend = () => {
                 <p className='py-4'>These are all the list of special refund request at these moment. Here you can see the current condition of any request. And also you can check all the information about the refund request.  </p>
             </div>
 
-            <StatusBar></StatusBar>
+            {/* <StatusBar></StatusBar> */}
 
         </div>
     );

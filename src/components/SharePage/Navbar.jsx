@@ -43,8 +43,8 @@ const Navbar = () => {
   const handleToLogOut = () => {
     try {
       setLoading(true);
-      setUser(null);
       localStorage.removeItem('RFuser');
+      setUser(null);
       toast.success("Logout successfully");
       setLoading(false);
       // Navigate('/login')
@@ -75,6 +75,7 @@ const Navbar = () => {
         <li><Link to='resend' className="md:text-small hover:cursor-pointer">Resend</Link> </li>
         <li><Link to='supply' className="md:text-small hover:cursor-pointer">Supply</Link> </li>
         <li><Link to='repair' className="md:text-small hover:cursor-pointer">Repair</Link> </li>
+        <li><Link to='order' className="md:text-small hover:cursor-pointer">Order</Link> </li>
         {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">Admin</Link> </li> : ""
         }
@@ -166,6 +167,7 @@ const Navbar = () => {
           <li><Link to='resend' className='border-b hover:cursor-pointer'>Resend</Link></li>
           <li><Link to='repair' className='border-b hover:cursor-pointer'>Supply</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>Repair</Link></li>
+          <li><Link to='order' className='border-b hover:cursor-pointer'>Order</Link></li>
           {
             user?.admin === "true" ? <li><Link to='admin' className="border-b hover:cursor-pointer">Admin</Link> </li> : ""
           }

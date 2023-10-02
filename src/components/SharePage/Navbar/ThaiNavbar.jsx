@@ -77,6 +77,7 @@ const ThaiNavbar = () => {
         <li><Link to='resend' className="hover:cursor-pointer">ส่งใหม่</Link> </li>
         <li><Link to='supply' className="hover:cursor-pointer">จัดหา</Link> </li>
         <li><Link to='repair' className="hover:cursor-pointer">ซ่อมแซม</Link> </li>
+        <li><Link to='order' className="hover:cursor-pointer">คำสั่ง</Link> </li>
         {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">ผู้ดูแลระบบ</Link> </li> : ""
         }
@@ -168,6 +169,7 @@ const ThaiNavbar = () => {
           <li><Link to='resend' className='border-b hover:cursor-pointer'>ส่งใหม่</Link></li>
           <li><Link to='repair' className='border-b hover:cursor-pointer'>ซ่อมแซม</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>จัดหา</Link></li>
+          <li><Link to='order' className='border-b hover:cursor-pointer'>คำสั่ง</Link></li>
           {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">ผู้ดูแลระบบ</Link> </li> : ""
         }

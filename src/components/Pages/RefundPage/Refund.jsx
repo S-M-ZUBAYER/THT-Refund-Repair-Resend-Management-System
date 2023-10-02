@@ -42,7 +42,7 @@ const Refund = () => {
     useEffect(() => {
         fetchData();
         fetchSpecialData();
-    }, []);
+    }, [user]);
 
 
 

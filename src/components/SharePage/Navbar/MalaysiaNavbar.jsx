@@ -78,6 +78,7 @@ const Navbar = () => {
         <li><Link to='resend' className="hover:cursor-pointer">Hantar semula</Link> </li>
         <li><Link to='supply' className="hover:cursor-pointer">Bekalan</Link> </li>
         <li><Link to='repair' className="hover:cursor-pointer">Baiki</Link> </li>
+        <li><Link to='order' className="hover:cursor-pointer">Pesanan</Link> </li>
         {
           user?.admin === "true" ? <li><Link to='admin' className="hover:cursor-pointer">Pentadbir</Link> </li> : ""
         }
@@ -169,6 +170,7 @@ const Navbar = () => {
           <li><Link to='resend' className='border-b hover:cursor-pointer'>Hantar semula</Link></li>
           <li><Link to='repair' className='border-b hover:cursor-pointer'>Baiki</Link></li>
           <li><Link to='supply' className='border-b hover:cursor-pointer'>Bekalan</Link></li>
+          <li><Link to='order' className='border-b hover:cursor-pointer'>Pesanan</Link></li>
           <li><Link to='admin' className='border-b hover:cursor-pointer'>Pentadbir</Link></li>
           <li><Link to='about' className='border-b hover:cursor-pointer'>Hubungi kam</Link></li>
           {

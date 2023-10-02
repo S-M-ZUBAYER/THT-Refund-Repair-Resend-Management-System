@@ -42,7 +42,7 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
   const [allShopDetails, setAllShopDetails] = useState([]);
 
 
- 
+
 
 
   //Create function to get the specific warehouse list and finance according to shopName for these specific shop name and warehouse list 
@@ -115,7 +115,7 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
 
   //crete function to generate order number according to the local date, time, country code and random number
   const handleToGenerateOrderNumber = () => {
-    
+
     if (!user || !user.country) {
       return null;
     }
@@ -137,7 +137,7 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
     const randomNumber = generateRandomNumber();
     const timeNumber = new Date().toLocaleTimeString().split(' ')[0].split(':');
     const dateNumber = new Date().toLocaleDateString().split('/');
-  
+
     const orderNumber = `${timeNumber[0]}${timeNumber[1]}${timeNumber[2]}${dateNumber[1]}${dateNumber[0]}${dateNumber[2]}${countryCode}${randomNumber}`;
 
     setOrderNumber(orderNumber);
@@ -975,7 +975,16 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
         {/* Refund Request applicant input field */}
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-left" htmlFor="applicantName">Applicant Name:</label>
+          <label className="text-left" htmlFor="applicantName">
+            {selectedLanguage === "zh-CN" && "申请人姓名:"}
+            {selectedLanguage === "en-US" && "Applicant Name:"}
+            {selectedLanguage === "fil-PH" && "Pangalan ng Applicant:"}
+            {selectedLanguage === "ms-MY" && "Nama Pemohon:"}
+            {selectedLanguage === "th-TH" && "ชื่อผู้สมัคร:"}
+            {selectedLanguage === "vi-VN" && "Tên Người Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Nama Pemohon:"}
+          </label>
+
           <input
             type="text"
             id="applicantName"
@@ -989,7 +998,16 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
         {/* Refund Request application date input field */}
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-left" htmlFor="applicantName">Application Date:</label>
+          <label className="text-left" htmlFor="applicationDate">
+            {selectedLanguage === "zh-CN" && "申请日期:"}
+            {selectedLanguage === "en-US" && "Application Date:"}
+            {selectedLanguage === "fil-PH" && "Petsa ng Aplikasyon:"}
+            {selectedLanguage === "ms-MY" && "Tarikh Permohonan:"}
+            {selectedLanguage === "th-TH" && "วันที่สมัคร:"}
+            {selectedLanguage === "vi-VN" && "Ngày Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Tanggal Aplikasi:"}
+          </label>
+
           <input
             type="text"
             id="applicationTime"
@@ -1004,7 +1022,16 @@ const RefundRequestForm = ({ setAllRequest, allRequest, setAllSpecialRequest, al
         {/* Refund Request application time input field */}
 
         <div className="mb-4 flex justify-between items-center">
-          <label className="text-left" htmlFor="applicantName">Application Time:</label>
+          <label className="text-left" htmlFor="applicationTime">
+            {selectedLanguage === "zh-CN" && "申请时间:"}
+            {selectedLanguage === "en-US" && "Application Time:"}
+            {selectedLanguage === "fil-PH" && "Oras ng Aplikasyon:"}
+            {selectedLanguage === "ms-MY" && "Masa Permohonan:"}
+            {selectedLanguage === "th-TH" && "เวลาสมัคร:"}
+            {selectedLanguage === "vi-VN" && "Thời Gian Đăng Ký:"}
+            {selectedLanguage === "id-ID" && "Waktu Aplikasi:"}
+          </label>
+
           <input
             type="text"
             id="applicationTime"
